@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="g.qmq" android:versionCode="28" android:versionName="1.531"
+	android:screenOrientation="nosensor">
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:screenOrientation="portrait">
+		<activity android:name=".splash" android:configChanges="locale" android:label="@string/app_name"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".MusicQuiz" android:configChanges="locale" android:label="@string/app_name"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".About" android:label="@string/about_title"
+			android:theme="@android:style/Theme.Dialog" android:icon="@drawable/icon"></activity>
+		<activity android:name=".Prefs" android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".DirBrowser"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".ModeTime" android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".endResult"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".sBoard" android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".sBoardView"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".ModeMem" android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".ModeSD" android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".ModeOL" android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".GamePlay" android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".endResult_OL"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".libBuilder" android:label="@string/lib_title"
+			android:theme="@android:style/Theme.Dialog" android:icon="@drawable/icon"></activity>
+
+		<!-- The application's publisher ID assigned by AdMob -->
+		<meta-data android:value="a14bda444ed1c13" android:name="ADMOB_PUBLISHER_ID" />
+	</application>
+	<uses-sdk android:minSdkVersion="5" />
+
+	<!-- AdMob SDK permissions -->
+	
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+</manifest>

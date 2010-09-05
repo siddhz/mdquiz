@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">mDroid免费版</string>
+	<string name="MainTitle">mDroid音乐试题</string>
+
+	<string name="setting_title">设定</string>
+	<string name="file_title">选择音乐文件所在文件夹</string>
+	<string name="file_folderName">/</string>
+	<string name="btnSelectDir_label">选择当前文件夹</string>
+
+
+	<string name="menuAbout_label">关于</string>
+	<string name="menuAbout_shortcut">a</string>
+	<string name="menuSettings_label">设定</string>
+	<string name="menuSettings_shortcut">s</string>
+
+	<string name="cancel">取消</string>
+
+	<string name="btnNew_lable">开始</string>
+	<string name="btnExit_lable">退出</string>
+	<string name="btnSettings_lable">设定</string>
+	<string name="btnBoard_lable">荣誉大厅</string>
+
+	<string name="about_title">关于MDriod</string>
+	<string name="about_content">
+		mDroid音乐试题是一款让人兴奋的音乐游戏, 它从你的SD卡中读取音乐文件并且声称妙趣横生的音乐试题.
+		\n多种游戏模式让你不亦乐乎.
+		\n游戏模式简介:
+		\n时间竞赛:你的目标是以最快时间完成试题.
+		\n\n记忆考验:这个模式考验你的记忆力, 你需要准确的回答每一题.
+		\n\n突然死亡:残酷的突然死亡模式,游戏在你答错的一瞬间结束.
+		\n\n在线挑战(专业版本):这个模式是死亡与时间模式的综合体. 
+			他将完全挑战的音乐敏感度和记忆力, 
+			更重要的是你的得分可以和全世界各地的音乐爱好者们同台竞技.
+	</string>
+
+	<string name="agreement">
+		恭喜你成功安裝mDroid音乐试题,无尽的欢乐正在向你招手.
+		mDroid音乐试题是一个让人兴奋的音乐游戏, 它从你的SD卡中读取音乐文件并且声称妙趣横生的音乐试题.
+		\n多种游戏模式让你不亦乐乎.
+		\n游戏模式简介:
+		\n时间竞赛:你的目标是以最快时间完成试题.
+		\n\n记忆考验:这个模式考验你的记忆力, 你需要准确的回答每一题.
+		\n\n突然死亡:残酷的突然死亡模式,游戏在你答错的一瞬间结束.
+		\n\n在线挑战:这个模式是死亡与时间模式的综合体. 
+			他将完全挑战的音乐敏感度和记忆力, 
+			最重要的是你的得分可以和全世界各地的音乐爱好者们同台竞技.
+		\n\n综合提示: 我们建议你最少拥有20首以上的歌曲从而完全享受mDroid带来的音乐乐趣.
+		\n\n你可以尝试"允许重复"来解决音乐过少的问题. (这并不在在线挑战中起作用.)
+		\n\nHave Fun!
+	</string>
+
+	<string name="warn_notEnoughSound">你没有足够的音乐文件来完成此游戏.
+		\n还是继续吗!?
+		\n(提示:你可以尝试运行重复来解决此问题.)</string>
+	<string name="warn_notEnoughSound_ModeSD">你没有足够的音乐文件, 虽然你可以继续但是这会降低游戏性.</string>
+	<!-- Mode Selection START -->
+	<string name="mode_title">选择游戏模式</string>
+	<string name="quizMode_ta">时间竞赛</string>
+	<string name="quizMode_mo">记忆考验</string>
+	<string name="quizMode_sd">突然死亡</string>
+	<string name="quizMode_ol">在线挑战</string>
+	
+	<string name="quizMode_ta_s">计时</string>
+	<string name="quizMode_mo_s">记忆</string>
+	<string name="quizMode_sd_s">死亡</string>
+	<string name="quizMode_ol_s">在线</string>
+	<!-- Mode Selection END -->
+
+	<!-- Time Mode START -->
+	<string name="tMode_startMsg">
+		目标: 以最快的速度完成游戏试题.
+		\n得分由完成时间加上准确率计算.
+		\n\n准备好了吗?
+	</string>
+	<string name="status_probNum_label">试题#</string>
+	<string name="status_probNum">1</string>
+	<string name="status_acc_label">准确率</string>
+	<string name="status_acc">0%</string>
+	<string name="status_time_label">时间</string>
+	<string name="status_time">0s</string>
+
+	<string name="btn_answer1">无</string>
+	<string name="btn_answer2">无</string>
+	<string name="btn_answer3">无</string>
+	<string name="btn_answer4">无</string>
+	
+	<string name="mode_loading">载入中</string>
+	
+	<!-- Time Mode END -->
+	<string name="sMode_startMsg">
+		目标:不要犯任何错误.
+		\n得分为你所完成的题目的总数.
+		\n\n你准备好了吗?
+	</string>
+	<string name="mMode_startMsg">
+		目标:100%精准!
+		\n得分由你的精准度计算.
+		\n\n你准备好了吗?
+	</string>
+
+	<!-- Result START -->
+	<string name="result_acc_r"></string>
+	<string name="result_acc_r_label">总正确数</string>
+	<string name="result_acc_w"></string>
+	<string name="result_acc_w_label">总错误数</string>
+	<string name="result_back">主菜单</string>
+	<string name="result_toSBoard">得分榜</string>
+	<!-- Result END -->
+
+	<!-- Online START-->
+	<string name="olMode_startMsg">
+		目标: 不要犯任何错误的情况下以最快速度完成.
+		\n得分由做对的题目的数量和时间决定.
+		\n\n你准备好了吗?
+	</string>
+	<string name="ol_label1">玩家名字</string>
+	<string name="ol_label2">得分</string>
+	<string name="ol_label3">国家</string>
+	<string name="ol_title">世界100强音乐高手绑</string>
+	<string name="ol_btn1">主菜单</string>
+	<string name="ol_btn2">查看完整列表</string>
+	<string name="vListUrl">http://www.comeplay8.com/mDroid/vlist.php</string>
+	<string name="insuf_title">音乐文件不足!</string>
+	<string name="insuf">在线挑战需要最少</string>
+	<string name="insuf_2">首歌曲.</string>
+	<!-- Online END -->
+	
+	<string name="fetching_web">正在获取全球排名信息</string>
+	<string name="fetching_xml">正在获取本地排名信息</string>
+	
+	<string name="btn_continue">继续</string>
+	<string name="btn_quit">退出</string>
+	
+	<string name="quizComplete">试题完成</string>
+	<string name="errorOccur">出问题了</string>
+	<string name="warning">注意!</string>
+	
+	<!-- Config START -->
+	<string name="cat1">综合设置</string>
+	<string name="config_musicFolder">选择音乐文件夹</string>
+	<string name="config_subFolder">包括子文件夹</string>
+	<string name="config_subFolder_summOn">允许搜索子文件夹内音乐文件</string>
+	<string name="config_subFolder_summOff">不允许搜索子文件夹内音乐文件</string>
+	<!-- Config END -->
+	
+	<!-- 
+		Libaray Building.
+	 -->
+	<string name="lib_title">刷新音乐库</string>
+	<string name="lib_line1">初始化中</string>
+	<string name="lib_line2">正在搜索中</string>
+	<string name="lib_success">音乐库建立完成</string>
+	<string name="lib_problem">出错啦!</string>
+	<string name="lib_defSum">点我建立音乐库</string>
+	<string name="lib_hint">这也许会花一点时间</string>
+</resources>

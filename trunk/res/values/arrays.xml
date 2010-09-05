@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<array name="quizMode">
+		<item>@string/quizMode_ta</item>
+		<item>@string/quizMode_mo</item>
+		<item>@string/quizMode_sd</item>
+		<item>@string/quizMode_ol</item>
+		<item>Game2.0</item>
+	</array>
+
+	<string-array name="entries_list_preference">
+		<item>10 Questions</item>
+		<item>25 Questions</item>
+		<item>30 Questions</item> 
+		<item>50 Questions</item> 
+		<item>100 Questions</item>
+	</string-array>
+
+	<!-- Used in app/menu examples -->
+	<string-array name="entryvalues_list_preference">
+		<item>10</item>
+		<item>25</item>
+		<item>30</item>
+		<item>50</item>
+		<item>100</item>
+	</string-array>
+</resources>

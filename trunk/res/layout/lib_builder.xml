@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/rl1"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:gravity="center">
+	<RelativeLayout android:id="@+id/rl2"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_marginLeft="5dip" android:layout_marginRight="5dip">
+		<ProgressBar android:id="@+id/pb"
+			android:layout_alignParentTop="true" android:layout_width="50dip"
+			android:layout_height="50dip" android:layout_marginRight="10dip">
+		</ProgressBar>
+		<TextView android:id="@+id/tv1" android:layout_width="wrap_content"
+			android:layout_height="25dip" android:text="@string/lib_line1"
+			android:layout_alignParentTop="true" android:layout_toRightOf="@+id/pb"
+			android:gravity="bottom" android:singleLine="true">
+		</TextView>
+		<TextView android:id="@+id/tv2" android:layout_width="wrap_content"
+			android:layout_height="25dip" android:text="@string/lib_line2"
+			android:layout_below="@+id/tv1" android:layout_toRightOf="@+id/pb"
+			android:singleLine="true">
+		</TextView>
+	</RelativeLayout>
+	<TextView android:id="@+id/hint" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:gravity="center"
+		android:text="@string/lib_hint" android:layout_below="@+id/rl2"
+		android:textSize="14sp">
+	</TextView>
+</RelativeLayout>
