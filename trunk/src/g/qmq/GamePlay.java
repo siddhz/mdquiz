@@ -45,7 +45,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE); // Hide title bar.
 
 		// TODO Some kind of switch form intent to choose XML file for the each
-		// mode.
+		// mode. 
 
 		setContentView(R.layout.time_mode);
 
