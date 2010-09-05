@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout android:id="@+id/World"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android" xmlns:myapp="http://schemas.android.com/apk/res/g.qmq"
+	android:background="@drawable/timemode_bg">
+	<RelativeLayout android:id="@+id/container"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_x="0px" android:layout_y="0px">
+		<LinearLayout android:id="@+id/midLayout"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:orientation="vertical" android:layout_centerVertical="true"
+			android:paddingLeft="10dip" android:paddingRight="10dip">
+			<Button android:id="@+id/btn_answer1" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textSize="18sp"
+				android:text="@string/btn_answer1" android:background="@drawable/btnbg"
+				android:textColor="@color/time_mode_btn_text">
+			</Button>
+			<Button android:id="@+id/btn_answer2" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textSize="18sp"
+				android:text="@string/btn_answer2" android:background="@drawable/btnbg"
+				android:textColor="@color/time_mode_btn_text"
+				android:layout_marginTop="25dip">
+			</Button>
+			<Button android:id="@+id/btn_answer3" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textSize="18sp"
+				android:text="@string/btn_answer3" android:background="@drawable/btnbg"
+				android:textColor="@color/time_mode_btn_text"
+				android:layout_marginTop="25dip">
+			</Button>
+			<Button android:id="@+id/btn_answer4" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:textSize="18sp"
+				android:text="@string/btn_answer4" android:background="@drawable/btnbg"
+				android:textColor="@color/time_mode_btn_text"
+				android:layout_marginTop="25dip">
+			</Button>
+			<ProgressBar android:id="@+id/time_pb"
+				android:layout_width="40dip" android:layout_height="40dip"></ProgressBar>
+			<TextView android:id="@+id/time_tvWait"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/mode_loading"></TextView>
+		</LinearLayout>
+		<LinearLayout android:id="@+id/topLayout"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:orientation="vertical" android:layout_alignParentTop="true"
+			android:layout_alignParentLeft="true" android:background="@drawable/top_bg">
+			<RelativeLayout android:id="@+id/widget101"
+				android:layout_width="fill_parent" android:layout_height="wrap_content">
+				<TextView android:id="@+id/status_probNum_label"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_alignParentTop="true"
+					android:layout_alignParentLeft="true" android:text="@string/status_probNum_label"
+					android:paddingLeft="10dip">
+				</TextView>
+				<TextView android:id="@+id/status_probNum"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/status_probNum"
+					android:layout_alignParentLeft="true" android:layout_below="@+id/status_probNum_label"
+					android:paddingLeft="10dip">
+				</TextView>
+
+				<TextView android:id="@+id/status_acc_label"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_alignParentTop="true" android:text="@string/status_acc_label"
+					android:layout_centerHorizontal="true">
+				</TextView>
+				<TextView android:id="@+id/status_acc"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/status_acc" android:layout_centerHorizontal="true"
+					android:layout_below="@+id/status_acc_label">
+				</TextView>
+
+				<TextView android:id="@+id/status_time_label"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/status_time_label"
+					android:layout_alignParentTop="true"
+					android:layout_alignParentRight="true" android:paddingRight="10dip">
+				</TextView>
+				<TextView android:id="@+id/status_time"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="@string/status_time" android:layout_alignParentRight="true"
+					android:layout_below="@+id/status_time_label" android:paddingRight="10dip">
+				</TextView>
+			</RelativeLayout>
+		</LinearLayout>
+		<LinearLayout android:id="@+id/botLayout"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:orientation="vertical" android:layout_alignParentBottom="true"
+			android:layout_alignParentLeft="true">
+			<!-- ADs Bottom START -->
+			<com.admob.android.ads.AdView
+				android:id="@+id/ad" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" myapp:backgroundColor="#000000"
+				myapp:primaryTextColor="#FFFFFF" myapp:secondaryTextColor="#CCCCCC" />
+			<!-- ADs Bottom END -->
+		</LinearLayout>
+	</RelativeLayout>
+</AbsoluteLayout>
+
+
+

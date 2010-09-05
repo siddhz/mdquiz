@@ -1,0 +1,11 @@
+Mode 0
+	v1 = tAcc
+	v2 = avg time
+	v3 = highest correct stack.
+	vf = final time
+
+Mode 1
+	v1 = tAcc
+	v2 = avg time
+	v3 = highest correct stack.
+	vf = final point

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/widget28"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@drawable/main_bg" xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:myapp="http://schemas.android.com/apk/res/g.qmq">
+	<LinearLayout android:id="@+id/widget29"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="vertical" android:layout_alignParentTop="true"
+		android:layout_alignParentLeft="true" android:gravity="center">
+		<ImageView android:src="@drawable/main_logo"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_marginBottom="20dip" android:layout_marginTop="20dip"></ImageView>
+	</LinearLayout>
+	<TextView android:id="@+id/side_note" android:layout_width="150dip"
+		android:layout_height="220dip" android:layout_alignParentRight="true"
+		android:layout_marginTop="45dip" android:layout_below="@+id/widget29"
+		android:background="@drawable/main_side_bg">
+	</TextView>
+	<LinearLayout android:id="@+id/widget30"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:orientation="vertical" android:layout_centerVertical="true"
+		android:layout_alignParentLeft="true" android:gravity="center">
+		<Button android:text="@string/btnNew_lable" android:id="@+id/btnNew"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/btn_main_hrev" android:textSize="19sp"
+			android:gravity="left" android:paddingTop="22dip" android:textColor="@color/mainBtn"
+			android:typeface="monospace" android:paddingLeft="8dip" />
+		<Button android:text="@string/btnSettings_lable" android:id="@+id/btnSettings"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/btn_main_hrev" android:textSize="19sp"
+			android:gravity="left" android:paddingTop="22dip" android:textColor="@color/mainBtn"
+			android:typeface="monospace" android:paddingLeft="8dip" />
+		<Button android:text="@string/btnBoard_lable" android:id="@+id/btnBoard"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/btn_main_hrev" android:textSize="19sp"
+			android:gravity="left" android:paddingTop="22dip" android:textColor="@color/mainBtn"
+			android:typeface="monospace" android:paddingLeft="8dip" />
+		<Button android:text="@string/btnExit_lable" android:id="@+id/btnExit"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/btn_main_hrev" android:textSize="19sp"
+			android:gravity="left" android:paddingTop="22dip" android:textColor="@color/mainBtn"
+			android:typeface="monospace" android:paddingLeft="8dip" />
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+		<com.admob.android.ads.AdView android:id="@+id/ad"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			myapp:keywords="music" myapp:backgroundColor="#000000"
+			myapp:primaryTextColor="#FFFFFF" myapp:secondaryTextColor="#CCCCCC" />
+	</LinearLayout>
+</RelativeLayout>

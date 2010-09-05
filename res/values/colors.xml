@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="MainBg">#ffffff</color>
+	<color name="MainTitle">#13dFF6</color>
+	<color name="mainBtn">#ffffff</color>
+
+	<color name="fileBg">#b8b8b8</color>
+	<color name="file_titleBg">#dea621</color>
+	<color name="file_titleText">#FFFFFF</color>
+	<color name="file_folderDirBg">#b8b8b8</color>
+	<color name="file_folderDirText">#000000</color>
+	<color name="file_listText">#000000</color>
+	
+	<color name="time_mode_btn_text">#c6ff00</color>
+	
+	<color name="result_acc">#FFFFFF</color>
+	<color name="result_acc_label">#FFFFFF</color>
+	<color name="result_time">#FFFFFF</color>
+	<color name="result_time_label">#FFFFFF</color>
+	<color name="result_avgTime">#FFFFFF</color>
+	<color name="result_avgTime_label">#FFFFFF</color>
+	<color name="result_fTime">#FFFFFF</color>
+	<color name="result_fTime_label">#FFFFFF</color>
+	<color name="result_fTime_hint">#999999</color>
+	<color name="result_acc_r">#FFFFFF</color>
+	<color name="result_acc_r_label">#FFFFFF</color>
+	<color name="result_acc_w">#FFFFFF</color>
+	<color name="result_acc_w_label">#FFFFFF</color>
+	
+	<color name="ol_value1">#FFFFFF</color>
+	<color name="ol_value2">#fa842e</color>
+	<color name="ol_value3">#FFFFFF</color>
+</resources>

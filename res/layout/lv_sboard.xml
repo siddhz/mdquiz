@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/widget28"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TextView android:id="@+id/list_rank" android:layout_height="wrap_content"
+		android:layout_width="40dip" android:textSize="20sp"
+		android:layout_alignParentTop="true" android:layout_alignParentLeft="true">
+	</TextView>
+	<TextView android:id="@+id/list_valuef" android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:textSize="20sp"
+		android:layout_alignParentTop="true" android:layout_centerHorizontal="true">
+	</TextView>
+	<TextView android:id="@+id/list_player" android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:textSize="20sp"
+		android:layout_alignParentRight="true" android:paddingRight="5dip">
+	</TextView>
+	<TextView android:id="@+id/list_date" android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:textSize="15sp"
+		android:layout_below="@+id/list_rank" android:layout_alignParentLeft="true">
+	</TextView>
+	<TextView android:id="@+id/list_value1" android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:textSize="15sp"
+		android:layout_below="@+id/list_date" android:layout_alignParentLeft="true">
+	</TextView>
+</RelativeLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout    
+         android:layout_width="fill_parent"    
+         xmlns:android="http://schemas.android.com/apk/res/android"    
+         android:layout_height="wrap_content"    
+         > 
+         <TableRow> 
+         <ImageView    
+               android:layout_width="wrap_content"    
+               android:layout_height="fill_parent"   
+               android:id="@+id/img" android:gravity="center_vertical">    
+         </ImageView>  
+         <TextView
+         	    
+               android:layout_height="wrap_content"    
+               android:layout_width="fill_parent"    
+               android:id="@+id/file_name"
+               android:textSize="25sp"
+               android:textColor="@color/file_listText"
+               >  
+         </TextView>  
+         </TableRow> 
+</TableLayout>

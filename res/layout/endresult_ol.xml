@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/widget28"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
+	<TextView android:id="@+id/ol_tv1" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="TextView"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true" android:visibility="gone">
+	</TextView>
+	<RelativeLayout android:id="@+id/ol_btnLayout"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<Button android:id="@+id/ol_btn1" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_alignParentTop="true"
+			android:layout_alignParentLeft="true" android:text="@string/ol_btn1"
+			android:background="@drawable/btn_main_hrev" android:gravity="left"
+			android:paddingTop="25dip" android:paddingLeft="5dip"
+			android:textColor="#FFFFFF" android:textSize="16sp"></Button>
+		<Button android:id="@+id/ol_btn2" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_alignParentTop="true"
+			android:layout_alignParentRight="true" android:text="@string/ol_btn2"
+			android:background="@drawable/btn_main" android:gravity="right"
+			android:paddingTop="25dip" android:paddingRight="5dip"
+			android:textColor="#FFFFFF" android:textSize="16sp"></Button>
+	</RelativeLayout>
+	<TextView android:id="@+id/ol_rankTitle" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:text="@string/ol_title"
+		android:textColor="#ff9876" android:textSize="20sp" android:gravity="center_horizontal"
+		android:visibility="gone">
+	</TextView>
+	<ListView android:id="@+id/ol_lv" android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:cacheColorHint="#000000">
+	</ListView>
+	<RelativeLayout android:id="@+id/RelativeLayout01"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<ProgressBar android:id="@+id/ol_pb" android:layout_width="80dip"
+			android:layout_height="80dip" android:layout_centerHorizontal="true"></ProgressBar>
+		<TextView android:id="@+id/ol_wait" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="Fetching Global Score Ranking"
+			android:layout_centerHorizontal="true" android:layout_centerVertical="true">
+		</TextView>
+	</RelativeLayout>
+
+</LinearLayout>
