@@ -7,7 +7,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
-import android.util.Log;
 
 public class Prefs extends PreferenceActivity {
 	private SharedPreferences prefs = null;
