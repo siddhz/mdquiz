@@ -78,13 +78,6 @@ public class MusicQuiz extends Activity implements OnClickListener,
 	}
 
 	private void animCtrl(boolean out) {
-		// animToolBox sAnim = new animToolBox(0,1,0,1);
-		// sAnim.setScaleMode(Animation.RELATIVE_TO_SELF);
-		// sAnim.setDelate(2000);
-		// sAnim.setTime(2000);
-		// sAnim.setS(0.5f, 0.5f);
-		// sAnim.animScale(tv);
-
 		animToolBox anim = new animToolBox('l', out);
 		anim.setTime(1500);
 		long delate = 0;
@@ -206,9 +199,9 @@ public class MusicQuiz extends Activity implements OnClickListener,
 	@Override
 	public boolean onTouch(View v, MotionEvent e) {
 		if (e.getAction() == MotionEvent.ACTION_DOWN) {
-			v.setBackgroundResource(R.drawable.btn_main_hrev_c); // 按下的图片对应pressed
+			v.setBackgroundResource(R.drawable.btn_main_hrev_c);
 		} else if (e.getAction() == MotionEvent.ACTION_UP) {
-			v.setBackgroundResource(R.drawable.btn_main_hrev); // 常态下的图片对应normal
+			v.setBackgroundResource(R.drawable.btn_main_hrev);
 		}
 		return false;
 	}
