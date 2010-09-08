@@ -36,7 +36,8 @@ import android.widget.Toast;
 
 public class GamePlay extends Activity implements OnTouchListener,
 		OnClickListener {
-	private final static int maxError = 10;
+	private final static int MAX_ERROR = 10; //Number of errors can occur before stop.
+	private final static char MODE_CODE_TIME = 'T'; //Timed mode.
 
 	/** Called when the activity is first created. */
 	@Override
@@ -45,7 +46,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE); // Hide title bar.
 
 		// TODO Some kind of switch form intent to choose XML file for the each
-		// mode. 
+		// mode.
 
 		setContentView(R.layout.time_mode);
 
@@ -84,7 +85,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private void readyStage() {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		// Pregame check
-		if (mFiles.size() - 2 > gLength) {
+		if (mFiles.size() - 4 > gLength) {
 			dialog.setIcon(R.drawable.icon_common);
 			dialog.setTitle("Let's Rock."); // TODO move to XML
 			dialog.setMessage(R.string.tMode_startMsg);
@@ -108,7 +109,22 @@ public class GamePlay extends Activity implements OnTouchListener,
 			dialog.setIcon(R.drawable.icon_question);
 			dialog.setTitle("Warning!"); // TODO move to XML
 			dialog.setMessage(R.string.warn_notEnoughSound);
-			dialog.setPositiveButton(R.string.btn_continue, null);
+			dialog.setPositiveButton(R.string.btn_continue,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							questionNum = 0;
+							played = new int[mFiles.size()];
+
+							// Start time counting.
+							timeSwitch = false;
+							timer = new Timer(true);
+							timer.schedule(task, 1000, 100);
+
+							questionGiver();
+						}
+
+					});
 			dialog.setNegativeButton(R.string.btn_quit,
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -141,7 +157,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		do {
 			c[0] = rng.nextInt(to);
 		} while (c[0] == theOne);
-		do { 
+		do {
 			c[1] = rng.nextInt(to);
 		} while (c[1] == theOne || c[1] == c[0]);
 		do {
@@ -163,7 +179,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 			handler.sendEmptyMessage(3);
 			return;
 		}
-		
+
 		// Update Question number.
 		questionNum++;
 		TextView tv = (TextView) findViewById(R.id.status_probNum);
@@ -237,16 +253,19 @@ public class GamePlay extends Activity implements OnTouchListener,
 			questionGiver();
 			return;
 		}
-
+		if (mp.isPlaying() && direction == 'o')
+			mp.stop();
 		AnimationListener animListener = new AnimationListener() {
 
 			@Override
 			public void onAnimationEnd(Animation a) {
 				if (direction == 'o') {
 					questionGiver(); // Next question.
+					timeSwitch = false;
 				}
 				if (direction == 'i') {
 					timeSwitch = true;
+					mp.start();
 				}
 			}
 
@@ -256,36 +275,29 @@ public class GamePlay extends Activity implements OnTouchListener,
 
 			@Override
 			public void onAnimationStart(Animation a) {
-				if (mp.isPlaying() && direction == 'o')
-					mp.stop();
-				if (direction == 'i') {
-					mp.start();
-				}
 			}
 
 		};
-
-		Animation anim_A = null, anim_B = null;
+		Animation anim = null;
+		Animation anim2 = null;
 		if (direction == 'o') {
-			anim_A = new TranslateAnimation(0, screenWidth, 0, 0);
-			anim_B = new TranslateAnimation(0, -screenWidth, 0, 0);
+			anim = new TranslateAnimation(0, screenWidth, 0, 0);
+			anim2 = new TranslateAnimation(0, -screenWidth, 0, 0);
 		} else {
-			anim_A = new TranslateAnimation(screenWidth, 0, 0, 0);
-			anim_B = new TranslateAnimation(-screenWidth, 0, 0, 0);
+			anim = new TranslateAnimation(screenWidth, 0, 0, 0);
+			anim2 = new TranslateAnimation(-screenWidth, 0, 0, 0);
 		}
-		anim_A.setInterpolator(new AccelerateDecelerateInterpolator());
-		anim_A.setDuration(800);
-		anim_A.setFillAfter(true);
-		anim_B.setInterpolator(new AccelerateDecelerateInterpolator());
-		anim_B.setDuration(800);
-		anim_B.setFillAfter(true);
-
-		btn[0].startAnimation(anim_A);
-		btn[1].startAnimation(anim_B);
-		btn[2].startAnimation(anim_A);
-
-		anim_B.setAnimationListener(animListener);
-		btn[3].startAnimation(anim_B);
+		anim.setInterpolator(new AccelerateDecelerateInterpolator());
+		anim.setDuration(800);
+		anim.setFillAfter(true);
+		anim2.setInterpolator(new AccelerateDecelerateInterpolator());
+		anim2.setDuration(800);
+		anim2.setFillAfter(true);
+		btn[0].startAnimation(anim);
+		btn[1].startAnimation(anim2);
+		btn[2].startAnimation(anim);
+		anim2.setAnimationListener(animListener);
+		btn[3].startAnimation(anim2);
 
 	}
 
@@ -313,12 +325,17 @@ public class GamePlay extends Activity implements OnTouchListener,
 							Intent i = new Intent(GamePlay.this,
 									endResult.class);
 							Bundle bundle = new Bundle();
-							bundle.putDouble("time", timePass / 10.0);
-							// bundle.putInt("acc_r", acc_r);
-							// bundle.putInt("acc_w", acc_w);
-							// bundle.putInt("hStack", hStack);
-							bundle.putInt("mode", mode);
-							bundle.putInt("gLength", gLength);
+							switch(mode){
+							case MODE_CODE_TIME:
+								timeBundle(bundle);
+								break;
+							}
+//							bundle.putDouble("time", timePass / 10.0);
+//							// bundle.putInt("acc_r", acc_r);
+//							// bundle.putInt("acc_w", acc_w);
+//							// bundle.putInt("hStack", hStack);
+//							bundle.putInt("mode", mode);
+//							bundle.putInt("gLength", gLength);
 							i.putExtras(bundle);
 							startActivity(i);
 							// Close current activity.
@@ -361,7 +378,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 			break;
 		}
 	}
-	
+
 	public void onPause() {
 		super.onPause();
 		timeSwitch = false;
@@ -428,7 +445,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 			// Error Case
 			case 3:// Error on giving question.
 				errorCount++;
-				if (errorCount >= maxError) {
+				if (errorCount >= MAX_ERROR) {
 					// TODO move below string to XML
 					endGame(false,
 							"Music not found try refreash the music library in settings.");
@@ -466,6 +483,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		String tMsg = "!";
 
 		if (a == btnRight) {
+			timeSwitch = false;
 			tMsg = "Correct!"; // TODO move to XML
 			rCount++;
 			stack++;
@@ -483,6 +501,20 @@ public class GamePlay extends Activity implements OnTouchListener,
 			timePass += tPenalty;
 		}
 		Toast.makeText(this, tMsg, 0).show();
+	}
+	
+	private void timeBundle(Bundle b){
+		String acc = String.valueOf(Math.round(rCount/(rCount+wCount)*100));
+		//First place must be mode code;
+		String[] resultData = new String[]{
+				String.valueOf(MODE_CODE_TIME),
+				"Total Time",String.valueOf(timePass),
+				"Total Questions",String.valueOf(questionNum),
+				"Correct Answers",String.valueOf(rCount),
+				"Incorrect Answers",String.valueOf(wCount),
+				"Accuracy",acc
+				};
+		b.putStringArray("resultData", resultData);
 	}
 
 	/*

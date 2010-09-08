@@ -398,6 +398,7 @@ public class ModeTime extends Activity implements OnClickListener,
 									endResult.class);
 							Bundle bundle = new Bundle();
 							bundle.putDouble("time", time / 10.0);
+							
 							bundle.putInt("acc_r", acc_r);
 							bundle.putInt("acc_w", acc_w);
 							bundle.putInt("hStack", hStack);
