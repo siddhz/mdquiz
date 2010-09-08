@@ -1,13 +1,10 @@
 package g.qmq;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,13 +34,13 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		 * Country and Language List.
 		 * http://developer.android.com/reference/java/util/Locale.html
 		 */
-		String languageToLoad = "en";
-		Locale locale = new Locale(languageToLoad);
-		Locale.setDefault(locale);
-		Configuration config = new Configuration();
-		config.locale = locale;		
-		getBaseContext().getResources().updateConfiguration(config,
-				getBaseContext().getResources().getDisplayMetrics());
+//		String languageToLoad = "en";
+//		Locale locale = new Locale(languageToLoad);
+//		Locale.setDefault(locale);
+//		Configuration config = new Configuration();
+//		config.locale = locale;		
+//		getBaseContext().getResources().updateConfiguration(config,
+//				getBaseContext().getResources().getDisplayMetrics());
 
 		setContentView(R.layout.main);
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
