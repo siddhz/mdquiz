@@ -18,6 +18,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 public class comFun {
 	public comFun() {

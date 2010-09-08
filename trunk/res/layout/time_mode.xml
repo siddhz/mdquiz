@@ -13,25 +13,25 @@
 			<Button android:id="@+id/btn_answer1" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:textSize="18sp"
 				android:text="@string/btn_answer1" android:background="@drawable/btnbg"
-				android:textColor="@color/time_mode_btn_text">
+				android:textColor="@color/time_mode_btn_text" android:visibility="invisible">
 			</Button>
 			<Button android:id="@+id/btn_answer2" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:textSize="18sp"
 				android:text="@string/btn_answer2" android:background="@drawable/btnbg"
 				android:textColor="@color/time_mode_btn_text"
-				android:layout_marginTop="25dip">
+				android:layout_marginTop="25dip" android:visibility="invisible">
 			</Button>
 			<Button android:id="@+id/btn_answer3" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:textSize="18sp"
 				android:text="@string/btn_answer3" android:background="@drawable/btnbg"
 				android:textColor="@color/time_mode_btn_text"
-				android:layout_marginTop="25dip">
+				android:layout_marginTop="25dip" android:visibility="invisible">
 			</Button>
 			<Button android:id="@+id/btn_answer4" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:textSize="18sp"
 				android:text="@string/btn_answer4" android:background="@drawable/btnbg"
 				android:textColor="@color/time_mode_btn_text"
-				android:layout_marginTop="25dip">
+				android:layout_marginTop="25dip" android:visibility="invisible">
 			</Button>
 			<ProgressBar android:id="@+id/time_pb"
 				android:layout_width="40dip" android:layout_height="40dip"></ProgressBar>
