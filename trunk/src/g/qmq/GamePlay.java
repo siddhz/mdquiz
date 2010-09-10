@@ -20,6 +20,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -323,7 +324,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 					public void onClick(DialogInterface dialog, int whichButton) {
 						if (isSuccess) {
 							Intent i = new Intent(GamePlay.this,
-									endResult.class);
+									Result.class);
 							Bundle bundle = new Bundle();
 							switch(mode){
 							case MODE_CODE_TIME:
@@ -515,6 +516,30 @@ public class GamePlay extends Activity implements OnTouchListener,
 				"Accuracy",acc
 				};
 		b.putStringArray("resultData", resultData);
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent e) {
+		switch(keyCode){
+		case KeyEvent.KEYCODE_0:
+			Intent i = new Intent(GamePlay.this,
+					Result.class);
+			Random rd = new Random();
+			Bundle bundle = new Bundle();
+			String[] test = new String[]{
+					String.valueOf(MODE_CODE_TIME),
+					"Time", String.valueOf(rd.nextInt(100)),
+					"Total","100",
+					"Corrects","5",
+					"Incorrects","5",
+					"","50"
+			};
+			bundle.putStringArray("resultData", test);
+			i.putExtra("resultData", bundle);
+			startActivity(i);
+			break;
+		}
+	    return false;
 	}
 
 	/*

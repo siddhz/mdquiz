@@ -27,6 +27,9 @@
 		<activity android:name=".endResult"
 			android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+			<activity android:name=".Result"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
 		<activity android:name=".sBoard" android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
 		<activity android:name=".sBoardView"
