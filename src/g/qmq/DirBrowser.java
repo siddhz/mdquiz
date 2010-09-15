@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -24,7 +25,8 @@ public class DirBrowser extends Activity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
+                WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 		setContentView(R.layout.file_layout);
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		currentDir = prefs.getString("music_dir", "/sdcard/");
