@@ -9,29 +9,29 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class DirBrowser extends Activity implements OnClickListener {
 	private String currentDir = "/sdcard/";
 	private SharedPreferences prefs = null;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-                WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+				WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 		setContentView(R.layout.file_layout);
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		currentDir = prefs.getString("music_dir", "/sdcard/");
 		fill(new File(currentDir).listFiles());
-		
+
 		View btnSelectDir = findViewById(R.id.btnSelectDir);
 		btnSelectDir.setOnClickListener(this);
 	}
@@ -42,36 +42,39 @@ public class DirBrowser extends Activity implements OnClickListener {
 		users.clear();
 		TextView dirTextView = (TextView) findViewById(R.id.file_folderName);
 		dirTextView.setText(currentDir);
-		if(!currentDir.contentEquals("/")){
+		if (!currentDir.contentEquals("/")) {
 			HashMap<String, Object> user = new HashMap<String, Object>();
 			user.put("img", R.drawable.foler);
 			user.put("folder", "...");
 			users.add(user);
 		}
+
 		for (File file : files) {
-			String[] st = splitString(file.getPath(),"/");
-			String isfolder = "";
-			int icon = R.drawable.foler;
-			if(file.isDirectory()){
-				isfolder = "/";
-				HashMap<String, Object> user = new HashMap<String, Object>();
-				user.put("img", icon);
-				user.put("folder", st[st.length-1]+isfolder);
-				users.add(user);	
+			if (file.canRead() && !file.isHidden()) {
+				String[] st = splitString(file.getPath(), "/");
+				String isfolder = "";
+				int icon = R.drawable.foler;
+				if (file.isDirectory()) {
+					isfolder = "/";
+					HashMap<String, Object> user = new HashMap<String, Object>();
+					user.put("img", icon);
+					user.put("folder", st[st.length - 1] + isfolder);
+					users.add(user);
+				}
 			}
-//			if(isMusicFile(file.getPath())){
-//				icon = R.drawable.music_file;
-//			}else if(isfolder == ""){
-//				icon = R.drawable.other_file;
-//			}
+			// if(isMusicFile(file.getPath())){
+			// icon = R.drawable.music_file;
+			// }else if(isfolder == ""){
+			// icon = R.drawable.other_file;
+			// }
 
 		}
 
 		SimpleAdapter saImageItems = new SimpleAdapter(this, users,// 数据来源
 				R.layout.file_view,// 每一个user xml 相当ListView的一个组件
-				new String[] {"img", "folder"},
+				new String[] { "img", "folder" },
 				// 分别对应view 的id
-				new int[] { R.id.img , R.id.file_name});
+				new int[] { R.id.img, R.id.file_name });
 		// 获取listview
 		((ListView) findViewById(R.id.users)).setAdapter(saImageItems);
 		((ListView) findViewById(R.id.users))
@@ -80,16 +83,18 @@ public class DirBrowser extends Activity implements OnClickListener {
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
-						String selectDir = currentDir + (String) users.get(arg2).get("folder");
+						String selectDir = currentDir
+								+ (String) users.get(arg2).get("folder");
 						File file = new File(selectDir);
-						if(selectDir.endsWith("/...")){
+						if (selectDir.endsWith("/...")) {
 							selectDir = file.getParent();
 							File file1 = new File(selectDir);
 							selectDir = file1.getParent();
-							if(!selectDir.endsWith("/")) selectDir = selectDir + "/";
+							if (!selectDir.endsWith("/"))
+								selectDir = selectDir + "/";
 						}
-						if(file.isDirectory() || selectDir.endsWith("/")){
-							currentDir = selectDir ;
+						if (file.isDirectory() || selectDir.endsWith("/")) {
+							currentDir = selectDir;
 							fill(new File(currentDir).listFiles());
 							Log.d("curDir", currentDir);
 						}
@@ -97,13 +102,14 @@ public class DirBrowser extends Activity implements OnClickListener {
 
 				});
 	}
-	
-//	private boolean isMusicFile(String path) {
-//		if(path.endsWith(".mp3") || path.endsWith(".wmv") || path.endsWith(".wav"))
-//			return true;
-//		return false;
-//	}
-	
+
+	// private boolean isMusicFile(String path) {
+	// if(path.endsWith(".mp3") || path.endsWith(".wmv") ||
+	// path.endsWith(".wav"))
+	// return true;
+	// return false;
+	// }
+
 	public String[] splitString(String str, String sdelimiter) {
 		String[] array = str.split(sdelimiter);
 		return array;
@@ -111,16 +117,16 @@ public class DirBrowser extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
+		switch (v.getId()) {
 		case R.id.btnSelectDir:
 			prefs = getSharedPreferences("g.qmq_preferences", 0);
-			SharedPreferences.Editor editor = prefs.edit();	
+			SharedPreferences.Editor editor = prefs.edit();
 			editor.putString("music_dir", currentDir);
 			editor.commit();
 			Log.d("Prefs", prefs.getString("music_dir", "None"));
 			finish();
 			break;
 		}
-		
+
 	}
 }
