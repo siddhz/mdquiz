@@ -167,6 +167,7 @@
 	<string name="config_subFolder">Include Sub-Folders</string>
 	<string name="config_subFolder_summOn">Search Music in Sub-Folders.</string>
 	<string name="config_subFolder_summOff">DO NOT Search Music in Sub-Folders.</string>
+	<string name="dir_title">Choose your music folder</string>
 	<!-- Config END -->
 	
 	<!-- 

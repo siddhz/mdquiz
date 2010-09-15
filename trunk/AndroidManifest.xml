@@ -19,16 +19,12 @@
 			android:theme="@android:style/Theme.Dialog" android:icon="@drawable/icon"></activity>
 		<activity android:name=".Prefs" android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-		<activity android:name=".DirBrowser"
-			android:screenOrientation="portrait"
-			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
 		<activity android:name=".ModeTime" android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
 		<activity android:name=".endResult"
 			android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
-			<activity android:name=".Result"
-			android:screenOrientation="portrait"
+		<activity android:name=".Result" android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
 		<activity android:name=".sBoard" android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
@@ -46,6 +42,9 @@
 		<activity android:name=".endResult_OL"
 			android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+		<activity android:name=".DirBrowser"
+			android:screenOrientation="portrait" android:label="@string/dir_title"
+			android:theme="@android:style/Theme.Dialog"></activity>
 		<activity android:name=".libBuilder" android:label="@string/lib_title"
 			android:theme="@android:style/Theme.Dialog" android:icon="@drawable/icon"></activity>
 
