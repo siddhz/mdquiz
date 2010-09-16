@@ -50,15 +50,17 @@ public class DirBrowser extends Activity implements OnClickListener {
 		}
 
 		for (File file : files) {
-			String[] st = splitString(file.getPath(), "/");
-			String isfolder = "";
-			int icon = R.drawable.foler;
-			if (file.isDirectory()) {
-				isfolder = "/";
-				HashMap<String, Object> user = new HashMap<String, Object>();
-				user.put("img", icon);
-				user.put("folder", st[st.length - 1] + isfolder);
-				users.add(user);
+			if (file.canRead() && !file.isHidden()) {
+				String[] st = splitString(file.getPath(), "/");
+				String isfolder = "";
+				int icon = R.drawable.foler;
+				if (file.isDirectory()) {
+					isfolder = "/";
+					HashMap<String, Object> user = new HashMap<String, Object>();
+					user.put("img", icon);
+					user.put("folder", st[st.length - 1] + isfolder);
+					users.add(user);
+				}
 			}
 			// if(isMusicFile(file.getPath())){
 			// icon = R.drawable.music_file;
