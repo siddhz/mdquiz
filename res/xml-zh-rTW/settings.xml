@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<CheckBoxPreference android:key="repeat"
-		android:title="重複播放歌曲" android:summaryOn="允許重複播放歌曲"
-		android:summaryOff="不允許重複播放歌曲" android:defaultValue="false"></CheckBoxPreference>
-	<CheckBoxPreference android:key="id3tag"
-		android:title="使用ID3作為主要來源" android:summaryOn="將首先使用ID3 Tag(如果存在的話)"
-		android:summaryOff="不使用ID3 Tag." android:defaultValue="false"></CheckBoxPreference>
-	<CheckBoxPreference android:key="anim"
-		android:title="是否顯示動畫效果" android:summaryOn="顯示所有動畫效果.(需要更多的CPU)"
-		android:summaryOff="關閉所有動畫效果. (節省CPU)" android:defaultValue="true"></CheckBoxPreference>
 	<EditTextPreference android:key="playerName"
-		android:title="輸入玩家名" android:summary="請輸入您的名稱(將會應用於線上排行)"
-		android:dialogTitle="輸入您的名稱(支持中文名稱)" android:defaultValue="PlayerRock" />
+		android:title="玩家名稱" android:summary="請輸入您的名稱" android:dialogTitle="輸入您的名稱"
+		android:defaultValue="搖滾玩家" />
+	<CheckBoxPreference android:key="force_en"
+		android:title="Force English language."
+		android:summaryOn="Force display in English.(Restart)" android:summaryOff="Display language base on system locale setting.(Restart)"
+		android:defaultValue="false"></CheckBoxPreference>
+	<CheckBoxPreference android:key="repeat"
+		android:title="允許重複" android:summaryOn="允許歌曲重複播放." android:summaryOff="不允許歌曲重複播放"
+		android:defaultValue="false">
+	</CheckBoxPreference>
+	<CheckBoxPreference android:key="id3tag"
+		android:title="使用ID3標籤" android:summaryOn="使用ID3標籤.(如果存在)"
+		android:summaryOff="不使用ID3標籤(使用文件名)" android:defaultValue="false">
+	</CheckBoxPreference>
+	<CheckBoxPreference android:key="anim"
+		android:title="顯示動畫效果" android:summaryOn="顯示全部動畫效果.(需要更多的CPU)"
+		android:summaryOff="不顯示動畫效果.(節省CPU)" android:defaultValue="true">
+	</CheckBoxPreference>
 
-	<PreferenceCategory android:title="時間模式設定"
+	<PreferenceCategory android:title="計時模式設置"
 		android:key="pref_tm">
 		<ListPreference android:key="prefs_length"
-			android:title="試題數量" android:summary="在時間模式中的試題數量" android:entries="@array/entries_list_preference"
+			android:title="問題數量" android:summary="時間模式中問題的數量" android:entries="@array/entries_list_preference"
 			android:entryValues="@array/entryvalues_list_preference"
-			android:dialogTitle="選擇試圖數量" android:defaultValue="20" />
+			android:dialogTitle="Select Number of Question" android:defaultValue="20" />
 	</PreferenceCategory>
 </PreferenceScreen>

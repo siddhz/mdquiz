@@ -517,7 +517,14 @@ public class GamePlay extends Activity implements OnTouchListener,
 				};
 		b.putStringArray("resultData", resultData);
 	}
-	
+
+	/*
+	 * Time Mode Core Function ******************
+	 */
+
+	/*
+	 * TESTING
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent e) {
 		switch(keyCode){
@@ -541,11 +548,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 		}
 	    return false;
 	}
-
 	/*
-	 * Time Mode Core Function ******************
+	 * TESTING ***
 	 */
-
+	
 	/* Common fields */
 	private int screenWidth = 320, screenHeight = 480, gLength, timePass = 0,
 			mode, questionNum = 0, btnRight, errorCount = 0, rCount, wCount;
