@@ -1,24 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<CheckBoxPreference android:key="repeat"
-		android:title="Allow repeated songs." android:summaryOn="Songs may repeat."
-		android:summaryOff="Songs will NOT repeat." android:defaultValue="false"></CheckBoxPreference>
-	<CheckBoxPreference android:key="id3tag"
-		android:title="Use ID3 as primary source." android:summaryOn="Will use ID3 Tag(if exists)."
-		android:summaryOff="Will NOT use ID3 Tag." android:defaultValue="false"></CheckBoxPreference>
-	<CheckBoxPreference android:key="anim"
-		android:title="Show animations during game." android:summaryOn="All animations will be played.(This will consume more CPU)"
-		android:summaryOff="Animations is OFF.(For lower rated CPUs)" android:defaultValue="true"></CheckBoxPreference>
-	<EditTextPreference android:key="playerName"
-		android:title="Enter Your Name" android:summary="Please enter your name"
-		android:dialogTitle="Enter Your Name(English Only)"
+	<EditTextPreference 
+		android:key="playerName"
+		android:title="Enter Your Name" 
+		android:summary="Please enter your name"
+		android:dialogTitle="Enter Your Name" 
 		android:defaultValue="PlayerRock" />
+	<CheckBoxPreference 
+		android:key="force_en"
+		android:title="Force English language." 
+		android:summaryOn="Force display in English.(Restart)"
+		android:summaryOff="Display language base on system locale setting.(Restart)" 
+		android:defaultValue="false">
+	</CheckBoxPreference>
+	<CheckBoxPreference 
+		android:key="repeat"
+		android:title="Allow repeated songs." 
+		android:summaryOn="Songs may repeat."
+		android:summaryOff="Songs will NOT repeat." 
+		android:defaultValue="false">
+	</CheckBoxPreference>
+	<CheckBoxPreference 
+		android:key="id3tag"
+		android:title="Use ID3 as primary source." 
+		android:summaryOn="Will use ID3 Tag(if exists)."
+		android:summaryOff="Will NOT use ID3 Tag." 
+		android:defaultValue="false">
+	</CheckBoxPreference>
+	<CheckBoxPreference 
+		android:key="anim"
+		android:title="Show animations during game."
+		android:summaryOn="All animations will be played.(This will consume more CPU)"
+		android:summaryOff="Animations is OFF.(For lower rated CPUs)"
+		android:defaultValue="true">
+	</CheckBoxPreference>
 
-	<PreferenceCategory android:title="Time Mode Preferences"
+	<PreferenceCategory 
+		android:title="Time Mode Preferences"
 		android:key="pref_tm">
-		<ListPreference android:key="prefs_length"
-			android:title="Number of Questions" android:summary="Game length druing time mode."
-			android:entries="@array/entries_list_preference" android:entryValues="@array/entryvalues_list_preference"
-			android:dialogTitle="Select Number of Question" android:defaultValue="20" />
+		<ListPreference 
+			android:key="prefs_length"
+			android:title="Number of Questions" 
+			android:summary="Game length druing time mode."
+			android:entries="@array/entries_list_preference" 
+			android:entryValues="@array/entryvalues_list_preference"
+			android:dialogTitle="Select Number of Question" 
+			android:defaultValue="20" />
 	</PreferenceCategory>
 </PreferenceScreen>
