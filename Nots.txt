@@ -1,11 +1,14 @@
-Mode 0
-	v1 = tAcc
-	v2 = avg time
-	v3 = highest correct stack.
-	vf = final time
+结束过程
+传送 resultData[] = Field Name + Value
 
-Mode 1
-	v1 = tAcc
-	v2 = avg time
-	v3 = highest correct stack.
-	vf = final point
+
+Mode 0
+	(0)[0] = UID
+	(0)[1] = NAME
+	(0)[2] = DATE
+	(1)[0] = TIME_FIELD
+	(1)[1] = TIME_VALUE
+	(1)[2] = TIME_UNIT (?)
+	[4] = 
+	[5] = 
+	

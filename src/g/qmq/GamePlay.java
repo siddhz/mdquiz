@@ -535,11 +535,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 			Bundle bundle = new Bundle();
 			String[] test = new String[]{
 					String.valueOf(MODE_CODE_TIME),
-					"Time", String.valueOf(rd.nextInt(100)),
-					"Total","100",
-					"Corrects","5",
-					"Incorrects","5",
-					"","50"
+					"Time", String.valueOf(rd.nextInt(100)),"S",
+					"Total","100", "",
+					"Corrects","5", "",
+					"Incorrects","5", ""
 			};
 			bundle.putStringArray("resultData", test);
 			i.putExtra("resultData", bundle);
