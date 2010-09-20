@@ -164,7 +164,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 			break;
 		case 4:
-			startActivity(new Intent(this, GamePlay.class));
+			startActivity(new Intent(this, Result.class));
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 			break;
 		}
