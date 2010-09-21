@@ -51,13 +51,10 @@ public class Result extends Activity {
 		newDL.add(newStr);
 		data.add(newDL);
 		String xmlStr = makeXML(data);
-		System.out.println(xmlStr);
+
 		writeXML("test.xml",xmlStr);
 		ReadXML("test.xml", data);
 
-		System.out.println(data.get(0).get(1)[1]);
-		System.out.println(data.get(1).get(1)[1]);
-		System.out.println(data.get(2).get(1)[1]);
 	}
 
 	private boolean ReadXML(String FileName, ArrayList<ArrayList<String[]>> data) {

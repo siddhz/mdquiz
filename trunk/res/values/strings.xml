@@ -176,8 +176,8 @@
 	<string name="lib_title">Refresh music library</string>
 	<string name="lib_line1">Initializing</string>
 	<string name="lib_line2">Please Wait</string>
-	<string name="lib_success">Music Library Successfully Builded</string>
+	<string name="lib_success">Done! Success!</string>
 	<string name="lib_problem">Opps... Problem Occur</string>
 	<string name="lib_defSum">Click me to build library.</string>
-	<string name="lib_hint">This may take some time.</string>
+	<string name="lib_hint">Please wait...</string>
 </resources>

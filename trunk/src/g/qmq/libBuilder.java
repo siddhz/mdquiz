@@ -24,6 +24,7 @@ import android.util.Log;
 import android.util.Xml;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class libBuilder extends Activity {
 	private Thread xmlThd = new Thread(new Runnable() {
@@ -39,15 +40,20 @@ public class libBuilder extends Activity {
 			switch (msg.what) {
 			case 0: // Fail
 				tv1.setText(R.string.lib_problem);
+				
+				toast.setText(errMsg);
+				toast.show();
 				tv2.setText(errMsg);
 				break;
 			case 1:
-				String strID3 = (id3tag)?"On":"Off";
+				// String strID3 = (id3tag)?"On":"Off";
 				tv1.setText(R.string.lib_success);
 				SharedPreferences.Editor editor = prefs.edit();
 				editor.putString("music_lib", "Total: " + total + "  "
-						+ "Date: " + date + " ID3: "+ strID3);
+						+ "Date: " + date);
 				editor.commit();
+				toast.setText(R.string.lib_success);
+				toast.show();
 				finish();
 				break;
 			case 2:
@@ -61,7 +67,7 @@ public class libBuilder extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-                WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+				WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 		setContentView(R.layout.lib_builder);
 
 		tv1 = (TextView) findViewById(R.id.tv1);
@@ -74,10 +80,10 @@ public class libBuilder extends Activity {
 		String xmlstr, path = "songlist.xml";
 		ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
-		id3tag = prefs.getBoolean("id3tag", false);
+		// id3tag = prefs.getBoolean("id3tag", false);
 		comFun cFun = new comFun();
-		cFun.getAllMusicFiles(prefs.getString("music_dir", "/sdcard/"), prefs
-				.getBoolean("music_searchSubFolder", true), data);
+		cFun.getAllMusicFiles(prefs.getString("music_dir", "/sdcard/"),
+				prefs.getBoolean("music_searchSubFolder", true), data);
 
 		/*
 		 * Create XML content as string.
@@ -97,22 +103,23 @@ public class libBuilder extends Activity {
 
 			serializer.attribute("", "total", String.valueOf(total));
 			serializer.attribute("", "date", date);
-			serializer.attribute("", "id3", String.valueOf(id3tag));
+//			serializer.attribute("", "id3", String.valueOf(id3tag));
+			serializer.attribute("", "id3", "true");
 			for (int i = 0; i < total; i++) {
 				serializer.startTag("", "song");
-				serializer.attribute("", "name", (String) data.get(i).get(
-						"mFile_name"));
+				serializer.attribute("", "name",
+						(String) data.get(i).get("mFile_name"));
 				dir = (String) data.get(i).get("mFile_path");
 
-				if (id3tag) {
-					AudioFile af = AudioFileIO.read(new File(dir));
-					String title = af.getTag().getTitle().toString();
-					String artist = af.getTag().getArtist().toString();
-					serializer.attribute("", "id3_title", title.substring(1,
-							title.length() - 1));
-					serializer.attribute("", "id3_artist", artist.substring(1,
-							artist.length() - 1));
-				}
+				// if (id3tag) {
+				AudioFile af = AudioFileIO.read(new File(dir));
+				String title = af.getTag().getTitle().toString();
+				String artist = af.getTag().getArtist().toString();
+				serializer.attribute("", "id3_title",
+						title.substring(1, title.length() - 1));
+				serializer.attribute("", "id3_artist",
+						artist.substring(1, artist.length() - 1));
+				// }
 
 				serializer.text(dir);
 				serializer.endTag("", "song");
@@ -155,5 +162,6 @@ public class libBuilder extends Activity {
 	private TextView tv1, tv2;
 	private String errMsg, date, dir;
 	private int total, now;
-	private boolean id3tag;
+	private Toast toast = new Toast(null);
+//	private boolean id3tag;
 }

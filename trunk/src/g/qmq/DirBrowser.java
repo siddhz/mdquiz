@@ -18,7 +18,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class DirBrowser extends Activity implements OnClickListener {
-	private String currentDir = "/sdcard/";
+	private String currentDir;
 	private SharedPreferences prefs = null;
 
 	/** Called when the activity is first created. */
