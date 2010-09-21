@@ -41,8 +41,8 @@ public class libBuilder extends Activity {
 			case 0: // Fail
 				tv1.setText(R.string.lib_problem);
 				
-				toast.setText(errMsg);
-				toast.show();
+				Toast.makeText(libBuilder.this, errMsg, Toast.LENGTH_LONG).show();
+				
 				tv2.setText(errMsg);
 				break;
 			case 1:
@@ -52,8 +52,7 @@ public class libBuilder extends Activity {
 				editor.putString("music_lib", "Total: " + total + "  "
 						+ "Date: " + date);
 				editor.commit();
-				toast.setText(R.string.lib_success);
-				toast.show();
+				Toast.makeText(libBuilder.this, R.string.lib_success, Toast.LENGTH_LONG).show();
 				finish();
 				break;
 			case 2:
@@ -162,6 +161,5 @@ public class libBuilder extends Activity {
 	private TextView tv1, tv2;
 	private String errMsg, date, dir;
 	private int total, now;
-	private Toast toast = new Toast(null);
 //	private boolean id3tag;
 }
