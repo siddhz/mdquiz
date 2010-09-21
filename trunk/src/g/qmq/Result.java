@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,17 +43,22 @@ public class Result extends Activity {
 			e.printStackTrace();
 		}
 
-		ReadXML("exp.xml", data);
-		sortList(data, 0, true);
-		ArrayList<String[]> newDL = new ArrayList<String[]>();
-		String[] newStr = new String[]{"125","ROCKNAME","2010-10-21:23:11:23"};
-		newDL.add(newStr);
-		newStr = new String[]{"Time","12.5","s"};
-		newDL.add(newStr);
-		data.add(newDL);
-		String xmlStr = makeXML(data);
+		Random rd = new Random();
 
-		writeXML("test.xml",xmlStr);
+		ReadXML("test.xml", data);
+		
+//		for (int i = 0; i < 10; i++) {
+			ArrayList<String[]> newDL = new ArrayList<String[]>();
+			String[] newStr = new String[] { "125", "ROCKNAME",
+					"2010-10-21:23:11:23" };
+			newDL.add(newStr);
+			newStr = new String[] { "Time", rd.nextDouble() + "", "s" };
+			newDL.add(newStr);
+			data.add(newDL);
+//		}
+		sortList(data, 1, true);
+		String xmlStr = makeXML(data);
+		writeXML("test.xml", xmlStr);
 		ReadXML("test.xml", data);
 
 	}
@@ -105,7 +111,7 @@ public class Result extends Activity {
 			return false;
 		} catch (IOException e) {
 			return false;
-		}catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		} finally {
 			doc = null;
@@ -122,7 +128,7 @@ public class Result extends Activity {
 			serializer.setOutput(writer);
 			// <?xml version=¡±1.0¡å encoding=¡±UTF-8¡å standalone=¡±yes¡±?>
 			serializer.startDocument("UTF-8", true);
-			serializer.startTag(null, "source");
+			serializer.startTag("", "source");
 			for (int i = 0; i < MAX_ENTRY && i < source.size(); i++) {
 
 				serializer.startTag("", "data");
@@ -130,11 +136,11 @@ public class Result extends Activity {
 				serializer.attribute("", "player", source.get(i).get(0)[1]);
 				serializer.attribute("", "date", source.get(i).get(0)[2]);
 
-				for (int j = 0, k = source.get(i).size(); j < k; k++) {
+				for (int j = 1, k = source.get(i).size(); j < k; j++) {
 					serializer.startTag("", "fields");
-					serializer.attribute("", "name", source.get(i).get(k)[0]);
-					serializer.attribute("", "unit", source.get(i).get(k)[2]);
-					serializer.text(source.get(i).get(k)[1]);
+					serializer.attribute("", "name", source.get(i).get(j)[0]);
+					serializer.attribute("", "unit", source.get(i).get(j)[2]);
+					serializer.text(source.get(i).get(j)[1]);
 					serializer.endTag("", "fields");
 				}
 
