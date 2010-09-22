@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -22,6 +23,7 @@ import org.xmlpull.v1.XmlSerializer;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Xml;
 import android.view.Window;
 
@@ -46,16 +48,25 @@ public class Result extends Activity {
 		Random rd = new Random();
 
 		ReadXML("test.xml", data);
-		
-//		for (int i = 0; i < 10; i++) {
-			ArrayList<String[]> newDL = new ArrayList<String[]>();
-			String[] newStr = new String[] { "125", "ROCKNAME",
-					"2010-10-21:23:11:23" };
-			newDL.add(newStr);
-			newStr = new String[] { "Time", rd.nextDouble() + "", "s" };
-			newDL.add(newStr);
-			data.add(newDL);
-//		}
+		final Calendar c = Calendar.getInstance();
+		mYear = c.get(Calendar.YEAR); // 获取当前年份
+		mMonth = c.get(Calendar.MONTH);// 获取当前月份
+		mDay = c.get(Calendar.DAY_OF_MONTH);// 获取当前月份的日期号码
+		mHour = c.get(Calendar.HOUR_OF_DAY);// 获取当前的小时数
+		mMinute = c.get(Calendar.MINUTE);// 获取当前的分钟数
+		cDate = mYear + "-" + mMonth + "-" + mDay + " " + mHour + ":" + mMinute;
+
+		/*
+		 * Add current to the data.
+		 */
+		// for (int i = 0; i < 10; i++) {
+		ArrayList<String[]> newDL = new ArrayList<String[]>();
+		String[] newStr = new String[] { String.valueOf(uid), playerName, cDate };
+		newDL.add(newStr);
+		newStr = new String[] { "Time", rd.nextDouble() + "", "s" };
+		newDL.add(newStr);
+		data.add(newDL);
+		// }
 		sortList(data, 1, true);
 		String xmlStr = makeXML(data);
 		writeXML("test.xml", xmlStr);
@@ -85,6 +96,9 @@ public class Result extends Activity {
 					String[] temp = new String[3];
 					temp[0] = rootNode.getAttributes().getNamedItem("uid")
 							.getNodeValue();
+					int uidTemp = -1;
+					uidTemp = Integer.valueOf(temp[0]);
+					uid = (uidTemp > uid) ? uidTemp + 1 : uid;
 					temp[1] = rootNode.getAttributes().getNamedItem("player")
 							.getNodeValue();
 					temp[2] = rootNode.getAttributes().getNamedItem("date")
@@ -197,8 +211,9 @@ public class Result extends Activity {
 	}
 
 	private SharedPreferences prefs = null;
-	private String playerName;
+	private String playerName, cDate;
 	private String[] resultData;
 	private char mode;
 	private ArrayList<ArrayList<String[]>> data = new ArrayList<ArrayList<String[]>>();
+	private int mYear, mMonth, mDay, mHour, mMinute, uid;
 }
