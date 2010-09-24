@@ -508,7 +508,6 @@ public class GamePlay extends Activity implements OnTouchListener,
 		String acc = String.valueOf(Math.round(rCount/(rCount+wCount)*100));
 		//First place must be mode code;
 		String[] resultData = new String[]{
-				String.valueOf(MODE_CODE_TIME),
 				"Total Time",String.valueOf(timePass),
 				"Total Questions",String.valueOf(questionNum),
 				"Correct Answers",String.valueOf(rCount),
@@ -516,6 +515,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 				"Accuracy",acc
 				};
 		b.putStringArray("resultData", resultData);
+		b.putChar("MODE", MODE_CODE_TIME);
 	}
 
 	/*

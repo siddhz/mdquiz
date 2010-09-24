@@ -7,7 +7,6 @@ import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,9 +22,11 @@ import org.xmlpull.v1.XmlSerializer;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Xml;
 import android.view.Window;
+import android.widget.Toast;
 
 public class Result extends Activity {
 	private final static int MAX_ENTRY = 100; // Max entry stored in XML.
@@ -41,39 +42,75 @@ public class Result extends Activity {
 		try {
 			Bundle bunde = this.getIntent().getExtras();
 			resultData = bunde.getStringArray("resultData");
+			mode = bunde.getChar("MODE");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		initThread.start();
 
-		Random rd = new Random();
-
-		ReadXML("test.xml", data);
-		final Calendar c = Calendar.getInstance();
-		mYear = c.get(Calendar.YEAR); // 获取当前年份
-		mMonth = c.get(Calendar.MONTH);// 获取当前月份
-		mDay = c.get(Calendar.DAY_OF_MONTH);// 获取当前月份的日期号码
-		mHour = c.get(Calendar.HOUR_OF_DAY);// 获取当前的小时数
-		mMinute = c.get(Calendar.MINUTE);// 获取当前的分钟数
-		cDate = mYear + "-" + mMonth + "-" + mDay + " " + mHour + ":" + mMinute;
-
-		/*
-		 * Add current to the data.
-		 */
-		// for (int i = 0; i < 10; i++) {
-		ArrayList<String[]> newDL = new ArrayList<String[]>();
-		String[] newStr = new String[] { String.valueOf(uid), playerName, cDate };
-		newDL.add(newStr);
-		newStr = new String[] { "Time", rd.nextDouble() + "", "s" };
-		newDL.add(newStr);
-		data.add(newDL);
-		// }
-		sortList(data, 1, true);
-		String xmlStr = makeXML(data);
-		writeXML("test.xml", xmlStr);
-		ReadXML("test.xml", data);
 
 	}
+	
+	private Thread initThread = new Thread(new Runnable() {
+		@Override
+		public void run() {
+			int msg = 1;
+			String xmlName = null;
+			switch(mode){
+			case 'T':
+				xmlName = "TimeMode.xml";			
+			}
+			//Read existing data.
+			ReadXML(xmlName, data);
+			
+			final Calendar c = Calendar.getInstance();
+			mYear = c.get(Calendar.YEAR); // 获取当前年份
+			mMonth = c.get(Calendar.MONTH);// 获取当前月份
+			mDay = c.get(Calendar.DAY_OF_MONTH);// 获取当前月份的日期号码
+			mHour = c.get(Calendar.HOUR_OF_DAY);// 获取当前的小时数
+			mMinute = c.get(Calendar.MINUTE);// 获取当前的分钟数
+			cDate = mYear + "-" + mMonth + "-" + mDay + " " + mHour + ":" + mMinute;
 
+			/*
+			 * Add current to the data.
+			 */
+			ArrayList<String[]> newDL = new ArrayList<String[]>();
+			String[] newStr = new String[] { String.valueOf(uid), playerName, cDate };
+			newDL.add(newStr);
+			for (int i = 0, j = resultData.length; i < j; i++) {
+				String[] temp = new String[] { resultData[i], resultData[i + 1] };
+				newDL.add(temp);
+			}
+			data.add(newDL);
+
+			sortList(data, 1, true);
+			String xmlStr = makeXML(data);
+			if(xmlStr != null){
+				
+				writeXML(xmlName, xmlStr);
+			}else{
+				Toast.makeText(Result.this, "Nothing to write into xml.", Toast.LENGTH_LONG);
+			}
+			if(!ReadXML(xmlName, data)){
+				msg = 0;
+				return;
+			}
+			handler.sendEmptyMessage(msg);
+		}
+	});
+	
+	final Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 0:
+				break;
+			case 1: 
+				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
+	
 	private boolean ReadXML(String FileName, ArrayList<ArrayList<String[]>> data) {
 		DocumentBuilderFactory docBuilderFactory = null;
 		DocumentBuilder docBuilder = null;
@@ -179,6 +216,8 @@ public class Result extends Activity {
 		} catch (FileNotFoundException e) {
 			return false;
 		} catch (IOException e) {
+			return false;
+		} catch (Exception e){
 			return false;
 		}
 		return true;
