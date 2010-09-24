@@ -17,15 +17,17 @@ public class splash extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 		
-		welcomeThread.start();
-		ImageView iv = (ImageView) findViewById(R.id.iv1);
+		
+		iv = (ImageView) findViewById(R.id.iv1);
 		iv.setOnClickListener(
 				new OnClickListener(){
 					@Override
 					public void onClick(View v) {
 						wait = WELCOME_TIME;
 					}
-		});		
+		});
+		
+		welcomeThread.start();
 	}
 	
 	private Thread welcomeThread = new Thread() {		
@@ -47,4 +49,5 @@ public class splash extends Activity {
 	};
 	
 	private int wait = 0;
+	private ImageView iv;
 }
