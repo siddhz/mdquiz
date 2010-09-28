@@ -20,6 +20,8 @@ import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlSerializer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,6 +47,16 @@ public class Result extends Activity {
 			mode = bunde.getChar("MODE");
 		} catch (Exception e) {
 			e.printStackTrace();
+			AlertDialog.Builder errDialog = new AlertDialog.Builder(this);
+			errDialog.setIcon(R.drawable.icon_problem);
+			errDialog.setTitle("Result cannot be saved.");
+			errDialog.setMessage("Error");
+			errDialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Result.this.finish();
+				}
+			});
 		}
 		initThread.start();
 
