@@ -534,14 +534,14 @@ public class GamePlay extends Activity implements OnTouchListener,
 			Random rd = new Random();
 			Bundle bundle = new Bundle();
 			String[] test = new String[]{
-					String.valueOf(MODE_CODE_TIME),
 					"Time", String.valueOf(rd.nextInt(100)),"S",
 					"Total","100", "",
 					"Corrects","5", "",
 					"Incorrects","5", ""
 			};
 			bundle.putStringArray("resultData", test);
-			i.putExtra("resultData", bundle);
+			bundle.putChar("MODE", MODE_CODE_TIME);
+			i.putExtras(bundle);
 			startActivity(i);
 			break;
 		}
