@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.util.Xml;
 import android.view.Window;
 import android.widget.Toast;
@@ -42,88 +43,90 @@ public class Result extends Activity {
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		playerName = prefs.getString("playerName", "PlayerRock");
 		try {
-			Bundle bunde = this.getIntent().getExtras();
-			resultData = bunde.getStringArray("resultData");
-			mode = bunde.getChar("MODE");
+			Bundle bundle = this.getIntent().getExtras();
+			resultData = bundle.getStringArray("resultData");
+			mode = bundle.getChar("MODE");
 		} catch (Exception e) {
 			e.printStackTrace();
 			AlertDialog.Builder errDialog = new AlertDialog.Builder(this);
 			errDialog.setIcon(R.drawable.icon_problem);
 			errDialog.setTitle("Result cannot be saved.");
 			errDialog.setMessage("Error");
-			errDialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Result.this.finish();
-				}
-			});
+			errDialog.setPositiveButton("Close",
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Result.this.finish();
+						}
+					});
 		}
 		initThread.start();
 
-
 	}
-	
+
 	private Thread initThread = new Thread(new Runnable() {
 		@Override
 		public void run() {
 			int msg = 1;
 			String xmlName = null;
-			switch(mode){
+			switch (mode) {
 			case 'T':
-				xmlName = "TimeMode.xml";			
+				xmlName = "TimeMode.xml";
 			}
-			//Read existing data.
-			ReadXML(xmlName, data);
-			
+			// Read existing data.
+			data = ReadXML(xmlName);
+
 			final Calendar c = Calendar.getInstance();
 			mYear = c.get(Calendar.YEAR); // 获取当前年份
 			mMonth = c.get(Calendar.MONTH);// 获取当前月份
 			mDay = c.get(Calendar.DAY_OF_MONTH);// 获取当前月份的日期号码
 			mHour = c.get(Calendar.HOUR_OF_DAY);// 获取当前的小时数
 			mMinute = c.get(Calendar.MINUTE);// 获取当前的分钟数
-			cDate = mYear + "-" + mMonth + "-" + mDay + " " + mHour + ":" + mMinute;
+			cDate = mYear + "-" + mMonth + "-" + mDay + " " + mHour + ":"
+					+ mMinute;
 
 			/*
 			 * Add current to the data.
 			 */
-			ArrayList<String[]> newDL = new ArrayList<String[]>();
-			String[] newStr = new String[] { String.valueOf(uid), playerName, cDate };
-			newDL.add(newStr);
-			for (int i = 0, j = resultData.length; i < j; i++) {
+			ArrayList<String[]> current_data = new ArrayList<String[]>();
+			String[] newStr = new String[] { String.valueOf(uid), playerName,
+					cDate };
+			current_data.add(newStr);
+			for (int i = 0, j = resultData.length; i < j-1; i++) {
 				String[] temp = new String[] { resultData[i], resultData[i + 1] };
-				newDL.add(temp);
+				current_data.add(temp);
 			}
-			data.add(newDL);
+			data.add(current_data);
 
-			sortList(data, 1, true);
+			data = sortList(data, 1, true);
 			String xmlStr = makeXML(data);
-			if(xmlStr != null){
-				
+			if (xmlStr != null) {
 				writeXML(xmlName, xmlStr);
-			}else{
-				Toast.makeText(Result.this, "Nothing to write into xml.", Toast.LENGTH_LONG);
+			} else {
+				Log.v("XML_EMPTY", "Nothing to write into xml.");
 			}
-			if(!ReadXML(xmlName, data)){
+			if (ReadXML(xmlName) == null) {
 				msg = 0;
 				return;
 			}
 			handler.sendEmptyMessage(msg);
 		}
 	});
-	
+
 	final Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 0:
 				break;
-			case 1: 
+			case 1:
 				break;
 			}
 			super.handleMessage(msg);
 		}
 	};
-	
-	private boolean ReadXML(String FileName, ArrayList<ArrayList<String[]>> data) {
+
+	private ArrayList<ArrayList<String[]>> ReadXML(String FileName) {
+		ArrayList<ArrayList<String[]>> temp_data = new ArrayList<ArrayList<String[]>>();
 		DocumentBuilderFactory docBuilderFactory = null;
 		DocumentBuilder docBuilder = null;
 		Document doc = null;
@@ -165,23 +168,23 @@ public class Result extends Activity {
 							fieldList.add(temp);
 						}
 					}
-					data.add(fieldList);
+					temp_data.add(fieldList);
 				}
 			}
 		} catch (ParserConfigurationException e) {
-			return false;
+			return null;
 		} catch (SAXException e) {
-			return false;
+			return null;
 		} catch (IOException e) {
-			return false;
+			return null;
 		} catch (Exception e) {
-			return false;
+			return null;
 		} finally {
 			doc = null;
 			docBuilder = null;
 			docBuilderFactory = null;
 		}
-		return true;
+		return temp_data;
 	}
 
 	private String makeXML(ArrayList<ArrayList<String[]>> source) {
@@ -192,6 +195,7 @@ public class Result extends Activity {
 			// <?xml version=”1.0″ encoding=”UTF-8″ standalone=”yes”?>
 			serializer.startDocument("UTF-8", true);
 			serializer.startTag("", "source");
+			serializer.attribute("", "lastUpdate", cDate);
 			for (int i = 0; i < MAX_ENTRY && i < source.size(); i++) {
 
 				serializer.startTag("", "data");
@@ -229,17 +233,17 @@ public class Result extends Activity {
 			return false;
 		} catch (IOException e) {
 			return false;
-		} catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 		return true;
 	}
 
-	private void sortList(ArrayList<ArrayList<String[]>> source, int sortBy,
+	private ArrayList<ArrayList<String[]>> sortList(ArrayList<ArrayList<String[]>> source, int sortBy,
 			Boolean inc) {
 		if (source.size() <= 1)
-			return; // One or Zero element list sorted and return.
-		ArrayList<ArrayList<String[]>> tempList = new ArrayList<ArrayList<String[]>>();
+			return source; // One or Zero element list sorted and return.
+		ArrayList<ArrayList<String[]>> sortedList = new ArrayList<ArrayList<String[]>>();
 		while (!source.isEmpty()) {
 			int temp = 0;
 			for (int i = 0; i < source.size(); i++) {
@@ -255,10 +259,10 @@ public class Result extends Activity {
 					}
 				}
 			}
-			tempList.add(source.get(temp));
+			sortedList.add(source.get(temp));
 			source.remove(temp);
 		}
-		source.addAll(tempList);
+		return sortedList;
 	}
 
 	private SharedPreferences prefs = null;
