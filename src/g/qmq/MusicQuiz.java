@@ -130,7 +130,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			overridePendingTransition(R.anim.hold,R.anim.fade);
 			break;
 		case R.id.btnExit:
-			this.finish();
+			android.os.Process.killProcess(android.os.Process.myPid());
 			break;
 		}
 	}

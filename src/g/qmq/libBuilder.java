@@ -40,9 +40,8 @@ public class libBuilder extends Activity {
 			switch (msg.what) {
 			case 0: // Fail
 				tv1.setText(R.string.lib_problem);
-				
-				Toast.makeText(libBuilder.this, errMsg, Toast.LENGTH_LONG).show();
-				
+				Toast.makeText(libBuilder.this, errMsg, Toast.LENGTH_LONG)
+						.show();
 				tv2.setText(errMsg);
 				break;
 			case 1:
@@ -52,7 +51,8 @@ public class libBuilder extends Activity {
 				editor.putString("music_lib", "Total: " + total + "  "
 						+ "Date: " + date);
 				editor.commit();
-				Toast.makeText(libBuilder.this, R.string.lib_success, Toast.LENGTH_LONG).show();
+				Toast.makeText(libBuilder.this, R.string.lib_success,
+						Toast.LENGTH_LONG).show();
 				finish();
 				break;
 			case 2:
@@ -102,7 +102,7 @@ public class libBuilder extends Activity {
 
 			serializer.attribute("", "total", String.valueOf(total));
 			serializer.attribute("", "date", date);
-//			serializer.attribute("", "id3", String.valueOf(id3tag));
+			// serializer.attribute("", "id3", String.valueOf(id3tag));
 			serializer.attribute("", "id3", "true");
 			for (int i = 0; i < total; i++) {
 				serializer.startTag("", "song");
@@ -157,9 +157,17 @@ public class libBuilder extends Activity {
 		return;
 	}
 
+	public void onPause() {
+		super.onPause();
+		// TODO Move string to xml
+		xmlThd.stop();
+		Toast.makeText(libBuilder.this, "Canceled", Toast.LENGTH_LONG).show();
+		libBuilder.this.finish();
+	}
+
 	SharedPreferences prefs = null;
 	private TextView tv1, tv2;
 	private String errMsg, date, dir;
 	private int total, now;
-//	private boolean id3tag;
+	// private boolean id3tag;
 }

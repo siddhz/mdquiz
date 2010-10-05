@@ -1,5 +1,7 @@
 package g.qmq;
 
+import java.util.Random;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.view.KeyEvent;
 
 public class Prefs extends PreferenceActivity {
 	private SharedPreferences prefs = null;
@@ -61,6 +64,17 @@ public class Prefs extends PreferenceActivity {
 		inlinePrefCat.addPreference(intentPref);
 
 		/*
+		 * Search sub-folder.(CheckBox)
+		 */
+		CheckBoxPreference nextScreenCheckBoxPref = new CheckBoxPreference(this);
+		nextScreenCheckBoxPref.setKey("music_searchSubFolder");
+		nextScreenCheckBoxPref.setTitle(R.string.config_subFolder);
+		nextScreenCheckBoxPref.setSummary(R.string.config_subFolder_summOn);
+		nextScreenCheckBoxPref.setSummaryOff(R.string.config_subFolder_summOff);
+		nextScreenCheckBoxPref.setDefaultValue(true);
+		inlinePrefCat.addPreference(nextScreenCheckBoxPref);
+		
+		/*
 		 * Music library set up. (Intent)
 		 */
 		PreferenceScreen libPref = getPreferenceManager()
@@ -71,16 +85,7 @@ public class Prefs extends PreferenceActivity {
 		libPref.setSummary(R.string.lib_defSum);
 		inlinePrefCat.addPreference(libPref);
 
-		/*
-		 * Search sub-folder.(CheckBox)
-		 */
-		CheckBoxPreference nextScreenCheckBoxPref = new CheckBoxPreference(this);
-		nextScreenCheckBoxPref.setKey("music_searchSubFolder");
-		nextScreenCheckBoxPref.setTitle(R.string.config_subFolder);
-		nextScreenCheckBoxPref.setSummary(R.string.config_subFolder_summOn);
-		nextScreenCheckBoxPref.setSummaryOff(R.string.config_subFolder_summOff);
-		nextScreenCheckBoxPref.setDefaultValue(true);
-		inlinePrefCat.addPreference(nextScreenCheckBoxPref);
+
 
 		return root;
 	}
