@@ -85,20 +85,28 @@ public class Result extends Activity {
 			cDate = mYear + "-" + mMonth + "-" + mDay + " " + mHour + ":"
 					+ mMinute;
 
-			/*
-			 * Add current to the data.
-			 */
-			ArrayList<String[]> current_data = new ArrayList<String[]>();
-			String[] newStr = new String[] { String.valueOf(uid), playerName,
-					cDate };
-			current_data.add(newStr);
-			for (int i = 0, j = resultData.length; i < j-1; i++) {
-				String[] temp = new String[] { resultData[i], resultData[i + 1] };
-				current_data.add(temp);
+			//Add current if not empty.
+			try{
+				/*
+				 * Add current to the data.
+				 */
+				ArrayList<String[]> current_data = new ArrayList<String[]>();
+				String[] newStr = new String[] { String.valueOf(uid), playerName,
+						cDate };
+				current_data.add(newStr);
+				int i = 0, j = resultData.length;
+				while (i > j) {
+					String[] temp = new String[] { resultData[i], resultData[++i] };
+					current_data.add(temp);
+				}
+				data.add(current_data);
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-			data.add(current_data);
-
+			//Sort data.
 			data = sortList(data, 1, true);
+			
+			//Create and write XML file.
 			String xmlStr = makeXML(data);
 			if (xmlStr != null) {
 				writeXML(xmlName, xmlStr);
@@ -239,8 +247,8 @@ public class Result extends Activity {
 		return true;
 	}
 
-	private ArrayList<ArrayList<String[]>> sortList(ArrayList<ArrayList<String[]>> source, int sortBy,
-			Boolean inc) {
+	private ArrayList<ArrayList<String[]>> sortList(
+			ArrayList<ArrayList<String[]>> source, int sortBy, Boolean inc) {
 		if (source.size() <= 1)
 			return source; // One or Zero element list sorted and return.
 		ArrayList<ArrayList<String[]>> sortedList = new ArrayList<ArrayList<String[]>>();
@@ -267,7 +275,7 @@ public class Result extends Activity {
 
 	private SharedPreferences prefs = null;
 	private String playerName, cDate;
-	private String[] resultData;
+	private String[] resultData = null;
 	private char mode;
 	private ArrayList<ArrayList<String[]>> data = new ArrayList<ArrayList<String[]>>();
 	private int mYear, mMonth, mDay, mHour, mMinute, uid;
