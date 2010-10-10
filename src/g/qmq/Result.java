@@ -29,7 +29,6 @@ import android.os.Message;
 import android.util.Log;
 import android.util.Xml;
 import android.view.Window;
-import android.widget.Toast;
 
 public class Result extends Activity {
 	private final static int MAX_ENTRY = 100; // Max entry stored in XML.
@@ -74,7 +73,7 @@ public class Result extends Activity {
 				xmlName = "TimeMode.xml";
 			}
 			// Read existing data.
-			data = ReadXML(xmlName);
+			dataStore = ReadXML(xmlName);
 
 			final Calendar c = Calendar.getInstance();
 			mYear = c.get(Calendar.YEAR); // 获取当前年份
@@ -85,29 +84,31 @@ public class Result extends Activity {
 			cDate = mYear + "-" + mMonth + "-" + mDay + " " + mHour + ":"
 					+ mMinute;
 
-			//Add current if not empty.
-			try{
+			// Add current if not empty.
+			try {
 				/*
 				 * Add current to the data.
 				 */
 				ArrayList<String[]> current_data = new ArrayList<String[]>();
-				String[] newStr = new String[] { String.valueOf(uid), playerName,
-						cDate };
+				String[] newStr = new String[] { String.valueOf(uid),
+						playerName, cDate };
 				current_data.add(newStr);
 				int i = 0, j = resultData.length;
-				while (i > j) {
-					String[] temp = new String[] { resultData[i], resultData[++i] };
+				while (i < j) {
+					String[] temp = new String[] { resultData[i],
+							resultData[++i], resultData[++i] };
+					i++;
 					current_data.add(temp);
 				}
-				data.add(current_data);
-			}catch(Exception e){
+				dataStore.add(current_data);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//Sort data.
-			data = sortList(data, 1, true);
-			
-			//Create and write XML file.
-			String xmlStr = makeXML(data);
+			// Sort data.
+			dataStore = sortList(dataStore, 1, true);
+
+			// Create and write XML file.
+			String xmlStr = makeXML(dataStore);
 			if (xmlStr != null) {
 				writeXML(xmlName, xmlStr);
 			} else {
@@ -156,9 +157,8 @@ public class Result extends Activity {
 					String[] temp = new String[3];
 					temp[0] = rootNode.getAttributes().getNamedItem("uid")
 							.getNodeValue();
-					int uidTemp = -1;
-					uidTemp = Integer.valueOf(temp[0]);
-					uid = (uidTemp > uid) ? uidTemp + 1 : uid;
+					int cUid = Integer.valueOf(temp[0]);
+					uid = (cUid >= uid) ? cUid + 1 : uid;
 					temp[1] = rootNode.getAttributes().getNamedItem("player")
 							.getNodeValue();
 					temp[2] = rootNode.getAttributes().getNamedItem("date")
@@ -180,13 +180,9 @@ public class Result extends Activity {
 				}
 			}
 		} catch (ParserConfigurationException e) {
-			return null;
 		} catch (SAXException e) {
-			return null;
 		} catch (IOException e) {
-			return null;
 		} catch (Exception e) {
-			return null;
 		} finally {
 			doc = null;
 			docBuilder = null;
@@ -249,8 +245,10 @@ public class Result extends Activity {
 
 	private ArrayList<ArrayList<String[]>> sortList(
 			ArrayList<ArrayList<String[]>> source, int sortBy, Boolean inc) {
+		if (source == null)
+			return null;
 		if (source.size() <= 1)
-			return source; // One or Zero element list sorted and return.
+			return source;
 		ArrayList<ArrayList<String[]>> sortedList = new ArrayList<ArrayList<String[]>>();
 		while (!source.isEmpty()) {
 			int temp = 0;
@@ -277,6 +275,6 @@ public class Result extends Activity {
 	private String playerName, cDate;
 	private String[] resultData = null;
 	private char mode;
-	private ArrayList<ArrayList<String[]>> data = new ArrayList<ArrayList<String[]>>();
+	private ArrayList<ArrayList<String[]>> dataStore = new ArrayList<ArrayList<String[]>>();
 	private int mYear, mMonth, mDay, mHour, mMinute, uid;
 }
