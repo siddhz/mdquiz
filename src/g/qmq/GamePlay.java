@@ -1,3 +1,6 @@
+/*
+ * TODO Add pause and resume.
+ */
 package g.qmq;
 
 import java.io.FileNotFoundException;

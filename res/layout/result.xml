@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
+<LinearLayout android:id="@+id/world" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:padding="10dip"
+	android:background="@drawable/result_bg" android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TextView android:id="@+id/result_title" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Quiz Result"
+		android:layout_marginTop="15dip" android:layout_marginBottom="50dip" android:textSize="40sp"
+		android:textColor="#000000"></TextView>
+<!--	<RelativeLayout android:id="@+id/staff"-->
+<!--		android:layout_width="fill_parent" android:layout_height="50px"-->
+<!--		android:layout_marginTop="40dip" android:background="@drawable/result_staff"-->
+<!--		android:paddingLeft="28px">-->
+<!--		<TextView android:id="@+id/tvl" android:layout_width="wrap_content"-->
+<!--			android:layout_height="wrap_content" android:layout_alignParentLeft="true"-->
+<!--			android:layout_centerVertical="true" android:textSize="28sp"-->
+<!--			android:textColor="#FFFFFF" android:text="Total Time: 230 S">-->
+<!--		</TextView>-->
+<!--	</RelativeLayout>-->
 </LinearLayout>
