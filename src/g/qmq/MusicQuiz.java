@@ -170,10 +170,10 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			Random rd = new Random();
 			Bundle bundle = new Bundle();
 			String[] test = new String[]{
-					"Time", String.valueOf(rd.nextInt(100)),"S",
-					"Total","100", "",
-					"Corrects","5", "",
-					"Incorrects","5", ""
+					"Total Questions","100", "Q",
+					"Corrects","5", "Q",
+					"Incorrects","5", "Q",
+					"Total Time", String.valueOf(rd.nextInt(100)),"S"
 			};
 			bundle.putStringArray("resultData", test);
 			bundle.putChar("MODE", 'T');
