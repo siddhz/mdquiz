@@ -21,10 +21,8 @@ import org.xmlpull.v1.XmlSerializer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -33,7 +31,6 @@ import android.os.Message;
 import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
-import android.view.Gravity;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -48,7 +45,7 @@ public class Result extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.result);
 
-		int staffLength = 4;
+		// int staffLength = 4;
 
 		Typeface tf = Typeface
 				.createFromAsset(getAssets(), "fonts/oldengl.ttf");
@@ -56,52 +53,23 @@ public class Result extends Activity {
 		TextView tv_title = (TextView) findViewById(R.id.result_title);
 		tv_title.setTypeface(tf);
 
-		TextView tvr[] = new TextView[staffLength];
-		String str[] = new String[] { "Java Code (NEW)", "100%", "Time:",
-				"150S" };
-
-		tvr = staffView(tvr, str, "fonts/oldengl.ttf", 26f, Color.BLACK);
-
-		RelativeLayout[] rl = new RelativeLayout[staffLength / 2];
-		rl = layoutFactory(rl, tvr);
-
-		// RelativeLayout mRl = new RelativeLayout(this);
-		// mRl.setBackgroundDrawable(getResources().getDrawable(
-		// R.drawable.result_staff));
-		// mRl.setPadding(28, 0, 0, 0);
+		// TextView tvr[] = new TextView[staffLength];
+		// String str[] = new String[] { "Java Code (NEW)", "100%", "Time:",
+		// "150S" };
 		//
-		// RelativeLayout mRl2 = new RelativeLayout(this);
-		// mRl2.setBackgroundDrawable(getResources().getDrawable(
-		// R.drawable.result_staff));
-		// mRl2.setPadding(28, 0, 0, 0);
+		// tvr = staffView(tvr, str, "fonts/oldengl.ttf", 26f, Color.BLACK);
 		//
-		// RelativeLayout.LayoutParams ParamL = new RelativeLayout.LayoutParams(
-		// RelativeLayout.LayoutParams.WRAP_CONTENT,
-		// RelativeLayout.LayoutParams.WRAP_CONTENT);
-		// ParamL.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		// RelativeLayout.LayoutParams ParamR = new RelativeLayout.LayoutParams(
-		// RelativeLayout.LayoutParams.WRAP_CONTENT,
-		// RelativeLayout.LayoutParams.WRAP_CONTENT);
-		// ParamR.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		// RelativeLayout[] rl = new RelativeLayout[staffLength / 2];
+		// rl = layoutFactory(rl, tvr);
 		//
-		// // Add 1
-		// mRl.addView(tvr[0], ParamL);
+		// RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+		// RelativeLayout.LayoutParams.FILL_PARENT, 50);
 		//
-		// // Add 2
-		// mRl.addView(tvr[1], ParamR);
+		// LinearLayout mWorld = (LinearLayout) findViewById(R.id.world);
 		//
-		// mRl2.addView(tvr[2], ParamL);
-		//
-		// mRl2.addView(tvr[3], ParamR);
-
-		RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.FILL_PARENT, 50);
-
-		LinearLayout mWorld = (LinearLayout) findViewById(R.id.world);
-
-		for (int i = 0, j = rl.length; i < j; i++) {
-			mWorld.addView(rl[i], param);
-		}
+		// for (int i = 0, j = rl.length; i < j; i++) {
+		// mWorld.addView(rl[i], param);
+		// }
 
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		playerName = prefs.getString("playerName", "PlayerRock");
@@ -109,6 +77,35 @@ public class Result extends Activity {
 			Bundle bundle = this.getIntent().getExtras();
 			resultData = bundle.getStringArray("resultData");
 			mode = bundle.getChar("MODE");
+
+			int dLength = resultData.length / 3 * 2;
+			TextView resultTV[] = new TextView[dLength];
+			String formatData[] = new String[dLength];
+			for (int i = 0, k = 0, j = resultData.length; i < j; i++) {
+				if ((i + 1) % 3 != 0) {
+					if ((i + 2) % 3 == 0) {
+						formatData[k] = resultData[i] + resultData[i + 1];
+					} else {
+						formatData[k] = resultData[i];
+					}
+					k++;
+				}
+			}
+			resultTV = staffView(resultTV, formatData, "fonts/oldengl.ttf",
+					28f, Color.BLACK);
+
+			RelativeLayout[] rl = new RelativeLayout[dLength / 2];
+			rl = layoutFactory(rl, resultTV);
+
+			RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
+					RelativeLayout.LayoutParams.FILL_PARENT, 55);
+
+			LinearLayout mWorld = (LinearLayout) findViewById(R.id.resultBox);
+
+			for (int i = 0, j = rl.length; i < j; i++) {
+				mWorld.addView(rl[i], param);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			AlertDialog.Builder errDialog = new AlertDialog.Builder(this);
@@ -123,11 +120,11 @@ public class Result extends Activity {
 						}
 					});
 		}
-		initThread.start();
+		Td_saveResult.start();
 
 	}
 
-	private Thread initThread = new Thread(new Runnable() {
+	private Thread Td_saveResult = new Thread(new Runnable() {
 		@Override
 		public void run() {
 			int msg = 1;
@@ -379,6 +376,7 @@ public class Result extends Activity {
 			RelativeLayout.LayoutParams ParamL = new RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.WRAP_CONTENT,
 					RelativeLayout.LayoutParams.WRAP_CONTENT);
+			ParamL.addRule(RelativeLayout.CENTER_VERTICAL);
 			ParamL.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 			rl[i].addView(tv[i * 2], ParamL);
 
@@ -386,6 +384,7 @@ public class Result extends Activity {
 			RelativeLayout.LayoutParams ParamR = new RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.WRAP_CONTENT,
 					RelativeLayout.LayoutParams.WRAP_CONTENT);
+			ParamR.addRule(RelativeLayout.CENTER_VERTICAL);
 			ParamR.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 			rl[i].addView(tv[i * 2 + 1], ParamR);
 		}
