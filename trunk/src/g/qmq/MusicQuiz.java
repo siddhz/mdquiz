@@ -1,6 +1,7 @@
 package g.qmq;
 
 import java.util.Locale;
+import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -164,7 +165,21 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 			break;
 		case 4:
-			startActivity(new Intent(this, GamePlay.class));
+			Intent it = new Intent(MusicQuiz.this,
+					Result.class);
+			Random rd = new Random();
+			Bundle bundle = new Bundle();
+			String[] test = new String[]{
+					"Time", String.valueOf(rd.nextInt(100)),"S",
+					"Total","100", "",
+					"Corrects","5", "",
+					"Incorrects","5", ""
+			};
+			bundle.putStringArray("resultData", test);
+			bundle.putChar("MODE", 'T');
+			it.putExtras(bundle);
+			startActivity(it);
+//			startActivity(new Intent(this, GamePlay.class));
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 			break;
 		}
