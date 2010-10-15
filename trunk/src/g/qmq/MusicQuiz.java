@@ -22,7 +22,6 @@ import android.view.Window;
 
 import com.admob.android.ads.AdManager;
 
-
 public class MusicQuiz extends Activity implements OnClickListener,
 		OnTouchListener {
 	private SharedPreferences prefs = null;
@@ -41,17 +40,17 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		 */
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		forceEN = prefs.getBoolean("force_en", false);
-		if(forceEN){
+		if (forceEN) {
 			String languageToLoad = "en";
 			Locale locale = new Locale(languageToLoad);
 			Locale.setDefault(locale);
 			Configuration config = new Configuration();
-			config.locale = locale;		
+			config.locale = locale;
 			getBaseContext().getResources().updateConfiguration(config,
 					getBaseContext().getResources().getDisplayMetrics());
 		}
 		setContentView(R.layout.main);
-		
+
 		showAnim = prefs.getBoolean("anim", true);
 		if (!prefs.getBoolean("iniData", false))
 			iniSystem();
@@ -79,7 +78,8 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		tv = findViewById(R.id.side_note);
 		tv.setVisibility(View.INVISIBLE);
 		// Start-up animations
-		if(showAnim) animCtrl(false);
+		if (showAnim)
+			animCtrl(false);
 	}
 
 	private void animCtrl(boolean out) {
@@ -122,13 +122,13 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			openNewQuizDialog();
 			break;
 		case R.id.btnSettings:
+			overridePendingTransition(R.anim.hold, R.anim.fade);
 			startActivity(new Intent(this, Prefs.class));
-			overridePendingTransition(R.anim.hold,R.anim.fade);
 			break;
 		case R.id.btnBoard:
+			overridePendingTransition(R.anim.hold, R.anim.fade);
 			startActivity(new Intent(this, sBoard.class).putExtra("UID", "-1")
 					.putExtra("mode", "0"));
-			overridePendingTransition(R.anim.hold,R.anim.fade);
 			break;
 		case R.id.btnExit:
 			android.os.Process.killProcess(android.os.Process.myPid());
@@ -137,50 +137,50 @@ public class MusicQuiz extends Activity implements OnClickListener,
 	}
 
 	private void openNewQuizDialog() {
-		new AlertDialog.Builder(this).setTitle(R.string.mode_title).setItems(
-				R.array.quizMode, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialoginterface, int i) {
-						startAct(i);
-					}
-				}).setCancelable(true).show();
+		new AlertDialog.Builder(this)
+				.setTitle(R.string.mode_title)
+				.setItems(R.array.quizMode,
+						new DialogInterface.OnClickListener() {
+							public void onClick(
+									DialogInterface dialoginterface, int i) {
+								startAct(i);
+							}
+						}).setCancelable(true).show();
 	}
 
 	// Game entry
 	protected void startAct(int i) {
 		switch (i) {
 		case 0:
-			startActivity(new Intent(this, ModeTime.class));
 			overridePendingTransition(R.anim.zoom_enter, R.anim.hold);
+			startActivity(new Intent(this, ModeTime.class));
 			break;
 		case 1:
-			startActivity(new Intent(this, ModeMem.class));
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+			startActivity(new Intent(this, ModeMem.class));
 			break;
 		case 2:
-			startActivity(new Intent(this, ModeSD.class));
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+			startActivity(new Intent(this, ModeSD.class));
 			break;
 		case 3:
-			startActivity(new Intent(this, ModeOL.class));
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+			startActivity(new Intent(this, ModeOL.class));
 			break;
 		case 4:
-			Intent it = new Intent(MusicQuiz.this,
-					Result.class);
-			Random rd = new Random();
-			Bundle bundle = new Bundle();
-			String[] test = new String[]{
-					"Total Questions","100", "Q",
-					"Corrects","5", "Q",
-					"Incorrects","5", "Q",
-					"Total Time", String.valueOf(rd.nextInt(100)),"S"
-			};
-			bundle.putStringArray("resultData", test);
-			bundle.putChar("MODE", 'T');
-			it.putExtras(bundle);
-			startActivity(it);
-//			startActivity(new Intent(this, GamePlay.class));
+			// Intent it = new Intent(MusicQuiz.this, Result.class);
+			// Random rd = new Random();
+			// Bundle bundle = new Bundle();
+			// String[] test = new String[] { "Total Questions", "100", "Q",
+			// "Corrects", "5", "Q", "Incorrects", "5", "Q", "Total Time",
+			// String.valueOf(rd.nextInt(100)), "S" };
+			// bundle.putStringArray("resultData", test);
+			// bundle.putChar("MODE", 'T');
+			// it.putExtras(bundle);
+			// startActivity(it);
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+			startActivity(new Intent(this, GamePlay.class));
+
 			break;
 		}
 	}

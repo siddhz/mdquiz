@@ -216,4 +216,6 @@ public class animToolBox {
 	private float x1 = 0, x2 = 0, y1 = 0, y2 = 0, s1 = 0, s2 = 0;
 	private long duration = 1000, delate = 0;
 	private boolean fill = true;
+	private View v;
+	public Animation AM;
 }

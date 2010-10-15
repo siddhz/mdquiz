@@ -40,8 +40,9 @@ import android.widget.Toast;
 
 public class GamePlay extends Activity implements OnTouchListener,
 		OnClickListener {
-	private final static int MAX_ERROR = 10; //Number of errors can occur before stop.
-	private final static char MODE_CODE_TIME = 'T'; //Timed mode.
+	private final static int MAX_ERROR = 10; // Number of errors can occur
+												// before stop.
+	private final static char MODE_CODE_TIME = 'T'; // Timed mode.
 
 	/** Called when the activity is first created. */
 	@Override
@@ -326,20 +327,19 @@ public class GamePlay extends Activity implements OnTouchListener,
 					@Override
 					public void onClick(DialogInterface dialog, int whichButton) {
 						if (isSuccess) {
-							Intent i = new Intent(GamePlay.this,
-									Result.class);
+							Intent i = new Intent(GamePlay.this, Result.class);
 							Bundle bundle = new Bundle();
-							switch(mode){
+							switch (mode) {
 							case MODE_CODE_TIME:
 								timeBundle(bundle);
 								break;
 							}
-//							bundle.putDouble("time", timePass / 10.0);
-//							// bundle.putInt("acc_r", acc_r);
-//							// bundle.putInt("acc_w", acc_w);
-//							// bundle.putInt("hStack", hStack);
-//							bundle.putInt("mode", mode);
-//							bundle.putInt("gLength", gLength);
+							// bundle.putDouble("time", timePass / 10.0);
+							// // bundle.putInt("acc_r", acc_r);
+							// // bundle.putInt("acc_w", acc_w);
+							// // bundle.putInt("hStack", hStack);
+							// bundle.putInt("mode", mode);
+							// bundle.putInt("gLength", gLength);
 							i.putExtras(bundle);
 							startActivity(i);
 							// Close current activity.
@@ -506,17 +506,16 @@ public class GamePlay extends Activity implements OnTouchListener,
 		}
 		Toast.makeText(this, tMsg, 0).show();
 	}
-	
-	private void timeBundle(Bundle b){
-		String acc = String.valueOf(Math.round(rCount/(rCount+wCount)*100));
-		//First place must be mode code;
-		String[] resultData = new String[]{
-				"Total Time",String.valueOf(timePass),
-				"Total Questions",String.valueOf(questionNum),
-				"Correct Answers",String.valueOf(rCount),
-				"Incorrect Answers",String.valueOf(wCount),
-				"Accuracy",acc
-				};
+
+	private void timeBundle(Bundle b) {
+		String acc = String.valueOf(Math
+				.round(rCount / (rCount + wCount) * 100));
+		// First place must be mode code;
+		String[] resultData = new String[] { "Total Questions",
+				String.valueOf(questionNum), "Correct Answers",
+				String.valueOf(rCount), "Incorrect Answers",
+				String.valueOf(wCount), "Accuracy", acc, "Total Time",
+				String.valueOf(timePass) };
 		b.putStringArray("resultData", resultData);
 		b.putChar("MODE", MODE_CODE_TIME);
 	}
@@ -530,30 +529,28 @@ public class GamePlay extends Activity implements OnTouchListener,
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent e) {
-		switch(keyCode){
+		switch (keyCode) {
 		case KeyEvent.KEYCODE_0:
-			Intent i = new Intent(GamePlay.this,
-					Result.class);
+			Intent i = new Intent(GamePlay.this, Result.class);
 			Random rd = new Random();
 			Bundle bundle = new Bundle();
-			String[] test = new String[]{
-					"Time", String.valueOf(rd.nextInt(100)),"S",
-					"Total","100", "Q",
-					"Corrects","5", "Q",
-					"Incorrects","5", "Qs"
-			};
+			String[] test = new String[] { "Time",
+					String.valueOf(rd.nextInt(100)), "S", "Total", "100", "Q",
+					"Corrects", "5", "Q", "Incorrects", "5", "Qs" };
 			bundle.putStringArray("resultData", test);
 			bundle.putChar("MODE", MODE_CODE_TIME);
 			i.putExtras(bundle);
 			startActivity(i);
+			GamePlay.this.finish();
 			break;
 		}
-	    return false;
+		return false;
 	}
+
 	/*
 	 * TESTING ***
 	 */
-	
+
 	/* Common fields */
 	private int screenWidth = 320, screenHeight = 480, gLength, timePass = 0,
 			mode, questionNum = 0, btnRight, errorCount = 0, rCount, wCount;
