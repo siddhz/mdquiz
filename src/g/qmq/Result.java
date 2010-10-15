@@ -22,8 +22,10 @@ import org.xmlpull.v1.XmlSerializer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,13 +33,23 @@ import android.os.Message;
 import android.util.Log;
 import android.util.TypedValue;
 import android.util.Xml;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class Result extends Activity {
+public class Result extends Activity implements OnClickListener,
+		OnTouchListener {
 	private final static int MAX_ENTRY = 100; // Max entry stored in XML.
+	private final static long animTime = 1500;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +62,15 @@ public class Result extends Activity {
 		Typeface tf = Typeface
 				.createFromAsset(getAssets(), "fonts/oldengl.ttf");
 
-		TextView tv_title = (TextView) findViewById(R.id.result_title);
-		tv_title.setTypeface(tf);
+		tv[0] = (TextView) findViewById(R.id.result_title);
+		tv[1] = (TextView) findViewById(R.id.ToMain);
+		tv[2] = (TextView) findViewById(R.id.ToBoard);
+
+		tv[1].setOnClickListener(this);
+		tv[2].setOnClickListener(this);
+		for (int i = 0, j = tv.length; i < j; i++) {
+			tv[i].setTypeface(tf);
+		}
 
 		// TextView tvr[] = new TextView[staffLength];
 		// String str[] = new String[] { "Java Code (NEW)", "100%", "Time:",
@@ -92,19 +111,36 @@ public class Result extends Activity {
 				}
 			}
 			resultTV = staffView(resultTV, formatData, "fonts/oldengl.ttf",
-					28f, Color.BLACK);
+					30f, Color.BLACK);
 
 			RelativeLayout[] rl = new RelativeLayout[dLength / 2];
 			rl = layoutFactory(rl, resultTV);
 
 			RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.FILL_PARENT, 55);
+					RelativeLayout.LayoutParams.FILL_PARENT, 60);
 
 			LinearLayout mWorld = (LinearLayout) findViewById(R.id.resultBox);
 
 			for (int i = 0, j = rl.length; i < j; i++) {
 				mWorld.addView(rl[i], param);
 			}
+
+			animToolBox ab = new animToolBox(480f, 0, 0, 0);
+			long delate = 0;
+			long last = animTime;
+			ab.setTime(last);
+			for (int i = 0, j = rl.length; i < j; i++) {
+				ab.animMove(rl[i]);
+				ab.setDelate(delate += last / 3);
+			}
+//			animToolBox ab_2 = new animToolBox(0, 0, 800, 0);
+//			ab_2.setTime(last);
+//			ab_2.setDelate(delate);
+//			LinearLayout endBox = (LinearLayout) findViewById(R.id.endBox);
+//			ab_2.animMove(endBox);
+			moveBox am = new moveBox(0,0,800f,0);
+			Animation anim = null;
+			am.start(tv[0], anim);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -332,6 +368,38 @@ public class Result extends Activity {
 		return sortedList;
 	}
 
+	// private void anim(View v, long delate, long offset, boolean fill,
+	// PointF sP, PointF eP) {
+	// Animation a = null;
+	// a = new TranslateAnimation(sP.x, eP.x, sP.y, eP.y);
+	// a.setInterpolator(new AccelerateDecelerateInterpolator());
+	// a.setDuration(2000);
+	// a.setFillAfter(true);
+	// a.setStartOffset(0);
+	// a.setAnimationListener(new AnimationListener() {
+	//
+	// @Override
+	// public void onAnimationEnd(Animation animation) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// @Override
+	// public void onAnimationRepeat(Animation animation) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// @Override
+	// public void onAnimationStart(Animation animation) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// });
+	// v.startAnimation(a);
+	// }
+
 	/**
 	 * Pre: TextView and attributes. Pos: TextView with edited attributes.
 	 * 
@@ -369,10 +437,9 @@ public class Result extends Activity {
 		for (int i = 0; i < j; i++) {
 			// Add left TV
 			rl[i] = new RelativeLayout(this);
-			rl[i].setPadding(0, 10, 0, 10);
 			rl[i].setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.result_staff));
-			rl[i].setPadding(28, 0, 0, 0);
+			rl[i].setPadding(25, 0, 0, 0);
 			RelativeLayout.LayoutParams ParamL = new RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.WRAP_CONTENT,
 					RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -391,10 +458,30 @@ public class Result extends Activity {
 		return rl;
 	}
 
+	@Override
+	public void onClick(View v) {
+		if (v.getId() == R.id.ToMain) {
+			Result.this.finish();
+		} else {
+			overridePendingTransition(R.anim.hold, R.anim.fade);
+			startActivity(new Intent(this, sBoard.class).putExtra("UID", "-1")
+					.putExtra("mode", "0"));
+			Result.this.finish();
+		}
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent e) {
+		((TextView) v).setTextColor(Color.GRAY);
+		return false;
+	}
+
 	private SharedPreferences prefs = null;
 	private String playerName, cDate;
 	private String[] resultData = null;
 	private char mode;
 	private ArrayList<ArrayList<String[]>> dataStore = new ArrayList<ArrayList<String[]>>();
 	private int mYear, mMonth, mDay, mHour, mMinute, uid;
+	private TextView tv[] = new TextView[3];
+
 }
