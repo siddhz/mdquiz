@@ -25,7 +25,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,13 +34,9 @@ import android.util.TypedValue;
 import android.util.Xml;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.TranslateAnimation;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -68,6 +63,8 @@ public class Result extends Activity implements OnClickListener,
 
 		tv[1].setOnClickListener(this);
 		tv[2].setOnClickListener(this);
+		tv[1].setOnTouchListener(this);
+		tv[2].setOnTouchListener(this);
 		for (int i = 0, j = tv.length; i < j; i++) {
 			tv[i].setTypeface(tf);
 		}
@@ -133,14 +130,11 @@ public class Result extends Activity implements OnClickListener,
 				ab.animMove(rl[i]);
 				ab.setDelate(delate += last / 3);
 			}
-//			animToolBox ab_2 = new animToolBox(0, 0, 800, 0);
-//			ab_2.setTime(last);
-//			ab_2.setDelate(delate);
-//			LinearLayout endBox = (LinearLayout) findViewById(R.id.endBox);
-//			ab_2.animMove(endBox);
-			moveBox am = new moveBox(0,0,800f,0);
-			Animation anim = null;
-			am.start(tv[0], anim);
+			animToolBox ab_2 = new animToolBox(0, 0, 800, 0);
+			ab_2.setTime(last);
+			ab_2.setDelate(delate);
+			LinearLayout endBox = (LinearLayout) findViewById(R.id.endBox);
+			ab_2.animMove(endBox);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -483,5 +477,4 @@ public class Result extends Activity implements OnClickListener,
 	private ArrayList<ArrayList<String[]>> dataStore = new ArrayList<ArrayList<String[]>>();
 	private int mYear, mMonth, mDay, mHour, mMinute, uid;
 	private TextView tv[] = new TextView[3];
-
 }
