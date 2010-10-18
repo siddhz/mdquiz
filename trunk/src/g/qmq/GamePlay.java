@@ -538,25 +538,25 @@ public class GamePlay extends Activity implements OnTouchListener,
 	/*
 	 * TESTING
 	 */
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent e) {
-		switch (keyCode) {
-		case KeyEvent.KEYCODE_0:
-			Intent i = new Intent(GamePlay.this, Result.class);
-			Random rd = new Random();
-			Bundle bundle = new Bundle();
-			String[] test = new String[] { "Time",
-					String.valueOf(rd.nextInt(100)), "S", "Total", "100", "Q",
-					"Corrects", "5", "Q", "Incorrects", "5", "Qs" };
-			bundle.putStringArray("resultData", test);
-			bundle.putChar("MODE", MODE_CODE_TIME);
-			i.putExtras(bundle);
-			startActivity(i);
-			GamePlay.this.finish();
-			break;
-		}
-		return false;
-	}
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent e) {
+//		switch (keyCode) {
+//		case KeyEvent.KEYCODE_0:
+//			Intent i = new Intent(GamePlay.this, Result.class);
+//			Random rd = new Random();
+//			Bundle bundle = new Bundle();
+//			String[] test = new String[] { "Time",
+//					String.valueOf(rd.nextInt(100)), "S", "Total", "100", "Q",
+//					"Corrects", "5", "Q", "Incorrects", "5", "Qs" };
+//			bundle.putStringArray("resultData", test);
+//			bundle.putChar("MODE", MODE_CODE_TIME);
+//			i.putExtras(bundle);
+//			startActivity(i);
+//			GamePlay.this.finish();
+//			break;
+//		}
+//		return false;
+//	}
 
 	/*
 	 * TESTING ***
