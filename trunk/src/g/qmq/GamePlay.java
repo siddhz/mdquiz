@@ -31,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
@@ -44,6 +45,9 @@ public class GamePlay extends Activity implements OnTouchListener,
 												// before stop.
 	private final static char MODE_CODE_TIME = 'T'; // Timed mode.
 
+	private final int TIME_PENALTY = 50; // Penalty for guessing wrong (1 =
+											// 1/10sec)
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		// TODO Some kind of switch form intent to choose XML file for the each
 		// mode.
 
-		setContentView(R.layout.time_mode);
+		setContentView(R.layout.game_play);
 
 		// Loading presences.
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
@@ -482,8 +486,6 @@ public class GamePlay extends Activity implements OnTouchListener,
 	 * Time Mode Core Function ******************
 	 */
 	private void timeModeCore(int a) {
-		final int tPenalty = 50; // Penalty for guessing wrong (1 = 1/10
-		// second)
 		String tMsg = "!";
 
 		if (a == btnRight) {
@@ -499,10 +501,19 @@ public class GamePlay extends Activity implements OnTouchListener,
 		} else {
 			wCount++;
 			stack = 0;
+			Animation timeAnim = AnimationUtils.loadAnimation(this,
+					R.anim.time_add);
+			timeAnim.setFillAfter(true);
+			TextView tTV = (TextView) findViewById(R.id.time_pluse);
+			tTV.setVisibility(View.VISIBLE);
+			tTV.startAnimation(timeAnim);
 			tMsg = "Wrong!"; // TODO move to XML
 			animToolBox sAnim = new animToolBox(animToolBox.ZOOM_IN_CENTER);
 			sAnim.animScale(btn[a]);
-			timePass += tPenalty;
+			timePass += TIME_PENALTY;
+			if (questionNum + 1 >= gLength) {
+				endGame(true, "Timed Quiz Complete!");
+			}
 		}
 		Toast.makeText(this, tMsg, 0).show();
 	}

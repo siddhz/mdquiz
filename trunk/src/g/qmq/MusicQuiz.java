@@ -168,16 +168,16 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			startActivity(new Intent(this, ModeOL.class));
 			break;
 		case 4:
-			// Intent it = new Intent(MusicQuiz.this, Result.class);
-			// Random rd = new Random();
-			// Bundle bundle = new Bundle();
-			// String[] test = new String[] { "Total Questions", "100", "Q",
-			// "Corrects", "5", "Q", "Incorrects", "5", "Q", "Total Time",
-			// String.valueOf(rd.nextInt(100)), "S" };
-			// bundle.putStringArray("resultData", test);
-			// bundle.putChar("MODE", 'T');
-			// it.putExtras(bundle);
-			// startActivity(it);
+//			Intent it = new Intent(MusicQuiz.this, Result.class);
+//			Random rd = new Random();
+//			Bundle bundle = new Bundle();
+//			String[] test = new String[] { "Total Questions", "100", "Q",
+//					"Corrects", "5", "Q", "Incorrects", "5", "Q", "Total Time",
+//					String.valueOf(rd.nextInt(100)), "S" };
+//			bundle.putStringArray("resultData", test);
+//			bundle.putChar("MODE", 'T');
+//			it.putExtras(bundle);
+//			startActivity(it);
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 			startActivity(new Intent(this, GamePlay.class));
 
