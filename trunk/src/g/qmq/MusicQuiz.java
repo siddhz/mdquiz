@@ -1,7 +1,6 @@
 package g.qmq;
 
 import java.util.Locale;
-import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;

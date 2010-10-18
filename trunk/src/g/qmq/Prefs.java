@@ -1,7 +1,5 @@
 package g.qmq;
 
-import java.util.Random;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +7,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
-import android.view.KeyEvent;
 
 public class Prefs extends PreferenceActivity {
 	private SharedPreferences prefs = null;
