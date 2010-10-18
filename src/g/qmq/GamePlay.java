@@ -23,17 +23,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -93,7 +92,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 
 	private void readyStage() {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-		// Pregame check
+		// Pre-game check
 		if (mFiles.size() - 4 > gLength) {
 			dialog.setIcon(R.drawable.icon_common);
 			dialog.setTitle("Let's Rock."); // TODO move to XML
@@ -426,7 +425,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		}
 	};
 	/*
-	 * Thread Block *************
+	 * Thread Block *************END
 	 */
 
 	/*
@@ -479,7 +478,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 	};
 
 	/*
-	 * Handler Block *************
+	 * Handler Block ************* END
 	 */
 
 	/*
@@ -532,39 +531,40 @@ public class GamePlay extends Activity implements OnTouchListener,
 	}
 
 	/*
-	 * Time Mode Core Function ******************
+	 * Time Mode Core Function ****************** END
 	 */
 
 	/*
 	 * TESTING
 	 */
-//	@Override
-//	public boolean onKeyDown(int keyCode, KeyEvent e) {
-//		switch (keyCode) {
-//		case KeyEvent.KEYCODE_0:
-//			Intent i = new Intent(GamePlay.this, Result.class);
-//			Random rd = new Random();
-//			Bundle bundle = new Bundle();
-//			String[] test = new String[] { "Time",
-//					String.valueOf(rd.nextInt(100)), "S", "Total", "100", "Q",
-//					"Corrects", "5", "Q", "Incorrects", "5", "Qs" };
-//			bundle.putStringArray("resultData", test);
-//			bundle.putChar("MODE", MODE_CODE_TIME);
-//			i.putExtras(bundle);
-//			startActivity(i);
-//			GamePlay.this.finish();
-//			break;
-//		}
-//		return false;
-//	}
+	// @Override
+	// public boolean onKeyDown(int keyCode, KeyEvent e) {
+	// switch (keyCode) {
+	// case KeyEvent.KEYCODE_0:
+	// Intent i = new Intent(GamePlay.this, Result.class);
+	// Random rd = new Random();
+	// Bundle bundle = new Bundle();
+	// String[] test = new String[] { "Time",
+	// String.valueOf(rd.nextInt(100)), "S", "Total", "100", "Q",
+	// "Corrects", "5", "Q", "Incorrects", "5", "Qs" };
+	// bundle.putStringArray("resultData", test);
+	// bundle.putChar("MODE", MODE_CODE_TIME);
+	// i.putExtras(bundle);
+	// startActivity(i);
+	// GamePlay.this.finish();
+	// break;
+	// }
+	// return false;
+	// }
 
 	/*
 	 * TESTING ***
 	 */
 
 	/* Common fields */
-	private int screenWidth = 320, screenHeight = 480, gLength, timePass = 0,
-			mode, questionNum = 0, btnRight, errorCount = 0, rCount, wCount;
+	private int screenWidth = 320, screenHeight = 480, gLength = 10,
+			timePass = 0, mode, questionNum = 0, btnRight, errorCount = 0,
+			rCount, wCount;
 	private boolean subFolder, repeat, id3tag, timeSwitch, isAnim;
 	private SharedPreferences prefs = null;
 	private ProgressBar iniProgressBar;
