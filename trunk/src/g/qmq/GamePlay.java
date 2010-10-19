@@ -497,6 +497,9 @@ public class GamePlay extends Activity implements OnTouchListener,
 			if (stack >= 2)
 				tMsg = "Correct!" + " x" + stack;
 			moveAnim('o');
+			if (questionNum + 1 >= gLength) {
+				endGame(true, "Timed Quiz Complete!");
+			}
 		} else {
 			wCount++;
 			stack = 0;
@@ -510,9 +513,6 @@ public class GamePlay extends Activity implements OnTouchListener,
 			animToolBox sAnim = new animToolBox(animToolBox.ZOOM_IN_CENTER);
 			sAnim.animScale(btn[a]);
 			timePass += TIME_PENALTY;
-			if (questionNum + 1 >= gLength) {
-				endGame(true, "Timed Quiz Complete!");
-			}
 		}
 		Toast.makeText(this, tMsg, 0).show();
 	}
