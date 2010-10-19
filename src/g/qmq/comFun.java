@@ -46,8 +46,8 @@ public class comFun {
 
 				String title = nd.getAttributes().getNamedItem("name")
 						.getNodeValue();
-				
-				//Get song title.
+
+				// Get song title.
 				String id3_title = null, id3_artist = null;
 				if (id3tag) {
 					id3_title = nd.getAttributes().getNamedItem("id3_title")
@@ -61,7 +61,7 @@ public class comFun {
 					hm.put("mFile_name", title);
 				}
 
-				//Get song path.
+				// Get song path.
 				String path = nd.getFirstChild().getNodeValue();
 				hm.put("mFile_path", path);
 
@@ -99,8 +99,9 @@ public class comFun {
 							.endsWith(".wma"))) {
 				// if (id3tag) {
 				// }
-				mFile.put("mFile_name", file.getName().substring(0,
-						file.getName().length() - 4));
+				mFile.put("mFile_name",
+						file.getName()
+								.substring(0, file.getName().length() - 4));
 				mFile.put("mFile_path", file.getPath());
 				mFiles.add(mFile);
 			}
@@ -112,48 +113,56 @@ public class comFun {
 
 	/**
 	 * 准备音乐
-	 * @param mp MediaPlayer
-	 * @param src 音乐地址
-	 * @param start 开始时间定位 (如果小于0，使用默认中间位置加随机偏差)
-	 * @return 准备状态.  T|F
+	 * 
+	 * @param mp
+	 *            MediaPlayer
+	 * @param src
+	 *            音乐地址
+	 * @param start
+	 *            开始时间定位 (如果小于0，使用默认中间位置加随机偏差)
+	 * @return 准备状态. T|F
 	 */
-	public boolean setMusic(MediaPlayer mp, boolean isLoop, String src, int start){
+	public boolean setMusic(MediaPlayer mp, boolean isLoop, String src,
+			int start) {
 		try {
-			if(mp.isPlaying()){
+			if (mp.isPlaying()) {
 				mp.stop();
 				mp.reset();
 			}
 			mp.setDataSource(src);
 			mp.prepare();
-			if(start<0){
+			if (start < 0) {
 				int mLength = mp.getDuration();
-				if(mLength<1){
+				if (mLength < 1) {
 					start = 0;
-				}else{
+				} else {
 					Random rng = new Random();
-					start = (int) ((mLength/2) + ( Math.pow(-1, rng.nextInt(1)) * (mLength/10) ));
+					start = (int) ((mLength / 2) + (Math
+							.pow(-1, rng.nextInt(1)) * (mLength / 10)));
 				}
 			}
 			mp.seekTo(start);
 			mp.setLooping(isLoop);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-			if(mp.isPlaying())mp.stop();
+			if (mp.isPlaying())
+				mp.stop();
 			mp.reset();
 			return false;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
-			if(mp.isPlaying())mp.stop();
+			if (mp.isPlaying())
+				mp.stop();
 			mp.reset();
 			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
-			if(mp.isPlaying())mp.stop();
+			if (mp.isPlaying())
+				mp.stop();
 			mp.reset();
 			return false;
 		}
 		return true;
 	}
-	
 
 }
