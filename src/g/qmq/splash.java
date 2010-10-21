@@ -52,8 +52,8 @@ public class splash extends Activity {
 			try {
 				super.run();
 				while (wait < WELCOME_TIME) {
-					sleep(100);
-					wait += 100;
+					sleep(10);
+					wait += 10;
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
