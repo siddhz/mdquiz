@@ -45,6 +45,6 @@
 			android:entries="@array/entries_list_preference" 
 			android:entryValues="@array/entryvalues_list_preference"
 			android:dialogTitle="Select Number of Question" 
-			android:defaultValue="20" />
+			android:defaultValue="10" />
 	</PreferenceCategory>
 </PreferenceScreen>

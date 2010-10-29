@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:id="@+id/container"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:background="@drawable/timemode_bg" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="@drawable/memory_bg" xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:myapp="http://schemas.android.com/apk/res/g.qmq">
 
 	<LinearLayout android:id="@+id/midLayout"
@@ -11,25 +11,25 @@
 		<Button android:id="@+id/btn_answer1" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:textSize="18sp"
 			android:text="@string/btn_answer1" android:background="@drawable/btnbg"
-			android:textColor="@color/time_mode_btn_text">
+			android:textColor="@color/time_mode_btn_text" android:visibility="gone">
 		</Button>
 		<Button android:id="@+id/btn_answer2" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:textSize="18sp"
 			android:text="@string/btn_answer2" android:background="@drawable/btnbg"
 			android:textColor="@color/time_mode_btn_text"
-			android:layout_marginTop="25dip">
+			android:layout_marginTop="25dip" android:visibility="gone">
 		</Button>
 		<Button android:id="@+id/btn_answer3" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:textSize="18sp"
 			android:text="@string/btn_answer3" android:background="@drawable/btnbg"
 			android:textColor="@color/time_mode_btn_text"
-			android:layout_marginTop="25dip">
+			android:layout_marginTop="25dip" android:visibility="gone">
 		</Button>
 		<Button android:id="@+id/btn_answer4" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:textSize="18sp"
 			android:text="@string/btn_answer4" android:background="@drawable/btnbg"
 			android:textColor="@color/time_mode_btn_text"
-			android:layout_marginTop="25dip">
+			android:layout_marginTop="25dip" android:visibility="gone">
 		</Button>
 		<ProgressBar android:id="@+id/time_pb"
 			android:layout_width="40dip" android:layout_height="40dip"></ProgressBar>
@@ -92,7 +92,7 @@
 
 	<TextView android:id="@+id/time_pluse" android:layout_height="wrap_content"
 		android:layout_width="wrap_content" android:text="+5"
-		android:textColor="#ff0000" android:textSize="22sp"
+		android:textColor="@color/time_mode_btn_text" android:textSize="22sp"
 		android:layout_alignParentTop="true" android:layout_alignParentRight="true"
 		android:layout_marginTop="11dip" android:layout_marginRight="5dip"
 		android:visibility="gone"></TextView>

@@ -57,6 +57,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		// mode.
 
 		setContentView(R.layout.game_play);
+		mode = MODE_CODE_TIME;
 
 		// Loading presences.
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
@@ -152,6 +153,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 			endGame(false, "No more question can be generate.");
 			return;
 		}
+		if (questionNum >= gLength) {
+			endGame(true, "Timed Quiz Complete!");
+			return;
+		}
 
 		int qCan;
 		do {
@@ -209,10 +214,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private void answer(int i) {
 		Log.i("Answer", i + " received.");
 		switch (mode) {
-		case 0:
+		case MODE_CODE_TIME:
 			timeModeCore(i);
 			break;
-		case 1:
+		case 'D':
 			break;
 		}
 	}
@@ -331,10 +336,23 @@ public class GamePlay extends Activity implements OnTouchListener,
 					public void onClick(DialogInterface dialog, int whichButton) {
 						if (isSuccess) {
 							Intent i = new Intent(GamePlay.this, Result.class);
-							Bundle bundle = new Bundle();
+							Bundle b = new Bundle();
 							switch (mode) {
 							case MODE_CODE_TIME:
-								timeBundle(bundle);
+								String acc = String.valueOf(Math.round(rCount
+										/ (rCount + wCount) * 100));
+								// First place must be mode code;
+								String[] resultData = new String[] {
+										"Total Questions",
+										String.valueOf(questionNum), "Q",
+										"Correct Answers",
+										String.valueOf(rCount), "Q",
+										"Incorrect Answers",
+										String.valueOf(wCount), "Q",
+										"Accuracy", acc, "%", "Total Time",
+										String.valueOf(timePass), "Sec" };
+								b.putStringArray("resultData", resultData);
+								b.putChar("MODE", MODE_CODE_TIME);
 								break;
 							}
 							// bundle.putDouble("time", timePass / 10.0);
@@ -343,7 +361,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 							// // bundle.putInt("hStack", hStack);
 							// bundle.putInt("mode", mode);
 							// bundle.putInt("gLength", gLength);
-							i.putExtras(bundle);
+							i.putExtras(b);
 							startActivity(i);
 							// Close current activity.
 							GamePlay.this.finish();
@@ -497,9 +515,9 @@ public class GamePlay extends Activity implements OnTouchListener,
 			if (stack >= 2)
 				tMsg = "Correct!" + " x" + stack;
 			moveAnim('o');
-			if (questionNum + 1 >= gLength) {
-				endGame(true, "Timed Quiz Complete!");
-			}
+			// if (questionNum + 1 >= gLength) {
+			// endGame(true, "Timed Quiz Complete!");
+			// }
 		} else {
 			wCount++;
 			stack = 0;
@@ -515,19 +533,6 @@ public class GamePlay extends Activity implements OnTouchListener,
 			timePass += TIME_PENALTY;
 		}
 		Toast.makeText(this, tMsg, 0).show();
-	}
-
-	private void timeBundle(Bundle b) {
-		String acc = String.valueOf(Math
-				.round(rCount / (rCount + wCount) * 100));
-		// First place must be mode code;
-		String[] resultData = new String[] { "Total Questions",
-				String.valueOf(questionNum), "Correct Answers",
-				String.valueOf(rCount), "Incorrect Answers",
-				String.valueOf(wCount), "Accuracy", acc, "Total Time",
-				String.valueOf(timePass) };
-		b.putStringArray("resultData", resultData);
-		b.putChar("MODE", MODE_CODE_TIME);
 	}
 
 	/*
@@ -563,8 +568,8 @@ public class GamePlay extends Activity implements OnTouchListener,
 
 	/* Common fields */
 	private int screenWidth = 320, screenHeight = 480, gLength = 10,
-			timePass = 0, mode, questionNum = 0, btnRight, errorCount = 0,
-			rCount, wCount;
+			timePass = 0, questionNum = 0, btnRight, errorCount = 0, rCount,
+			wCount;
 	private boolean subFolder, repeat, id3tag, timeSwitch, isAnim;
 	private SharedPreferences prefs = null;
 	private ProgressBar iniProgressBar;
@@ -575,6 +580,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private MediaPlayer mp = new MediaPlayer();
 	private Random rng = new Random();
 	private Timer timer;
+	private char mode;
 
 	/* Time fields */
 	private int stack, hStack;
