@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,13 +19,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.widget.Button;
 
 import com.admob.android.ads.AdManager;
 
 public class MusicQuiz extends Activity implements OnClickListener,
 		OnTouchListener {
 	private SharedPreferences prefs = null;
-	private View btnNew, btnSet, btnBoard, btnExit, tv;
+	private Button btnNew, btnSet, btnBoard, btnExit;
+	private View tv;
 	private boolean showAnim;
 	private boolean forceEN;
 
@@ -37,6 +40,8 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		 * Country and Language List.
 		 * http://developer.android.com/reference/java/util/Locale.html
 		 */
+		Typeface tf = Typeface
+				.createFromAsset(getAssets(), "fonts/oldengl.ttf");
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		forceEN = prefs.getBoolean("force_en", false);
 		if (forceEN) {
@@ -58,21 +63,25 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR });
 
 		// Set OnClick Listener.
-		btnNew = findViewById(R.id.btnNew);
+		btnNew = (Button) findViewById(R.id.btnNew);
 		btnNew.setOnClickListener(this);
 		btnNew.setOnTouchListener(this);
+		btnNew.setTypeface(tf);
 
-		btnSet = findViewById(R.id.btnSettings);
+		btnSet = (Button) findViewById(R.id.btnSettings);
 		btnSet.setOnClickListener(this);
 		btnSet.setOnTouchListener(this);
+		btnSet.setTypeface(tf);
 
-		btnBoard = findViewById(R.id.btnBoard);
+		btnBoard = (Button) findViewById(R.id.btnBoard);
 		btnBoard.setOnClickListener(this);
 		btnBoard.setOnTouchListener(this);
+		btnBoard.setTypeface(tf);
 
-		btnExit = findViewById(R.id.btnExit);
+		btnExit = (Button) findViewById(R.id.btnExit);
 		btnExit.setOnClickListener(this);
 		btnExit.setOnTouchListener(this);
+		btnExit.setTypeface(tf);
 
 		tv = findViewById(R.id.side_note);
 		tv.setVisibility(View.INVISIBLE);
@@ -167,16 +176,16 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			startActivity(new Intent(this, ModeOL.class));
 			break;
 		case 4:
-//			Intent it = new Intent(MusicQuiz.this, Result.class);
-//			Random rd = new Random();
-//			Bundle bundle = new Bundle();
-//			String[] test = new String[] { "Total Questions", "100", "Q",
-//					"Corrects", "5", "Q", "Incorrects", "5", "Q", "Total Time",
-//					String.valueOf(rd.nextInt(100)), "S" };
-//			bundle.putStringArray("resultData", test);
-//			bundle.putChar("MODE", 'T');
-//			it.putExtras(bundle);
-//			startActivity(it);
+			// Intent it = new Intent(MusicQuiz.this, Result.class);
+			// Random rd = new Random();
+			// Bundle bundle = new Bundle();
+			// String[] test = new String[] { "Total Questions", "100", "Q",
+			// "Corrects", "5", "Q", "Incorrects", "5", "Q", "Total Time",
+			// String.valueOf(rd.nextInt(100)), "S" };
+			// bundle.putStringArray("resultData", test);
+			// bundle.putChar("MODE", 'T');
+			// it.putExtras(bundle);
+			// startActivity(it);
 			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 			startActivity(new Intent(this, GamePlay.class));
 
@@ -222,5 +231,12 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			v.setBackgroundResource(R.drawable.btn_main_hrev);
 		}
 		return false;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		System.exit(0);
+		// android.os.Process.killProcess(android.os.Process.myPid());
 	}
 }
