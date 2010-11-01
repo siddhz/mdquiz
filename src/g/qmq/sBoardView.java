@@ -49,8 +49,10 @@ public class sBoardView extends Activity {
 		switch (mode) {
 		case 0:
 			if (listCreater(ReadXML("sb_time.xml"))) {
+				// Successfully created list.
 				tv.setVisibility(View.GONE);
 			} else {
+				// Failed to find XML.
 				tv.setText("XML not found or empty. Play some game first.");
 			}
 			break;
@@ -80,8 +82,8 @@ public class sBoardView extends Activity {
 							.getSystemService(Context.TELEPHONY_SERVICE);
 					webToolBox webFetcher = new webToolBox();
 					// Add Post content
-					String[] postCont = new String[] { 
-							"imei",	teleInfo.getDeviceId() };
+					String[] postCont = new String[] { "imei",
+							teleInfo.getDeviceId() };
 					String url = "http://comeplay8.com/mDroid/mlist.php";
 					if (webFetcher.webCon(url, postCont)) {
 						String strResult = webFetcher.strResult;
@@ -94,11 +96,10 @@ public class sBoardView extends Activity {
 							Log.d("DATA", data);
 							// 获取当前排名
 							myRank = Integer.valueOf(strResult.split("#")[2]);
-							Log.d("MYRANK", myRank+"");
+							Log.d("MYRANK", myRank + "");
 							for (int i = 0, tSize = data.split(";").length; i < tSize; i++) {
 								HashMap<String, String> hm = new HashMap<String, String>();
-								hm.put("name", data.split(";")[i]
-												.split(":")[0]);
+								hm.put("name", data.split(";")[i].split(":")[0]);
 								hm.put("score",
 										data.split(";")[i].split(":")[1]);
 								hm.put("country",
@@ -120,62 +121,6 @@ public class sBoardView extends Activity {
 		// Kill progressbar.(S|F)
 	}
 
-	// public boolean webFetcher(int uid) {
-	// String uriAPI = "http://comeplay8.com/mDroid/mlist.php";
-	//
-	// /* 建立HTTPost对象 */
-	// HttpPost httpRequest = new HttpPost(uriAPI);
-	//
-	// /* NameValuePair实现请求参数的封装 */
-	// List<NameValuePair> params = new ArrayList<NameValuePair>();
-	// params.add(new BasicNameValuePair("uid", String.valueOf(uid)));
-	// params.add(new BasicNameValuePair("sCode",
-	// "9EB2F1619156C86DD91C5652516F175E"));
-	// try {
-	// /* 添加请求参数到请求对象 */
-	// httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-	// /* 发送请求并等待响应 */
-	// HttpResponse httpResponse = new DefaultHttpClient()
-	// .execute(httpRequest);
-	// /* 若状态码为200 ok */
-	// if (httpResponse.getStatusLine().getStatusCode() == 200) {
-	// /* 读返回数据(整个Post后的页面源码.) */
-	// String strResult = EntityUtils.toString(httpResponse
-	// .getEntity(), "utf_8");
-	// if (strResult.contains("[F]")) {
-	// errMsg = strResult.split("#")[1];
-	// return false;
-	// } else if (strResult.contains("[S]")) {
-	// // 获取排名内容
-	// String data = strResult.split("#")[1];
-	// // 获取当前排名
-	// myRank = Integer.valueOf(strResult.split("#")[2]);
-	// for (int i = 0; i < data.split(";").length; i++) {
-	// HashMap<String, String> hm = new HashMap<String, String>();
-	// hm.put("name", data.split(";")[i].split(":")[0]);
-	// hm.put("score", data.split(";")[i].split(":")[1]);
-	// hm.put("country", data.split(";")[i].split(":")[2]);
-	// listData.add(hm);
-	// }
-	// return true;
-	// }
-	// } else {
-	// errMsg = "Error Response: "
-	// + httpResponse.getStatusLine().toString();
-	// return false;
-	// }
-	// } catch (ClientProtocolException e) {
-	// errMsg = e.getMessage().toString();
-	// e.printStackTrace();
-	// } catch (IOException e) {
-	// errMsg = e.getMessage().toString();
-	// e.printStackTrace();
-	// } catch (Exception e) {
-	// errMsg = e.getMessage().toString();
-	// e.printStackTrace();
-	// }
-	// return false;
-	// }
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
@@ -282,26 +227,33 @@ public class sBoardView extends Activity {
 	private boolean listCreater(ArrayList<HashMap<String, String>> data) {
 		if (data.isEmpty())
 			return false;
-		SimpleAdapter sAdp = new SimpleAdapter(this, data,// 数据来源
-				R.layout.lv_sboard,// 每一个user xml 相当ListView的一个组件
-				new String[] { "rank", "valuef", "player", "date", "value1" },
-				// 分别对应view 的id
-				new int[] { R.id.list_rank, R.id.list_valuef, R.id.list_player,
-						R.id.list_date, R.id.list_value1 });
-		// 获取listview
-		((ListView) findViewById(R.id.lv)).setAdapter(sAdp);
-		((ListView) findViewById(R.id.lv)).setSelection(select - 2);
-		Log.d("d", select + "");
-		((ListView) findViewById(R.id.lv))
-				.setOnItemClickListener(new OnItemClickListener() {
-
-					@Override
-					public void onItemClick(AdapterView<?> arg0, View arg1,
-							int arg2, long arg3) {
-						Log.d("ListView", arg2 + "Clicked");
-					}
-
-				});
+		// SimpleAdapter sAdp = new SimpleAdapter(this, data,// 数据来源
+		// R.layout.lv_sboard,// 每一个user xml 相当ListView的一个组件
+		// new String[] { "rank", "valuef", "player", "date", "value1" },
+		// // 分别对应view 的id
+		// new int[] { R.id.list_rank, R.id.list_valuef, R.id.list_player,
+		// R.id.list_date, R.id.list_value1 });
+		// // 获取listview
+		// ((ListView) findViewById(R.id.lv)).setAdapter(sAdp);
+		// ((ListView) findViewById(R.id.lv)).setSelection(select - 2);
+		// ((ListView) findViewById(R.id.lv))
+		// .setOnItemClickListener(new OnItemClickListener() {
+		// @Override
+		// public void onItemClick(AdapterView<?> arg0, View arg1,
+		// int arg2, long arg3) {
+		// Log.d("ListView", arg2 + "Clicked");
+		// }
+		//
+		// });
+		ListView lv = ((ListView) findViewById(R.id.lv));
+		EfficientAdapter eAdap = new EfficientAdapter(sBoardView.this);
+		eAdap.addData(data);
+		lv.setAdapter(eAdap);
+		if (myRank > 0) {
+			lv.setSelection(myRank - 1);
+		}
+		tv.setVisibility(View.GONE);
+		pb.setVisibility(View.GONE);
 		return true;
 	}
 
@@ -317,7 +269,7 @@ public class sBoardView extends Activity {
 		}
 
 		public int getCount() {
-			return listData.size();
+			return DATA.size();
 		}
 
 		public Object getItem(int position) {
@@ -340,20 +292,18 @@ public class sBoardView extends Activity {
 			// supplied
 			// by ListView is null.
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.lv_ol, null);
+				convertView = mInflater.inflate(R.layout.list_score, null);
 
 				// Creates a ViewHolder and store references to the two children
 				// views
 				// we want to bind data to.
 				holder = new ViewHolder();
-				holder.tv0 = (TextView) convertView
-						.findViewById(R.id.ol_value0);
-				holder.tv1 = (TextView) convertView
-						.findViewById(R.id.ol_value1);
-				holder.tv2 = (TextView) convertView
-						.findViewById(R.id.ol_value2);
-				holder.tv3 = (TextView) convertView
-						.findViewById(R.id.ol_value3);
+				holder.tv_rank = (TextView) convertView
+						.findViewById(R.id.ls_rank);
+				holder.tv_time = (TextView) convertView
+						.findViewById(R.id.ls_time);
+				holder.tv_date = (TextView) convertView
+						.findViewById(R.id.ls_date);
 
 				convertView.setTag(holder);
 			} else {
@@ -363,41 +313,40 @@ public class sBoardView extends Activity {
 			}
 
 			// Bind the data efficiently with the holder.
-			holder.tv0.setText(String.valueOf(position + 1)
+			holder.tv_rank.setText(String.valueOf(position + 1)
 					+ suffix(position + 1));
 			if (position == myRank - 1) {
-				holder.tv0.setBackgroundColor(Color.BLUE);
+				holder.tv_rank.setBackgroundColor(Color.BLUE);
 			} else {
-				holder.tv0.setBackgroundColor(Color.TRANSPARENT);
+				holder.tv_rank.setBackgroundColor(Color.TRANSPARENT);
 			}
 			switch (position) {
 			case 0:
-				holder.tv0.setTextColor(Color.RED);
-				holder.tv0.setTextSize(20f);
+				holder.tv_rank.setTextColor(Color.RED);
+				holder.tv_rank.setTextSize(20f);
 
 				break;
 			case 1:
-				holder.tv0.setTextColor(Color.BLUE);
-				holder.tv0.setTextSize(19f);
+				holder.tv_rank.setTextColor(Color.BLUE);
+				holder.tv_rank.setTextSize(19f);
 				break;
 			case 2:
-				holder.tv0.setTextColor(Color.GREEN);
-				holder.tv0.setTextSize(18f);
+				holder.tv_rank.setTextColor(Color.GREEN);
+				holder.tv_rank.setTextSize(18f);
 				break;
 			default:
-				holder.tv0.setTextColor(Color.WHITE);
-				holder.tv0.setTextSize(16f);
+				holder.tv_rank.setTextColor(Color.WHITE);
+				holder.tv_rank.setTextSize(16f);
 				break;
 			}
-			holder.tv1.setText(listData.get(position).get("name"));
-			holder.tv2.setText(listData.get(position).get("score"));
-			holder.tv3.setText(listData.get(position).get("country"));
+			holder.tv_time.setText(DATA.get(position).get("time"));
+			holder.tv_date.setText(DATA.get(position).get("date"));
 
 			return convertView;
 		}
 
 		class ViewHolder {
-			TextView tv0, tv1, tv2, tv3;
+			TextView tv_rank, tv_time, tv_date;
 		}
 
 		private String suffix(int num) {
@@ -415,6 +364,12 @@ public class sBoardView extends Activity {
 				return "th";
 			}
 		}
+
+		private void addData(ArrayList<HashMap<String, String>> data) {
+			DATA.addAll(data);
+		}
+
+		private ArrayList<HashMap<String, String>> DATA = new ArrayList<HashMap<String, String>>();
 	}
 
 	private TelephonyManager teleInfo;
