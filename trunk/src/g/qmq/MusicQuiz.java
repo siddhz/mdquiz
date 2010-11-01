@@ -145,15 +145,17 @@ public class MusicQuiz extends Activity implements OnClickListener,
 	}
 
 	private void openNewQuizDialog() {
-		new AlertDialog.Builder(this)
-				.setTitle(R.string.mode_title)
-				.setItems(R.array.quizMode,
-						new DialogInterface.OnClickListener() {
-							public void onClick(
-									DialogInterface dialoginterface, int i) {
-								startAct(i);
-							}
-						}).setCancelable(true).show();
+//		new AlertDialog.Builder(this)
+//				.setTitle(R.string.mode_title)
+//				.setItems(R.array.quizMode,
+//						new DialogInterface.OnClickListener() {
+//							public void onClick(
+//									DialogInterface dialoginterface, int i) {
+//								startAct(i);
+//							}
+//						}).setCancelable(true).show();
+		overridePendingTransition(R.anim.zoom_enter, R.anim.fade);
+		startActivity(new Intent(this, ModeSelection.class));
 	}
 
 	// Game entry

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/list_rel_world"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<TextView android:id="@+id/ls_rank" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:text="Rank"
+		android:gravity="left" 
+		android:layout_alignParentTop="true"
+		android:layout_alignParentLeft="true">
+	</TextView>
+	<TextView android:id="@+id/ls_time" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:text="Timed"
+		android:gravity="center" 
+		android:layout_alignParentTop="true"
+		android:layout_centerInParent="true">
+	</TextView>
+	<TextView android:id="@+id/ls_date" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:text="Date Time"
+		android:layout_alignParentTop="true" 
+		android:layout_alignParentRight="true">
+	</TextView>
+
+
+</RelativeLayout>
