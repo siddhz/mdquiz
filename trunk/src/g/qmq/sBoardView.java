@@ -155,72 +155,51 @@ public class sBoardView extends Activity {
 		try {
 			docBuilderFactory = DocumentBuilderFactory.newInstance();
 			docBuilder = docBuilderFactory.newDocumentBuilder();
-			// xml file 放到 assets目录中的
 			doc = docBuilder.parse(this.openFileInput(FileName));
 			// root element
 			Element root = doc.getDocumentElement();
-			// Do something here
-			// get a NodeList by tagname
-			NodeList nodeList = root.getElementsByTagName("data");
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				HashMap<String, String> hm = new HashMap<String, String>();
-				Node nd = nodeList.item(i);
-				hm.put("UID", nd.getAttributes().getNamedItem("UID")
-						.getNodeValue());
-				if (Integer.valueOf(nd.getAttributes().getNamedItem("UID")
-						.getNodeValue()) == UID) {
-					select = i;
-					hm.put("rank", String.valueOf(i + 1) + "<");
-				} else {
-					hm.put("rank", String.valueOf(i + 1));
+
+			NodeList rootList = root.getElementsByTagName("data");
+
+			for (int i = 0, j = rootList.getLength(); i < j; i++) {
+				Node rootNode = rootList.item(i);
+				NodeList nodeList = rootNode.getChildNodes();
+				if (nodeList != null) {
+					ArrayList<String[]> fieldList = new ArrayList<String[]>();
+					String[] temp = new String[3];
+					temp[0] = rootNode.getAttributes().getNamedItem("uid")
+							.getNodeValue();
+					int cUid = Integer.valueOf(temp[0]);
+					UID = (cUid >= UID) ? cUid + 1 : UID;
+					temp[1] = rootNode.getAttributes().getNamedItem("player")
+							.getNodeValue();
+					temp[2] = rootNode.getAttributes().getNamedItem("date")
+							.getNodeValue();
+					fieldList.add(temp);
+					for (int k = 0, l = nodeList.getLength(); k < l; k++) {
+						Node node = nodeList.item(k);
+						if (node.getNodeType() == Node.ELEMENT_NODE) {
+							temp = new String[3];
+							temp[0] = node.getAttributes().getNamedItem("name")
+									.getNodeValue();
+							temp[1] = node.getFirstChild().getNodeValue();
+							temp[2] = node.getAttributes().getNamedItem("unit")
+									.getNodeValue();
+							fieldList.add(temp);
+						}
+					}
+					temp_data.add(fieldList);
 				}
-				NodeList v1List = root.getElementsByTagName("value1");
-				Node v1Node = v1List.item(i);
-				hm.put("value1", v1Node.getAttributes().getNamedItem("name")
-						.getNodeValue()
-						+ ": " + v1Node.getFirstChild().getNodeValue());
-
-				NodeList v2List = root.getElementsByTagName("value2");
-				Node v2Node = v2List.item(i);
-				hm.put("value2", v2Node.getAttributes().getNamedItem("name")
-						.getNodeValue()
-						+ ": " + v2Node.getFirstChild().getNodeValue());
-
-				NodeList v3List = root.getElementsByTagName("value3");
-				Node v3Node = v3List.item(i);
-				hm.put("value3", v3Node.getAttributes().getNamedItem("name")
-						.getNodeValue()
-						+ ": " + v3Node.getFirstChild().getNodeValue());
-
-				NodeList vfList = root.getElementsByTagName("valuef");
-				Node vfNode = vfList.item(i);
-				hm.put("valuef", vfNode.getFirstChild().getNodeValue());
-
-				NodeList playerList = root.getElementsByTagName("player");
-				Node playerNode = playerList.item(i);
-				hm.put("player", playerNode.getFirstChild().getNodeValue());
-
-				NodeList dateList = root.getElementsByTagName("date");
-				Node dateNode = dateList.item(i);
-				hm.put("date", "Date: "
-						+ dateNode.getFirstChild().getNodeValue());
-
-				dataList.add(hm);
-
 			}
-			// re = getAttributes().getNamedItem("number").getNodeValue();
 		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
 		} catch (SAXException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 		} finally {
 			doc = null;
 			docBuilder = null;
 			docBuilderFactory = null;
 		}
-
 		return dataList;
 	}
 
