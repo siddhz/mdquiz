@@ -26,13 +26,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class sBoardView extends Activity {
 
@@ -147,14 +144,15 @@ public class sBoardView extends Activity {
 		return true;
 	}
 
-	private ArrayList<HashMap<String, String>> ReadXML(String FileName) {
-		ArrayList<HashMap<String, String>> dataList = new ArrayList<HashMap<String, String>>();
+	private ArrayList<ArrayList<String[]>> ReadXML(String FileName) {
+		ArrayList<ArrayList<String[]>> temp_data = new ArrayList<ArrayList<String[]>>();
 		DocumentBuilderFactory docBuilderFactory = null;
 		DocumentBuilder docBuilder = null;
 		Document doc = null;
 		try {
 			docBuilderFactory = DocumentBuilderFactory.newInstance();
 			docBuilder = docBuilderFactory.newDocumentBuilder();
+			// xml file 放到 assets目录中的
 			doc = docBuilder.parse(this.openFileInput(FileName));
 			// root element
 			Element root = doc.getDocumentElement();
@@ -169,8 +167,6 @@ public class sBoardView extends Activity {
 					String[] temp = new String[3];
 					temp[0] = rootNode.getAttributes().getNamedItem("uid")
 							.getNodeValue();
-					int cUid = Integer.valueOf(temp[0]);
-					UID = (cUid >= UID) ? cUid + 1 : UID;
 					temp[1] = rootNode.getAttributes().getNamedItem("player")
 							.getNodeValue();
 					temp[2] = rootNode.getAttributes().getNamedItem("date")
@@ -200,10 +196,10 @@ public class sBoardView extends Activity {
 			docBuilder = null;
 			docBuilderFactory = null;
 		}
-		return dataList;
+		return temp_data;
 	}
 
-	private boolean listCreater(ArrayList<HashMap<String, String>> data) {
+	private boolean listCreater(ArrayList<ArrayList<String[]>> data) {
 		if (data.isEmpty())
 			return false;
 		// SimpleAdapter sAdp = new SimpleAdapter(this, data,// 数据来源
@@ -318,8 +314,8 @@ public class sBoardView extends Activity {
 				holder.tv_rank.setTextSize(16f);
 				break;
 			}
-			holder.tv_time.setText(DATA.get(position).get("time"));
-			holder.tv_date.setText(DATA.get(position).get("date"));
+			holder.tv_time.setText(DATA.get(position).get(position)[0]);
+			holder.tv_date.setText(DATA.get(position).get(position)[1]);
 
 			return convertView;
 		}
@@ -344,11 +340,11 @@ public class sBoardView extends Activity {
 			}
 		}
 
-		private void addData(ArrayList<HashMap<String, String>> data) {
+		private void addData(ArrayList<ArrayList<String[]>> data) {
 			DATA.addAll(data);
 		}
 
-		private ArrayList<HashMap<String, String>> DATA = new ArrayList<HashMap<String, String>>();
+		private ArrayList<ArrayList<String[]>> DATA = new ArrayList<ArrayList<String[]>>();
 	}
 
 	private TelephonyManager teleInfo;
