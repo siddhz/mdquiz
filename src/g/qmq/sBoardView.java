@@ -314,8 +314,8 @@ public class sBoardView extends Activity {
 				holder.tv_rank.setTextSize(16f);
 				break;
 			}
-			holder.tv_time.setText(DATA.get(position).get(position)[0]);
-			holder.tv_date.setText(DATA.get(position).get(position)[1]);
+			holder.tv_time.setText(DATA.get(position).get(SCORE_POS)[1]);
+			holder.tv_date.setText(DATA.get(position).get(TIME_POS)[1]);
 
 			return convertView;
 		}
@@ -345,6 +345,7 @@ public class sBoardView extends Activity {
 		}
 
 		private ArrayList<ArrayList<String[]>> DATA = new ArrayList<ArrayList<String[]>>();
+		private int TIME_POS = 4, SCORE_POS;
 	}
 
 	private TelephonyManager teleInfo;
