@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,12 +31,12 @@ public class MusicQuiz extends Activity implements OnClickListener,
 	private View tv;
 	private boolean showAnim;
 	private boolean forceEN;
-
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE); // Hide title bar.
-
+		requestWindowFeature(Window.FEATURE_NO_TITLE); // Hide title bar.	
+		
 		/*
 		 * Country and Language List.
 		 * http://developer.android.com/reference/java/util/Locale.html
