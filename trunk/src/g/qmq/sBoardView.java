@@ -22,8 +22,8 @@ public class sBoardView extends Activity {
 	}
 	
 	private void xmlReader(String name){
-		
 	}
+	
 
 	/*
 	 * Thread	***START***
@@ -48,5 +48,8 @@ public class sBoardView extends Activity {
 	/*
 	 * Handler	***END***
 	 */
+	
+
+	
 	private RelativeLayout waitRela;
 }
