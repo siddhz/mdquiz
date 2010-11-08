@@ -160,8 +160,11 @@ public class libBuilder extends Activity {
 	public void onPause() {
 		super.onPause();
 		// TODO Move string to xml
-		xmlThd.stop();
-		Toast.makeText(libBuilder.this, "Canceled", Toast.LENGTH_LONG).show();
+		if (xmlThd.isAlive()) { //If thread
+			xmlThd.stop();
+			Toast.makeText(libBuilder.this, "Canceled", Toast.LENGTH_LONG)
+					.show();
+		}
 		libBuilder.this.finish();
 	}
 
@@ -169,5 +172,4 @@ public class libBuilder extends Activity {
 	private TextView tv1, tv2;
 	private String errMsg, date, dir;
 	private int total, now;
-	// private boolean id3tag;
 }

@@ -44,6 +44,7 @@ import android.widget.TextView;
 public class Result extends Activity implements OnClickListener,
 		OnTouchListener {
 	private final static int MAX_ENTRY = 100; // Max entry stored in XML.
+	private final static String TIME_KEY = "total time";
 	private final static long animTime = 1500;
 
 	@Override
@@ -93,7 +94,11 @@ public class Result extends Activity implements OnClickListener,
 			Bundle bundle = this.getIntent().getExtras();
 			resultData = bundle.getStringArray("resultData");
 			mode = bundle.getChar("MODE");
-
+			switch (mode) {
+			case 'T':
+				KEY = TIME_KEY;
+				break;
+			}
 			int dLength = resultData.length / 3 * 2;
 			TextView resultTV[] = new TextView[dLength];
 			String formatData[] = new String[dLength];
@@ -301,7 +306,13 @@ public class Result extends Activity implements OnClickListener,
 				for (int j = 1, k = source.get(i).size(); j < k; j++) {
 					serializer.startTag("", "fields");
 					serializer.attribute("", "name", source.get(i).get(j)[0]);
-					serializer.attribute("", "unit", source.get(i).get(j)[2]);
+					serializer.attribute("", "unit", source.get(i).get(j)[2]);					
+					//Check if the field is a key field
+					if (source.get(i).get(j)[0] == KEY) {
+						serializer.attribute("", "key", "1");
+					} else {
+						serializer.attribute("", "key", "0");
+					}
 					serializer.text(source.get(i).get(j)[1]);
 					serializer.endTag("", "fields");
 				}
@@ -477,4 +488,5 @@ public class Result extends Activity implements OnClickListener,
 	private ArrayList<ArrayList<String[]>> dataStore = new ArrayList<ArrayList<String[]>>();
 	private int mYear, mMonth, mDay, mHour, mMinute, uid;
 	private TextView tv[] = new TextView[3];
+	private String KEY;
 }

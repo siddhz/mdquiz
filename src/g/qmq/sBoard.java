@@ -23,7 +23,7 @@ public class sBoard extends TabActivity {
 				.setIndicator(getResources().getString(R.string.quizMode_ta_s),
 						getResources().getDrawable(R.drawable.tab_time))
 				.setContent(
-						new Intent(this, sBoardView.class).putExtra("mode", 0)
+						new Intent(this, sBoardView_d.class).putExtra("mode", 0)
 								.putExtra("UID", UID)));
 
 		tabHost.setCurrentTab(mode);
