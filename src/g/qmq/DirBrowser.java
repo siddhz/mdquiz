@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DirBrowser extends Activity implements OnClickListener {
 	private String currentDir;
@@ -29,9 +30,15 @@ public class DirBrowser extends Activity implements OnClickListener {
 				WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 		setContentView(R.layout.file_layout);
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
-		currentDir = prefs.getString("music_dir", "/sdcard/");
-		fill(new File(currentDir).listFiles());
-
+		currentDir = prefs.getString("music_dir", "/");
+		try{
+			fill(new File(currentDir).listFiles());
+		}catch (Exception e){
+			Toast.makeText(this, "Current directory not found.", Toast.LENGTH_LONG).show(); //TODO move to xml
+			currentDir = "/";
+				fill(new File(currentDir).listFiles());
+		}
+			
 		View btnSelectDir = findViewById(R.id.btnSelectDir);
 		btnSelectDir.setOnClickListener(this);
 	}
