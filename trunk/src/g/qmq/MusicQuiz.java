@@ -137,7 +137,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		case R.id.btnBoard:
 			overridePendingTransition(R.anim.hold, R.anim.fade);
 			startActivity(new Intent(this, sBoard.class).putExtra("UID", -1)
-					.putExtra("mode", "0"));
+					.putExtra("mode", 0));
 			break;
 		case R.id.btnExit:
 			android.os.Process.killProcess(android.os.Process.myPid());

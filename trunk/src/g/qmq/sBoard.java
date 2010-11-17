@@ -9,13 +9,18 @@ import android.widget.TabHost.OnTabChangeListener;
 
 public class sBoard extends TabActivity {
 	int UID = -1;
+	int MODE = 0;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		UID = this.getIntent().getExtras().getInt("UID");
-		int mode = this.getIntent().getExtras().getInt("mode");
+		try {
+			UID = this.getIntent().getExtras().getInt("UID");
+			MODE = this.getIntent().getExtras().getInt("mode");
+		} catch (Exception e) {
+		}
+
 		final TabHost tabHost = getTabHost();
 
 		tabHost.addTab(tabHost
@@ -23,10 +28,10 @@ public class sBoard extends TabActivity {
 				.setIndicator(getResources().getString(R.string.quizMode_ta_s),
 						getResources().getDrawable(R.drawable.tab_time))
 				.setContent(
-						new Intent(this, sBoardView_d.class).putExtra("mode", 0)
-								.putExtra("UID", UID)));
+						new Intent(this, sBoardView.class)
+								.putExtra("mode", 0).putExtra("UID", UID)));
 
-		tabHost.setCurrentTab(mode);
+		tabHost.setCurrentTab(MODE);
 		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
 			@Override
 			public void onTabChanged(String tabId) {
