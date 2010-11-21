@@ -248,9 +248,9 @@ public class sBoardView_d extends Activity {
 				holder.tv_rank = (TextView) convertView
 						.findViewById(R.id.ls_rank);
 				holder.tv_time = (TextView) convertView
-						.findViewById(R.id.ls_time);
+						.findViewById(R.id.ls_score);
 				holder.tv_date = (TextView) convertView
-						.findViewById(R.id.ls_date);
+						.findViewById(R.id.ls_player);
 
 				convertView.setTag(holder);
 			} else {

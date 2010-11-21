@@ -14,12 +14,19 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class sBoardView extends Activity {
 	@Override
@@ -114,8 +121,8 @@ public class sBoardView extends Activity {
 	private Thread initThd = new Thread(new Runnable() {
 		@Override
 		public void run() {
-			ArrayList<ArrayList<String[]>> resultT = new ArrayList<ArrayList<String[]>>();
 			resultT = xmlReader("TimeMode.xml");
+			handler.sendEmptyMessage(1);
 		}
 	});
 	/*
@@ -128,6 +135,35 @@ public class sBoardView extends Activity {
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 1: // Success
+				ListView lv = ((ListView) findViewById(R.id.lv));
+				eAdapter eAdap = new eAdapter(sBoardView.this);
+				eAdap.addData(resultT);
+				lv.setAdapter(eAdap);
+				lv.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> av, View v, int i,
+							long l) {
+						ArrayList<String[]> showList = resultT.get(i);
+						int length = showList.size();
+						String detail[] = new String[length - (length / 4)];
+						int k = 0;
+						for (int x = 0, y = length; x < y; i++) {
+							if (x % 4 != 0) {
+								detail[k++] = showList.get(i)[1];
+								detail[k++] = showList.get(i)[2];
+								detail[k++] = showList.get(i)[3];
+							}
+						}
+						startActivity(new Intent(sBoardView.this,
+								showDetail.class).putExtra("detail", detail));
+					}
+				});
+				// Hide loading view.
+				waitRela.setVisibility(View.GONE);
+				break;
+			}
 		}
 	};
 	/*
@@ -135,4 +171,5 @@ public class sBoardView extends Activity {
 	 */
 
 	private RelativeLayout waitRela;
+	private ArrayList<ArrayList<String[]>> resultT = new ArrayList<ArrayList<String[]>>();
 }

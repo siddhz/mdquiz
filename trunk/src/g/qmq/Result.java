@@ -99,15 +99,25 @@ public class Result extends Activity implements OnClickListener,
 				KEY = TIME_KEY;
 				break;
 			}
-			int dLength = resultData.length / 3 * 2;
+			int rLength = resultData.length;
+			String preFormat[] = new String[rLength - (rLength / 4)];
+			int pLength = preFormat.length;
+			for (int i = 0, k = 0; i < rLength; i++) {
+				if (i % 4 != 0) {
+					preFormat[k] = resultData[i];
+					k++;
+				}
+			}
+
+			int dLength = pLength / 3 * 2;
 			TextView resultTV[] = new TextView[dLength];
 			String formatData[] = new String[dLength];
-			for (int i = 0, k = 0, j = resultData.length; i < j; i++) {
+			for (int i = 0, k = 0, j = preFormat.length; i < j; i++) {
 				if ((i + 1) % 3 != 0) {
 					if ((i + 2) % 3 == 0) {
-						formatData[k] = resultData[i] + resultData[i + 1];
+						formatData[k] = preFormat[i] + preFormat[i + 1];
 					} else {
-						formatData[k] = resultData[i];
+						formatData[k] = preFormat[i];
 					}
 					k++;
 				}
@@ -192,7 +202,7 @@ public class Result extends Activity implements OnClickListener,
 				int i = 0, j = resultData.length;
 				while (i < j) {
 					String[] temp = new String[] { resultData[i],
-							resultData[++i], resultData[++i] };
+							resultData[++i], resultData[++i], resultData[++i] };
 					i++;
 					current_data.add(temp);
 				}
@@ -201,7 +211,9 @@ public class Result extends Activity implements OnClickListener,
 				e.printStackTrace();
 			}
 			// Sort data.
-			dataStore = sortList(dataStore, 1, true);
+			dataStore = sortList(dataStore, -1, true);
+			char cha = '+';
+			System.out.println(cha);
 
 			// Create and write XML file.
 			String xmlStr = makeXML(dataStore);
@@ -263,11 +275,13 @@ public class Result extends Activity implements OnClickListener,
 					for (int k = 0, l = nodeList.getLength(); k < l; k++) {
 						Node node = nodeList.item(k);
 						if (node.getNodeType() == Node.ELEMENT_NODE) {
-							temp = new String[3];
-							temp[0] = node.getAttributes().getNamedItem("name")
+							temp = new String[4];
+							temp[0] = node.getAttributes().getNamedItem("key")
 									.getNodeValue();
-							temp[1] = node.getFirstChild().getNodeValue();
-							temp[2] = node.getAttributes().getNamedItem("unit")
+							temp[1] = node.getAttributes().getNamedItem("name")
+									.getNodeValue();
+							temp[2] = node.getFirstChild().getNodeValue();
+							temp[3] = node.getAttributes().getNamedItem("unit")
 									.getNodeValue();
 							fieldList.add(temp);
 						}
@@ -305,15 +319,10 @@ public class Result extends Activity implements OnClickListener,
 
 				for (int j = 1, k = source.get(i).size(); j < k; j++) {
 					serializer.startTag("", "fields");
-					serializer.attribute("", "name", source.get(i).get(j)[0]);
-					serializer.attribute("", "unit", source.get(i).get(j)[2]);					
-					//Check if the field is a key field
-					if (source.get(i).get(j)[0] == KEY) {
-						serializer.attribute("", "key", "1");
-					} else {
-						serializer.attribute("", "key", "0");
-					}
-					serializer.text(source.get(i).get(j)[1]);
+					serializer.attribute("", "key", source.get(i).get(j)[0]);
+					serializer.attribute("", "name", source.get(i).get(j)[1]);
+					serializer.attribute("", "unit", source.get(i).get(j)[3]);
+					serializer.text(source.get(i).get(j)[2]);
 					serializer.endTag("", "fields");
 				}
 
@@ -347,30 +356,55 @@ public class Result extends Activity implements OnClickListener,
 
 	private ArrayList<ArrayList<String[]>> sortList(
 			ArrayList<ArrayList<String[]>> source, int sortBy, Boolean inc) {
-		if (source == null)
-			return null;
+		// Sorted case.
 		if (source.size() <= 1)
 			return source;
+		// Sort by key field.
+		sortBy = (sortBy < 0) ? findKeyPos(source.get(0)) : sortBy;
+		int index, fieldValue = 2;
 		ArrayList<ArrayList<String[]>> sortedList = new ArrayList<ArrayList<String[]>>();
-		while (!source.isEmpty()) {
-			int temp = 0;
-			for (int i = 0; i < source.size(); i++) {
-				if (inc) {
-					if (Double.valueOf(source.get(i).get(sortBy)[1]) < Double
-							.valueOf(source.get(temp).get(sortBy)[1])) {
-						temp = i;
-					}
-				} else {
-					if (Double.valueOf(source.get(i).get(sortBy)[1]) > Double
-							.valueOf(source.get(temp).get(sortBy)[1])) {
-						temp = i;
+		ArrayList<String[]> temp = new ArrayList<String[]>();
+		if (inc) {
+			while (!source.isEmpty()) {
+				temp = source.get(0);
+				index = 0;
+				for (int i = 0, j = source.size(); i < j; i++) {
+					int t = Integer.valueOf(temp.get(sortBy)[fieldValue]);
+					int c = Integer.valueOf(source.get(i).get(sortBy)[fieldValue]);
+					if(c < t){
+						temp = source.get(i);
+						index = i;
 					}
 				}
+				sortedList.add(temp);
+				source.remove(index);
 			}
-			sortedList.add(source.get(temp));
-			source.remove(temp);
+		}else{
+			while (!source.isEmpty()) {
+				temp = source.get(0);
+				index = 0;
+				for (int i = 0, j = source.size(); i < j; i++) {
+					int t = Integer.valueOf(temp.get(sortBy)[fieldValue]);
+					int c = Integer.valueOf(source.get(i).get(sortBy)[fieldValue]);
+					if(c > t){
+						temp = source.get(i);
+						index = i;
+					}
+				}
+				sortedList.add(temp);
+				source.remove(index);
+			}
 		}
 		return sortedList;
+	}
+
+	private int findKeyPos(ArrayList<String[]> list) {
+		for (int i = 1, j = list.size(); i < j; i++) {
+			if (Integer.valueOf(list.get(i)[0]) == 1) {
+				return i;
+			}
+		}
+		return 1;
 	}
 
 	// private void anim(View v, long delate, long offset, boolean fill,

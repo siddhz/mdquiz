@@ -50,8 +50,10 @@ public class eAdapter extends BaseAdapter {
 			// we want to bind data to.
 			holder = new ViewHolder();
 			holder.tv_rank = (TextView) convertView.findViewById(R.id.ls_rank);
-			holder.tv_time = (TextView) convertView.findViewById(R.id.ls_time);
-			holder.tv_date = (TextView) convertView.findViewById(R.id.ls_date);
+			holder.tv_score = (TextView) convertView
+					.findViewById(R.id.ls_score);
+			holder.tv_player = (TextView) convertView
+					.findViewById(R.id.ls_player);
 
 			convertView.setTag(holder);
 		} else {
@@ -71,36 +73,41 @@ public class eAdapter extends BaseAdapter {
 		switch (position) {
 		case 0:
 			holder.tv_rank.setTextColor(Color.RED);
-			holder.tv_rank.setTextSize(20f);
-
 			break;
 		case 1:
 			holder.tv_rank.setTextColor(Color.BLUE);
-			holder.tv_rank.setTextSize(19f);
 			break;
 		case 2:
 			holder.tv_rank.setTextColor(Color.GREEN);
-			holder.tv_rank.setTextSize(18f);
 			break;
 		default:
 			holder.tv_rank.setTextColor(Color.WHITE);
-			holder.tv_rank.setTextSize(16f);
 			break;
 		}
-		holder.tv_time.setText(DATA.get(position).get(1)[1]);
-		holder.tv_date.setText(DATA.get(position).get(2)[1]);
+		// Preset value for keyfield not found.
+//		holder.tv_score.setText(DATA.get(position).get(4)[2]);
+		for (int i = 1, j = DATA.get(position).size(); i < j; i++) {
+			// Search for key field from 1 to size.
+			if(Integer.valueOf(DATA.get(position).get(i)[0]) > 0){
+				String[] keyField = DATA.get(position).get(i);
+				holder.tv_score.setText(keyField[2]+" "+keyField[3]);
+				break;
+			}
+		}
+		holder.tv_player.setText(DATA.get(position).get(0)[1]);
 
 		return convertView;
 	}
 
 	class ViewHolder {
-		TextView tv_rank, tv_time, tv_date;
+		TextView tv_rank, tv_score, tv_player;
 	}
 
 	/**
 	 * 生成数字后缀.
 	 * 
-	 * @param num int 任何整数
+	 * @param num
+	 *            int 任何整数
 	 * @return String 后缀"st","nd","rd","th".
 	 */
 	private String suffix(int num) {
@@ -119,8 +126,8 @@ public class eAdapter extends BaseAdapter {
 		}
 	}
 
-	private void addData(ArrayList<ArrayList<String[]>> data) {
-		DATA.addAll(data);
+	public void addData(ArrayList<ArrayList<String[]>> data) {
+		DATA = data;
 	}
 
 	private ArrayList<ArrayList<String[]>> DATA = new ArrayList<ArrayList<String[]>>();
