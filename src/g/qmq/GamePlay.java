@@ -343,13 +343,14 @@ public class GamePlay extends Activity implements OnTouchListener,
 										/ (rCount + wCount) * 100));
 								// First place must be mode code;
 								String[] resultData = new String[] {
-										"Total Questions",
+										"0", "Total Questions",
 										String.valueOf(questionNum), "Q",
-										"Correct Answers",
+										"0", "Correct Answers",
 										String.valueOf(rCount), "Q",
-										"Incorrect Answers",
+										"0", "Incorrect Answers",
 										String.valueOf(wCount), "Q",
-										"Accuracy", acc, "%", "Total Time",
+										"0", "Accuracy", acc, "%", 
+										"1", "Total Time",
 										String.valueOf(timePass), "Sec" };
 								b.putStringArray("resultData", resultData);
 								b.putChar("MODE", MODE_CODE_TIME);

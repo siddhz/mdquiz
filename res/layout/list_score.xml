@@ -9,22 +9,30 @@
 		android:text="Rank"
 		android:gravity="left" 
 		android:layout_alignParentTop="true"
-		android:layout_alignParentLeft="true">
+		android:layout_alignParentLeft="true"
+		android:textSize="25sp"
+		>
 	</TextView>
-	<TextView android:id="@+id/ls_time" 
+	<TextView android:id="@+id/ls_score" 
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" 
-		android:text="Timed"
-		android:gravity="center" 
-		android:layout_alignParentTop="true"
-		android:layout_centerInParent="true">
+		android:text="Score"
+		android:gravity="right" 
+		android:layout_alignParentTop="true"		
+		android:layout_toLeftOf="@+id/ls_player"
+		android:textSize="25sp"
+		>
 	</TextView>
-	<TextView android:id="@+id/ls_date" 
+	<TextView 
+		android:id="@+id/ls_player" 
+		android:layout_marginLeft="20dip"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content" 
-		android:text="Date Time"
+		android:text="PlayName"
 		android:layout_alignParentTop="true" 
-		android:layout_alignParentRight="true">
+		android:layout_alignParentRight="true"
+		android:textSize="25sp"
+		>
 	</TextView>
 
 

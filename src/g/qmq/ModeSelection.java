@@ -1,5 +1,7 @@
 package g.qmq;
 
+import java.util.Random;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +40,22 @@ public class ModeSelection extends Activity implements OnTouchListener,
 	@Override
 	public void onClick(View v) {
 		overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
-		startActivity(new Intent(this, GamePlay.class));
+
+		Intent it = new Intent(this, Result.class);
+		Random rd = new Random();
+		Bundle bundle = new Bundle();
+		String[] test = new String[] { 
+				"0","Total Questions", "100", "Q",
+				"0","Corrects", "5", "Q", 
+				"0","Incorrects", "5", "Q", 
+				"1","Total Time",
+				String.valueOf(rd.nextInt(100)), "S" };
+		bundle.putStringArray("resultData", test);
+		bundle.putChar("MODE", 'T');
+		it.putExtras(bundle);
+		startActivity(it);
+
+		// startActivity(new Intent(this, GamePlay.class));
 		this.finish();
 	}
 }
