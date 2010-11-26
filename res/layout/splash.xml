@@ -5,10 +5,10 @@
 		android:layout_height="fill_parent" android:src="@drawable/splash"
 		android:scaleType="fitXY">
 	</ImageView>
-	<ImageView android:id="@+id/disk" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:src="@drawable/icon"
-		android:layout_alignParentBottom="true"
-		android:layout_alignParentLeft="true" android:layout_marginBottom="20dip"
-		android:layout_marginLeft="20dip">
-	</ImageView>
+<!--	<ImageView android:id="@+id/disk" android:layout_width="wrap_content"-->
+<!--		android:layout_height="wrap_content" android:src="@drawable/icon"-->
+<!--		android:layout_alignParentBottom="true"-->
+<!--		android:layout_alignParentLeft="true" android:layout_marginBottom="20dip"-->
+<!--		android:layout_marginLeft="20dip">-->
+<!--	</ImageView>-->
 </RelativeLayout>

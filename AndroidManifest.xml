@@ -48,10 +48,10 @@
 		<activity android:name=".libBuilder" android:label="@string/lib_title"
 			android:theme="@android:style/Theme.Dialog"></activity>
 		<activity android:name=".ModeSelection" android:label="Select Mode"
-			android:theme="@style/myTheme"></activity>
+			android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 		<activity android:name=".showDetail"
 			android:screenOrientation="portrait" android:label=""
-			android:theme="@android:style/Theme.Dialog"></activity>
+			android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
 		<!-- The application's publisher ID assigned by AdMob -->
 		<meta-data android:value="a14bda444ed1c13" android:name="ADMOB_PUBLISHER_ID" />
