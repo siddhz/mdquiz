@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 
 public class splash extends Activity {
@@ -25,44 +23,57 @@ public class splash extends Activity {
 		iv.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				wait = WELCOME_TIME;
+				startActivity(new Intent(splash.this, MusicQuiz.class));
+				splash.this.finish();
 			}
 		});
 
-		disk = (ImageView) findViewById(R.id.disk);
-		Animation am_move = new TranslateAnimation(0, 0, -50f, 0);
-		am_move.setInterpolator(new AccelerateDecelerateInterpolator());
-		am_move.setFillAfter(true);
-		am_move.setDuration(WELCOME_TIME / 3);
+		Animation fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out);
+		fadeOut.setDuration((long) (WELCOME_TIME * 0.4));
+		fadeOut.setStartOffset((long) (WELCOME_TIME * 0.6) - 500);
+		fadeOut.setFillAfter(true);
+		fadeOut.setAnimationListener(new AnimationListener() {
 
-		Animation am_spin = new RotateAnimation(0, 7200f, 36f, 36f);
-		am_spin.setInterpolator(new AccelerateInterpolator());
-		am_spin.setFillAfter(true);
-		am_spin.setDuration(WELCOME_TIME + 1000);
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				startActivity(new Intent(splash.this, MusicQuiz.class));
+				splash.this.finish();
+			}
 
-		disk.startAnimation(am_move);
-		disk.startAnimation(am_spin);
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
 
-		welcomeThread.start();
+			}
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		iv.startAnimation(fadeOut);
+
+		// welcomeThread.start();
 	}
 
-	private Thread welcomeThread = new Thread() {
-		@Override
-		public void run() {
-			try {
-				super.run();
-				while (wait < WELCOME_TIME) {
-					sleep(10);
-					wait += 10;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				startActivity(new Intent(splash.this, MusicQuiz.class));
-				finish();
-			}
-		}
-	};
+	// private Thread welcomeThread = new Thread() {
+	// @Override
+	// public void run() {
+	// try {
+	// super.run();
+	// while (wait < WELCOME_TIME) {
+	// sleep(10);
+	// wait += 10;
+	// }
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// } finally {
+	// startActivity(new Intent(splash.this, MusicQuiz.class));
+	// finish();
+	// }
+	// }
+	// };
 
 	private int wait = 0;
 	private ImageView iv, disk;

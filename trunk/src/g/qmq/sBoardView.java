@@ -147,17 +147,16 @@ public class sBoardView extends Activity {
 							long l) {
 						ArrayList<String[]> showList = resultT.get(i);
 						int length = showList.size();
-						String detail[] = new String[length - (length / 4)];
+						String[] detail = new String[3 * (length - 1)];
 						int k = 0;
-						for (int x = 0, y = length; x < y; i++) {
-							if (x % 4 != 0) {
-								detail[k++] = showList.get(i)[1];
-								detail[k++] = showList.get(i)[2];
-								detail[k++] = showList.get(i)[3];
-							}
+						for (int x = 1, y = length; x < y; x++) {
+							detail[k++] = showList.get(x)[1];
+							detail[k++] = showList.get(x)[2];
+							detail[k++] = showList.get(x)[3];
 						}
 						startActivity(new Intent(sBoardView.this,
-								showDetail.class).putExtra("detail", detail));
+								showDetail.class).putExtra("detail", detail)
+								.putExtra("head", showList.get(0)));
 					}
 				});
 				// Hide loading view.
