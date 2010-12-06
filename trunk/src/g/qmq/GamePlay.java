@@ -351,7 +351,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 										String.valueOf(wCount), "Q",
 										"0", "Accuracy", acc, "%", 
 										"1", "Total Time",
-										String.valueOf(timePass), "Sec" };
+										String.valueOf(timePass/10), "Sec" };
 								b.putStringArray("resultData", resultData);
 								b.putChar("MODE", MODE_CODE_TIME);
 								break;
