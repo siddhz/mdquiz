@@ -9,7 +9,7 @@
 		android:layout_alignParentLeft="true" android:gravity="center">
 		<ImageView android:src="@drawable/main_logo"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:layout_marginBottom="20dip" android:layout_marginTop="20dip"></ImageView>
+			android:layout_marginBottom="20dip" android:layout_marginTop="40dip"></ImageView>
 	</LinearLayout>
 	<TextView android:id="@+id/side_note" android:layout_width="150dip"
 		android:layout_height="220dip" android:layout_alignParentRight="true"

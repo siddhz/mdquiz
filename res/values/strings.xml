@@ -6,7 +6,7 @@
 	<string name="setting_title">Settings</string>
 	<string name="file_title">Select Music Folder</string>
 	<string name="file_folderName">/</string>
-	<string name="btnSelectDir_label">Select Current Folder</string>
+	<string name="btnSelectDir_label">Select and Scan</string>
 
 
 	<string name="menuAbout_label">About</string>
@@ -23,68 +23,31 @@
 
 	<string name="about_title">About MDriod</string>
 	<string name="about_content">
-		mDroid Music Quiz is a game which loads music from local SD Card and turn
-		them into exciting music quiz game.
-		\nDifferent game modes give different gaming experience.
-		\nHere are some quick introduction to those game modes:
-		\nTime Attack:
-		The goal is to answer all questions correctly as fast as possible.
-		\n\nMemory Ordeal: This mode tests you memory, you want to be as
-		accurate as possible and take your time.
-		\n\nSudden Death: This is a
-		very difficulty mode and rule is simple DO NOT pick the wrong one,
-		game over after first mistake.
-		\n\nOnline Challenge:
-		This mode is combination of both death and timed mode. It requires
-		both accuracy and quickness. Most importantly your result will be
-		posted online and compete with other music lover like you.
+		This is a BETA test version.\n
+		MDroid Music Quiz is a game which loads music from local SDCard or Phone Memory and turns them into exciting music quiz game.\n	
 	</string>
 
 	<string name="agreement">
-		Congratulations! You have successfully installed
-		mDroid and tons of fun are waiting for you.
-		\n\nBefore you start here
-		are some quick introductions to different game modes.
-		\n\nTime Attack:
-		The goal is to answer all questions correctly as fast as possible.
-		\n\nMemory Ordeal: This mode tests you memory, you want to be as
-		accurate as possible and take your time.
-		\n\nSudden Death: This is a
-		very difficulty mode and rule is simple DO NOT pick the wrong one,
-		game over after first mistake.
-		\n\nOnline Challenge(Pro version only):
-		This mode is combination of both death and timed mode. It requires
-		both accuracy and quickness. Most importantly your result will be
-		posted online and compete with other music lover like you.
+		Congratulations and thank you for installing MDroid.
+		\n\nBefore you start here are some quick introductions.
+		\n\nTime Mode: In time mode one song will be played and four choices is given, 
+		your goal is to choose the correct match of the song as fast as possible. 
+		\n*Every wrong guess will add a extra 5 seconds.
 		\n\nGeneral Hints: We suggest you have a least 20 song on your device.
 		Insufficient songs will reduce interest of the game.
 		\n\nYou can also
 		check allow repeat in settings page if you do not have enough songs to
 		play with.
-		\n\nHave Fun!
+		\n\nMost importantly, HAVE FUN, lot of it!
 	</string>
 
 	<string name="warn_notEnoughSound">You do not have enough sounds to complete this
-		quiz
-		continue anyway!?
+		quiz, continue anyway!?
 		\n(Hint: Change setting to "Allow Repeat" or simply
 		add more sounds.)</string>
-	<string name="warn_notEnoughSound_ModeSD">You do not have enough sounds you may still play
-		but this may decrease interest of Gameplay.</string>
-	<!-- Mode Selection START -->
-	<string name="mode_title">Select Quiz Mode</string>
-	<string name="quizMode_ta">Time Attack</string>
-	<string name="quizMode_mo">Memory Ordeal</string>
-	<string name="quizMode_sd">Sudden Death</string>
-	<string name="quizMode_ol">Online Challenge</string>
-	
-	<string name="quizMode_ta_s">Time</string>
-	<string name="quizMode_mo_s">Memory</string>
-	<string name="quizMode_sd_s">Death</string>
-	<string name="quizMode_ol_s">Online</string>
-	<!-- Mode Selection END -->
 
 	<!-- Time Mode START -->
+	<string name="tMode_name">Timed Mode</string>
 	<string name="tMode_startMsg">
 		Goal: Finish the question as fast as you can.
 		\nScore base on time and accuracy.
@@ -105,6 +68,7 @@
 	<string name="mode_loading">Loading</string>
 	
 	<!-- Time Mode END -->
+	
 	<string name="sMode_startMsg">
 		Goal: Do not make a single mistake.
 		\nScore base on
@@ -117,38 +81,6 @@
 		\nScore base on how accurate you are.
 		\n\nAre you ready?!
 	</string>
-
-	<!-- Result START -->
-	<string name="result_acc_r"></string>
-	<string name="result_acc_r_label">Total Rights</string>
-	<string name="result_acc_w"></string>
-	<string name="result_acc_w_label">Total Wrongs</string>
-	<string name="result_back">To Main Menu</string>
-	<string name="result_toSBoard">To Score Board</string>
-	<!-- Result END -->
-
-	<!-- Online START-->
-	<string name="olMode_startMsg">
-		Goal: Do NOT pick the wrong answer and finish the
-		question as fast as you
-		can.
-		\nYou will be grade on both number of
-		questions you have answered and time
-		to complete them.
-		\n\nAre you
-		ready?!
-	</string>
-	<string name="ol_label1">Player Name</string>
-	<string name="ol_label2">Score</string>
-	<string name="ol_label3">Country</string>
-	<string name="ol_title">World Top 100 Music Pro</string>
-	<string name="ol_btn1">Main Menu</string>
-	<string name="ol_btn2">View Full List</string>
-	<string name="vListUrl">http://www.comeplay8.com/mDroid/vlist.php</string>
-	<string name="insuf_title">Insufficient Songs!</string>
-	<string name="insuf">In order to play online challenge you must have at least</string>
-	<string name="insuf_2">songs.</string>
-	<!-- Online END -->
 	
 	<string name="fetching_web">Fetching Global Score Ranking</string>
 	<string name="fetching_xml">Fetching Local Score Ranking</string>
@@ -177,7 +109,7 @@
 	<string name="lib_line1">Initializing</string>
 	<string name="lib_line2">Please Wait</string>
 	<string name="lib_success">Library successfully built!</string>
-	<string name="lib_problem">Opps... Problem Occur</string>
+	<string name="lib_problem">Opps... Problem Occurs</string>
 	<string name="lib_defSum">Click me to build library.</string>
 	<string name="lib_hint">Please wait...</string>
 </resources>
