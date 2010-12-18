@@ -340,16 +340,15 @@ public class GamePlay extends Activity implements OnTouchListener,
 							switch (mode) {
 							case MODE_CODE_TIME:
 								String acc = String.valueOf(Math.round(rCount
-										/ (rCount + wCount) * 100));
+										/ (rCount + wCount)));
 								// First place must be mode code;
 								String[] resultData = new String[] {
 										"0", "Total Questions",
 										String.valueOf(questionNum), "Q",
-										"0", "Correct Answers",
-										String.valueOf(rCount), "Q",
 										"0", "Incorrect Answers",
 										String.valueOf(wCount), "Q",
 										"0", "Accuracy", acc, "%", 
+										"0", "Total Penalty", String.valueOf(TIME_PENALTY*wCount), "Sec", 
 										"1", "Total Time",
 										String.valueOf(timePass/10), "Sec" };
 								b.putStringArray("resultData", resultData);

@@ -25,7 +25,7 @@ public class sBoard extends TabActivity {
 
 		tabHost.addTab(tabHost
 				.newTabSpec("timed")
-				.setIndicator(getResources().getString(R.string.quizMode_ta_s),
+				.setIndicator(getResources().getString(R.string.tMode_name),
 						getResources().getDrawable(R.drawable.tab_time))
 				.setContent(
 						new Intent(this, sBoardView.class)

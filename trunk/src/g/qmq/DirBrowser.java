@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -132,6 +133,7 @@ public class DirBrowser extends Activity implements OnClickListener {
 			editor.commit();
 			Log.d("Prefs", prefs.getString("music_dir", "None"));
 			finish();
+			startActivity(new Intent(this, libBuilder.class));
 			break;
 		}
 

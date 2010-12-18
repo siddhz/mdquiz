@@ -108,7 +108,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setIcon(R.drawable.icon_common);
 		alertDialogBuilder.setMessage(R.string.agreement);
-		alertDialogBuilder.setTitle("Welcome to MDroid");
+		alertDialogBuilder.setTitle("Welcome to MDroid"); //TODO MOVE TO XML
 		alertDialogBuilder.setPositiveButton("OK",
 				new DialogInterface.OnClickListener() {
 					@Override
@@ -117,6 +117,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 						SharedPreferences.Editor editor = prefs.edit();
 						editor.putBoolean("iniData", true);
 						editor.commit();
+						iniFolderSelect();
 					}
 				});
 		alertDialogBuilder.setCancelable(false);
@@ -124,6 +125,23 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		startDialog.show();
 	}
 
+	
+	private void iniFolderSelect(){
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setIcon(R.drawable.icon_common);		
+		alertDialogBuilder.setTitle("Welcome to MDroid"); //TODO MOVE TO XML
+		alertDialogBuilder.setMessage("To get started, you need to select your music folder."); //TODO MOVE TO XML
+		alertDialogBuilder.setPositiveButton("Continue",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int whichButton) {
+						startActivity(new Intent(MusicQuiz.this, DirBrowser.class));
+					}
+				});
+		alertDialogBuilder.setCancelable(false);
+		final AlertDialog startDialog = alertDialogBuilder.create();
+		startDialog.show();
+	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -159,33 +177,6 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		startActivity(new Intent(this, ModeSelection.class));
 	}
 
-	// Game entry
-	protected void startAct(int i) {
-		switch (i) {
-		case 0:
-			overridePendingTransition(R.anim.zoom_enter, R.anim.hold);
-			startActivity(new Intent(this, ModeTime.class));
-			break;
-		case 1:
-			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
-			startActivity(new Intent(this, ModeMem.class));
-			break;
-		case 2:
-			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
-			startActivity(new Intent(this, ModeSD.class));
-			break;
-		case 3:
-			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
-			startActivity(new Intent(this, ModeOL.class));
-			break;
-		case 4:
-			overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
-			startActivity(new Intent(this, GamePlay.class));
-
-			break;
-		}
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
@@ -203,13 +194,6 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			// More items go here (if any) ...
 		case R.id.about:
 			startActivity(new Intent(this, About.class));
-			return true;
-		case R.id.menu_view:
-			final String url = (String) this.getBaseContext().getResources()
-					.getText(R.string.vListUrl);
-			Uri uri = Uri.parse(url);
-			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-			startActivity(intent);
 			return true;
 		}
 		return false;
