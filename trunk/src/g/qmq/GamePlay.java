@@ -41,11 +41,12 @@ import android.widget.Toast;
 public class GamePlay extends Activity implements OnTouchListener,
 		OnClickListener {
 	private final static int MAX_ERROR = 10; // Number of errors can occur
-												// before stop.
+	// before stop.
 	private final static char MODE_CODE_TIME = 'T'; // Timed mode.
 
 	private final int TIME_PENALTY = 50; // Penalty for guessing wrong (1 =
-											// 1/10sec)
+
+	// 1/10sec)
 
 	/** Called when the activity is first created. */
 	@Override
@@ -339,18 +340,13 @@ public class GamePlay extends Activity implements OnTouchListener,
 							Bundle b = new Bundle();
 							switch (mode) {
 							case MODE_CODE_TIME:
-								String acc = String.valueOf(Math.round(rCount
-										/ (rCount + wCount)));
 								// First place must be mode code;
 								String[] resultData = new String[] {
-										"0", "Total Questions",
-										String.valueOf(questionNum), "Q",
-										"0", "Incorrect Answers",
-										String.valueOf(wCount), "Q",
-										"0", "Accuracy", acc, "%", 
-										"0", "Total Penalty", String.valueOf(TIME_PENALTY*wCount), "Sec", 
-										"1", "Total Time",
-										String.valueOf(timePass/10), "Sec" };
+										"0","Total Questions",String.valueOf(questionNum),"Q",
+										"0","Incorrect Answers",String.valueOf(wCount),"Q",
+										"0","Accuracy",String.valueOf(acc),"%",
+										"0","Total Penalty",String.valueOf(TIME_PENALTY * wCount/10),"Sec",
+										"1","Total Time", String.valueOf(timePass / 10), "Sec" };
 								b.putStringArray("resultData", resultData);
 								b.putChar("MODE", MODE_CODE_TIME);
 								break;
@@ -533,6 +529,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 			timePass += TIME_PENALTY;
 		}
 		Toast.makeText(this, tMsg, 0).show();
+		acc = (rCount*1000 / (rCount + wCount))/10.0;
+		tv_acc = (TextView) findViewById(R.id.status_acc);
+		tv_acc.setText(acc+"%");
+		Log.v("ACC", rCount+"|"+wCount+"|"+acc);
 	}
 
 	/*
@@ -581,6 +581,8 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private Random rng = new Random();
 	private Timer timer;
 	private char mode;
+	private TextView tv_acc;
+	private double acc;
 
 	/* Time fields */
 	private int stack, hStack;
