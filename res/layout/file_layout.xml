@@ -4,8 +4,8 @@
 	android:layout_height="fill_parent" android:background="@color/fileBg">
 	<Button android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="@string/btnSelectDir_label"
-		android:id="@+id/btnSelectDir" android:paddingLeft="10dip"
-		android:paddingRight="10dip"></Button>
+		android:id="@+id/btnSelectDir" android:textStyle="bold"
+		android:soundEffectsEnabled="true" android:layout_marginBottom="20dip"></Button>
 	<TextView android:text="@string/file_title" android:gravity="center"
 		android:layout_height="wrap_content" android:layout_width="fill_parent"
 		android:background="@color/file_titleBg" android:textColor="@color/file_titleText"
@@ -16,7 +16,7 @@
 		<TextView android:text="@string/file_folderName" android:id="@+id/file_folderName"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			android:textStyle="bold" android:background="@color/file_folderDirBg"
-			android:textColor="@color/file_folderDirText" android:textSize="15sp"
+			android:textColor="@color/file_folderDirText" android:textSize="17sp"
 			android:gravity="left">
 		</TextView>
 	</LinearLayout>
@@ -24,4 +24,5 @@
 		android:layout_height="wrap_content" android:id="@+id/users"
 		android:cacheColorHint="#00000000">
 	</ListView>
+
 </LinearLayout>

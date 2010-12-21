@@ -20,9 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class DirBrowser extends Activity implements OnClickListener {
-	private String currentDir;
-	private SharedPreferences prefs = null;
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,14 +29,15 @@ public class DirBrowser extends Activity implements OnClickListener {
 		setContentView(R.layout.file_layout);
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		currentDir = prefs.getString("music_dir", "/");
-		try{
+		try {
 			fill(new File(currentDir).listFiles());
-		}catch (Exception e){
-			Toast.makeText(this, "Current directory not found.", Toast.LENGTH_LONG).show(); //TODO move to xml
+		} catch (Exception e) {
+			Toast.makeText(this, "Current directory not found.", // TODO move to XML
+					Toast.LENGTH_LONG).show(); 
 			currentDir = "/";
-				fill(new File(currentDir).listFiles());
+			fill(new File(currentDir).listFiles());
 		}
-			
+
 		View btnSelectDir = findViewById(R.id.btnSelectDir);
 		btnSelectDir.setOnClickListener(this);
 	}
@@ -47,6 +45,7 @@ public class DirBrowser extends Activity implements OnClickListener {
 	private ArrayList<HashMap<String, Object>> users = new ArrayList<HashMap<String, Object>>();
 
 	private void fill(File[] files) {
+//		musicUnderFolder = 0; //Reset counter.
 		users.clear();
 		TextView dirTextView = (TextView) findViewById(R.id.file_folderName);
 		dirTextView.setText(currentDir);
@@ -57,33 +56,41 @@ public class DirBrowser extends Activity implements OnClickListener {
 			users.add(user);
 		}
 
+		// for (File file : files) {
+		// if (file.canRead() && !file.isHidden()) {
+		// String[] st = splitString(file.getPath(), "/");
+		// String isfolder = "";
+		// int icon = R.drawable.foler;
+		// if (file.isDirectory()) {
+		// isfolder = "/";
+		// HashMap<String, Object> user = new HashMap<String, Object>();
+		// user.put("img", icon);
+		// user.put("folder", st[st.length - 1] + isfolder);
+		// users.add(user);
+		// }
+		// }
+
 		for (File file : files) {
 			if (file.canRead() && !file.isHidden()) {
-				String[] st = splitString(file.getPath(), "/");
-				String isfolder = "";
 				int icon = R.drawable.foler;
 				if (file.isDirectory()) {
-					isfolder = "/";
 					HashMap<String, Object> user = new HashMap<String, Object>();
 					user.put("img", icon);
-					user.put("folder", st[st.length - 1] + isfolder);
+					user.put("folder", file.getName() + "/");
 					users.add(user);
 				}
 			}
-			// if(isMusicFile(file.getPath())){
-			// icon = R.drawable.music_file;
-			// }else if(isfolder == ""){
-			// icon = R.drawable.other_file;
-			// }
+//			if (isMusicFile(file.getName())) {
+//				musicUnderFolder++;
+//			}
 
 		}
+//		TextView musicCount = (TextView) findViewById(R.id.file_musicCount);
+//		musicCount.setText("Music files under correct folder: "+musicUnderFolder); //TODO MOVE TO XML
 
-		SimpleAdapter saImageItems = new SimpleAdapter(this, users,// 数据来源
-				R.layout.file_view,// 每一个user xml 相当ListView的一个组件
-				new String[] { "img", "folder" },
-				// 分别对应view 的id
+		SimpleAdapter saImageItems = new SimpleAdapter(this, users,
+				R.layout.file_view, new String[] { "img", "folder" },
 				new int[] { R.id.img, R.id.file_name });
-		// 获取listview
 		((ListView) findViewById(R.id.users)).setAdapter(saImageItems);
 		((ListView) findViewById(R.id.users))
 				.setOnItemClickListener(new OnItemClickListener() {
@@ -104,19 +111,19 @@ public class DirBrowser extends Activity implements OnClickListener {
 						if (file.isDirectory() || selectDir.endsWith("/")) {
 							currentDir = selectDir;
 							fill(new File(currentDir).listFiles());
-							Log.d("curDir", currentDir);
+							Log.v("curDir", currentDir);
 						}
 					}
 
 				});
 	}
 
-	// private boolean isMusicFile(String path) {
-	// if(path.endsWith(".mp3") || path.endsWith(".wmv") ||
-	// path.endsWith(".wav"))
-	// return true;
-	// return false;
-	// }
+//	private boolean isMusicFile(String name) {
+//		if (name.endsWith(".mp3") || name.endsWith(".wmv")
+//				|| name.endsWith(".wav"))
+//			return true;
+//		return false;
+//	}
 
 	public String[] splitString(String str, String sdelimiter) {
 		String[] array = str.split(sdelimiter);
@@ -136,6 +143,8 @@ public class DirBrowser extends Activity implements OnClickListener {
 			startActivity(new Intent(this, libBuilder.class));
 			break;
 		}
-
 	}
+	private String currentDir;
+	private SharedPreferences prefs = null;
+//	private int musicUnderFolder;
 }

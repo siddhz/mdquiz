@@ -43,7 +43,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private final static int MAX_ERROR = 10; // Number of errors can occur
 	// before stop.
 	private final static char MODE_CODE_TIME = 'T'; // Timed mode.
-
+	private final static int GLENGTH = 10; //Game Length
 	private final int TIME_PENALTY = 50; // Penalty for guessing wrong (1 =
 
 	// 1/10sec)
@@ -63,7 +63,8 @@ public class GamePlay extends Activity implements OnTouchListener,
 		// Loading presences.
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		subFolder = prefs.getBoolean("music_searchSubFolder", true);
-		gLength = Integer.parseInt(prefs.getString("prefs_length", "10"));
+//		gLength = Integer.parseInt(prefs.getString("prefs_length", "10"));
+		gLength = GLENGTH;
 		repeat = prefs.getBoolean("repeat", false);
 		id3tag = prefs.getBoolean("id3tag", false);
 		isAnim = prefs.getBoolean("anim", true);
@@ -567,9 +568,11 @@ public class GamePlay extends Activity implements OnTouchListener,
 	 */
 
 	/* Common fields */
-	private int screenWidth = 320, screenHeight = 480, gLength = 10,
+	private int screenWidth = 320, gLength = 10,
 			timePass = 0, questionNum = 0, btnRight, errorCount = 0, rCount,
 			wCount;
+	@SuppressWarnings("unused")
+	private int screenHeight = 480;
 	private boolean subFolder, repeat, id3tag, timeSwitch, isAnim;
 	private SharedPreferences prefs = null;
 	private ProgressBar iniProgressBar;
