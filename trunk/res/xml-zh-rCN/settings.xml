@@ -35,16 +35,16 @@
 		android:defaultValue="true">
 	</CheckBoxPreference>
 
-	<PreferenceCategory 
-		android:title="计时模式设置"
-		android:key="pref_tm">
-		<ListPreference 
-			android:key="prefs_length"
-			android:title="问题数量" 
-			android:summary="时间模式中问题的数量"
-			android:entries="@array/entries_list_preference" 
-			android:entryValues="@array/entryvalues_list_preference"
-			android:dialogTitle="Select Number of Question" 
-			android:defaultValue="10" />
-	</PreferenceCategory>
+<!--	<PreferenceCategory -->
+<!--		android:title="计时模式设置"-->
+<!--		android:key="pref_tm">-->
+<!--		<ListPreference -->
+<!--			android:key="prefs_length"-->
+<!--			android:title="问题数量" -->
+<!--			android:summary="时间模式中问题的数量"-->
+<!--			android:entries="@array/entries_list_preference" -->
+<!--			android:entryValues="@array/entryvalues_list_preference"-->
+<!--			android:dialogTitle="Select Number of Question" -->
+<!--			android:defaultValue="10" />-->
+<!--	</PreferenceCategory>-->
 </PreferenceScreen>

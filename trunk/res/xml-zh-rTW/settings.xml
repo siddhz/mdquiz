@@ -20,11 +20,11 @@
 		android:summaryOff="不顯示動畫效果.(節省CPU)" android:defaultValue="true">
 	</CheckBoxPreference>
 
-	<PreferenceCategory android:title="計時模式設置"
-		android:key="pref_tm">
-		<ListPreference android:key="prefs_length"
-			android:title="問題數量" android:summary="時間模式中問題的數量" android:entries="@array/entries_list_preference"
-			android:entryValues="@array/entryvalues_list_preference"
-			android:dialogTitle="Select Number of Question" android:defaultValue="10" />
-	</PreferenceCategory>
+<!--	<PreferenceCategory android:title="計時模式設置"-->
+<!--		android:key="pref_tm">-->
+<!--		<ListPreference android:key="prefs_length"-->
+<!--			android:title="問題數量" android:summary="時間模式中問題的數量" android:entries="@array/entries_list_preference"-->
+<!--			android:entryValues="@array/entryvalues_list_preference"-->
+<!--			android:dialogTitle="Select Number of Question" android:defaultValue="10" />-->
+<!--	</PreferenceCategory>-->
 </PreferenceScreen>

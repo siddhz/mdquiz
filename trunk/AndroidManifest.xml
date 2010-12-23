@@ -3,7 +3,7 @@
 	package="g.qmq" android:versionCode="30" android:versionName="2.0BETA"
 	android:screenOrientation="nosensor">
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
-		android:screenOrientation="portrait" android:debuggable="true"> <!-- Take out debuggable -->
+		android:screenOrientation="portrait">
 		<activity android:name=".splash" android:configChanges="locale"
 			android:label="@string/app_name" android:screenOrientation="portrait"
 			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
