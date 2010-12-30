@@ -84,27 +84,31 @@ public class comFun {
 
 	public boolean getAllMusicFiles(String dir, boolean subFolder,
 			ArrayList<HashMap<String, Object>> mFiles) {
+		try{
 		File files[] = new File(dir).listFiles();
 		for (File file : files) { // Start seeking all files under DIR.
 			HashMap<String, Object> mFile = new HashMap<String, Object>();
-			// If current file is a folder and search subFolders is on, go
-			// dig.
-			if (file.isDirectory() && subFolder)
-				getAllMusicFiles(file.getPath(), subFolder, mFiles);
-			// If it is not a folder and end with support music format put in to
-			// array.
-			if (!file.isDirectory()
-					&& !file.isHidden()
-					&& (file.getName().endsWith(".mp3") || file.getName()
-							.endsWith(".wma"))) {
-				// if (id3tag) {
-				// }
-				mFile.put("mFile_name",
-						file.getName()
-								.substring(0, file.getName().length() - 4));
-				mFile.put("mFile_path", file.getPath());
-				mFiles.add(mFile);
+			// Checking permissions.
+			if (!file.isHidden() && file.canRead()) {
+				// If current file is a folder and search subFolders is on, go
+				// dig.
+				if (file.isDirectory() && subFolder)
+					getAllMusicFiles(file.getPath(), subFolder, mFiles);
+				// If it is not a folder and end with support music format put
+				// in to
+				// array.
+				if (!file.isDirectory()
+						&& (file.getName().endsWith(".mp3") || file.getName()
+								.endsWith(".wma"))) {
+					mFile.put("mFile_name", file.getName().substring(0,
+							file.getName().length() - 4));
+					mFile.put("mFile_path", file.getPath());
+					mFiles.add(mFile);
+				}
 			}
+		}
+		}catch (Exception e){
+			e.printStackTrace();
 		}
 		if (!mFiles.isEmpty())
 			return true;

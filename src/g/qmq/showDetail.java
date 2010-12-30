@@ -26,14 +26,18 @@ public class showDetail extends Activity {
 					LinearLayout.LayoutParams.FILL_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT);
 
-			String headStr[] = new String[] { "Player Name", head[1] }; //TODO TO XML
-			ly.addView(relayFactory(headStr), Param);
-			String headStr_1[] = new String[] { "Date", head[2] }; //TODO TO XML
-			ly.addView(relayFactory(headStr_1), Param);
+			String headStr[] = new String[] { "Player Name", head[1] }; // TODO
+																		// TO
+																		// XML
+			ly.addView(relayFactory(headStr, 18f), Param);
+			String headStr_1[] = new String[] { "Date", head[2] }; // TODO TO
+																	// XML
+			ly.addView(relayFactory(headStr_1, 18f), Param);
 
 			for (int i = 0, j = data.length; i < j;) {
-				String dataStr[] = new String[] { data[i++], data[i++] + data[i++] };
-				ly.addView(relayFactory(dataStr), Param);
+				String dataStr[] = new String[] { data[i++],
+						data[i++] + data[i++] };
+				ly.addView(relayFactory(dataStr, 18f), Param);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,12 +48,13 @@ public class showDetail extends Activity {
 
 	}
 
-	private RelativeLayout relayFactory(String text[]) {
+	private RelativeLayout relayFactory(String text[], float size) {
 		RelativeLayout rl = new RelativeLayout(this);
 		TextView tv[] = new TextView[2];
 
 		// Add Left TV
 		tv[0] = new TextView(this);
+		tv[0].setTextSize(size);
 		tv[0].setText(text[0]);
 		RelativeLayout.LayoutParams ParamL = new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -61,6 +66,7 @@ public class showDetail extends Activity {
 		// Add right TV
 		tv[1] = new TextView(this);
 		tv[1].setText(text[1]);
+		tv[1].setTextSize(size);
 		RelativeLayout.LayoutParams ParamR = new RelativeLayout.LayoutParams(
 				RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);

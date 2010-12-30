@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:layout_height="fill_parent" android:background="@drawable/board_bg"
+	android:gravity="center_horizontal">
+	<LinearLayout android:id="@+id/sboard_title_bar"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:orientation="horizontal" android:gravity="bottom"
+		android:scrollbars="horizontal" android:scrollbarStyle="insideOverlay">
+		<ImageView android:src="@drawable/bar_left"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
+		<TextView android:id="@+id/sboard_title_1"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:paddingLeft="10dip" android:paddingRight="10dip"
+			android:layout_weight="1" android:gravity="center"
+			android:background="@drawable/bar_mid_on" android:text="Timed Mode"></TextView>
+		<ImageView android:src="@drawable/bar_right"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
+	</LinearLayout>
 	<ListView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:id="@+id/lv">
 	</ListView>
 	<RelativeLayout android:id="@+id/rela_wait"
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content">
-		<ProgressBar android:id="@+id/sb_pb" 
-			android:layout_width="80dip"
-			android:layout_height="80dip" 
-			android:layout_centerHorizontal="true">
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_marginTop="50dip">
+		<ProgressBar android:id="@+id/sb_pb" android:layout_width="85dip"
+			android:layout_height="85dip" android:layout_centerHorizontal="true">
 		</ProgressBar>
-		<TextView android:id="@+id/sb_wait" 
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true" 
-			android:layout_centerVertical="true"
+		<TextView android:id="@+id/sb_wait" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textSize="20sp"
+			android:layout_centerHorizontal="true" android:layout_centerVertical="true"
 			android:text="@string/fetching_xml">
 		</TextView>
 	</RelativeLayout>
+	<TextView android:id="@+id/sb_fail" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_centerHorizontal="true"
+		android:layout_centerVertical="true" android:text="@string/fetching_failed"
+		android:visibility="gone">
+	</TextView>
 </LinearLayout>

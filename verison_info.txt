@@ -1,0 +1,9 @@
+2.0.0Beta
+	*Core code rewrite, more stable less FCs
+	*Some UI improvement.
+	-Removed redundant modes.
+	
+2.0.1Beta
+	*Fixed bug with scanning large and complex structured folder.
+	*Fixed FC when trying to enter Glory Hall with no game played.
+	*Nicer Glory Hall.
