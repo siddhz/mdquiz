@@ -83,10 +83,10 @@
 		android:orientation="vertical" android:layout_alignParentBottom="true"
 		android:layout_alignParentLeft="true">
 		<!-- ADs Bottom START -->
-<!--		<com.admob.android.ads.AdView android:id="@+id/ad"-->
-<!--			android:layout_width="fill_parent" android:layout_height="wrap_content"-->
-<!--			myapp:backgroundColor="#000000" myapp:primaryTextColor="#FFFFFF"-->
-<!--			myapp:secondaryTextColor="#CCCCCC" />-->
+		<com.admob.android.ads.AdView android:id="@+id/ad"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			myapp:backgroundColor="#000000" myapp:primaryTextColor="#FFFFFF"
+			myapp:secondaryTextColor="#CCCCCC" />
 		<!-- ADs Bottom END -->
 	</LinearLayout>
 

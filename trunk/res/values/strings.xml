@@ -102,9 +102,7 @@
 	<string name="dir_title">Choose your music folder</string>
 	<!-- Config END -->
 	
-	<!-- 
-		Libaray Building.
-	 -->
+	<!-- Libaray Building -->
 	<string name="lib_title">Refresh music library</string>
 	<string name="lib_line1">Initializing</string>
 	<string name="lib_line2">Please Wait</string>
@@ -112,4 +110,7 @@
 	<string name="lib_problem">Opps... Problem Occurs</string>
 	<string name="lib_defSum">Click me to build library.</string>
 	<string name="lib_hint">Please wait...</string>
+	
+	<!-- Score Board -->
+	<string name="fetching_failed">No result found!</string>
 </resources>
