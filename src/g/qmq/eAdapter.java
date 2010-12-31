@@ -1,6 +1,7 @@
 package g.qmq;
 
 import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -54,7 +55,6 @@ public class eAdapter extends BaseAdapter {
 					.findViewById(R.id.ls_score);
 			holder.tv_player = (TextView) convertView
 					.findViewById(R.id.ls_player);
-
 			convertView.setTag(holder);
 		} else {
 			// Get the ViewHolder back to get fast access to the TextView
@@ -85,12 +85,12 @@ public class eAdapter extends BaseAdapter {
 			break;
 		}
 		// Preset value for keyfield not found.
-//		holder.tv_score.setText(DATA.get(position).get(4)[2]);
+		// holder.tv_score.setText(DATA.get(position).get(4)[2]);
 		for (int i = 1, j = DATA.get(position).size(); i < j; i++) {
 			// Search for key field from 1 to size.
-			if(Integer.valueOf(DATA.get(position).get(i)[0]) > 0){
+			if (Integer.valueOf(DATA.get(position).get(i)[0]) > 0) {
 				String[] keyField = DATA.get(position).get(i);
-				holder.tv_score.setText(keyField[2]+" "+keyField[3]);
+				holder.tv_score.setText(keyField[2] + " " + keyField[3]);
 				break;
 			}
 		}
