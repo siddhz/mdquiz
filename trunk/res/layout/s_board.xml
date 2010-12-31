@@ -9,7 +9,7 @@
 		android:scrollbars="horizontal" android:scrollbarStyle="insideOverlay">
 		<ImageView android:src="@drawable/bar_left"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
-		<TextView android:id="@+id/sboard_title_1"
+		<TextView android:id="@+id/sboard_title_1" android:textSize="18sp"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:paddingLeft="10dip" android:paddingRight="10dip"
 			android:layout_weight="1" android:gravity="center"
@@ -35,6 +35,7 @@
 	<TextView android:id="@+id/sb_fail" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_centerHorizontal="true"
 		android:layout_centerVertical="true" android:text="@string/fetching_failed"
-		android:visibility="gone">
+		android:visibility="gone" android:gravity="center"
+		android:layout_marginTop="20dip" android:textSize="20sp">
 	</TextView>
 </LinearLayout>

@@ -59,7 +59,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			iniSystem();
 
 		// Ad Testing
-//		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR });
+		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR });
 
 		// Set OnClick Listener.
 		btnNew = (Button) findViewById(R.id.btnNew);
