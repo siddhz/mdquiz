@@ -7,3 +7,15 @@
 	*Fixed bug with scanning large and complex structured folder.
 	*Fixed FC when trying to enter Glory Hall with no game played.
 	*Nicer Glory Hall.
+
+2.0.2Beta
+	+Added sound indications.
+	+Add pause and resume. 
+		Got to go? Don't worry you can now pause the game by tap home key or power key, 
+		and come back later resume wherever you left off.
+
+2.0.3Beta BD:20100107
+	*Polished Glory Hall.
+	
+TODO:
+	
