@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ public class eAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 
 	public eAdapter(Context context) {
+		mContext = context;
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 	}
@@ -61,7 +64,19 @@ public class eAdapter extends BaseAdapter {
 			// and the ImageView.
 			holder = (ViewHolder) convertView.getTag();
 		}
-
+		
+		//Set fonts.
+		try {
+			Typeface tf = Typeface.createFromAsset(mContext.getAssets(),
+					"fonts/oldengl.ttf");
+			holder.tv_player.setTypeface(tf);
+			holder.tv_rank.setTypeface(tf);
+			holder.tv_score.setTypeface(tf);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("FONTS", "FONTS UNFOUND (CONTEXT ERROR?)");
+		}
+		
 		// Bind the data efficiently with the holder.
 		holder.tv_rank.setText(String.valueOf(position + 1)
 				+ suffix(position + 1));
@@ -104,11 +119,11 @@ public class eAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * Éú³ÉÊý×Öºó×º.
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öºï¿½×º.
 	 * 
 	 * @param num
-	 *            int ÈÎºÎÕûÊý
-	 * @return String ºó×º"st","nd","rd","th".
+	 *            int ï¿½Îºï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @return String ï¿½ï¿½×º"st","nd","rd","th".
 	 */
 	private String suffix(int num) {
 		// Handle special case 11,12,13
@@ -132,5 +147,6 @@ public class eAdapter extends BaseAdapter {
 
 	private ArrayList<ArrayList<String[]>> DATA = new ArrayList<ArrayList<String[]>>();
 	private int myRank = -1;
+	private Context mContext;
 
 }

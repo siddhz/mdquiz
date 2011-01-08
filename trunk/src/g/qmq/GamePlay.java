@@ -14,10 +14,13 @@ import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,14 +28,14 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,10 +46,11 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private final static int MAX_ERROR = 10; // Number of errors can occur
 	// before stop.
 	private final static char MODE_CODE_TIME = 'T'; // Timed mode.
-	private final static int GLENGTH = 10; //Game Length
-	private final int TIME_PENALTY = 50; // Penalty for guessing wrong (1 =
-
-	// 1/10sec)
+	private final static int GLENGTH = 10; // Game Length
+	private final int TIME_PENALTY = 50; // Penalty for guessing wrong
+	// (1=1/10sec)
+	public static final int SOUND_RIGHT = 1;
+	public static final int SOUND_WRONG = 2;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -63,7 +67,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		// Loading presences.
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		subFolder = prefs.getBoolean("music_searchSubFolder", true);
-//		gLength = Integer.parseInt(prefs.getString("prefs_length", "10"));
+		// gLength = Integer.parseInt(prefs.getString("prefs_length", "10"));
 		gLength = GLENGTH;
 		repeat = prefs.getBoolean("repeat", false);
 		id3tag = prefs.getBoolean("id3tag", false);
@@ -90,6 +94,11 @@ public class GamePlay extends Activity implements OnTouchListener,
 		btn[2].setOnTouchListener(this);
 		btn[3].setOnTouchListener(this);
 
+		sp = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
+		spMap = new HashMap<Integer, Integer>();
+		spMap.put(SOUND_RIGHT, sp.load(GamePlay.this, R.raw.sound_right, 1));
+		spMap.put(SOUND_WRONG, sp.load(GamePlay.this, R.raw.sound_wrong, 1));
+
 		initThread.start();
 	}
 
@@ -106,7 +115,6 @@ public class GamePlay extends Activity implements OnTouchListener,
 						public void onClick(DialogInterface arg0, int arg1) {
 							questionNum = 0;
 							played = new int[mFiles.size()];
-
 							// Start time counting.
 							timeSwitch = false;
 							timer = new Timer(true);
@@ -343,11 +351,24 @@ public class GamePlay extends Activity implements OnTouchListener,
 							case MODE_CODE_TIME:
 								// First place must be mode code;
 								String[] resultData = new String[] {
-										"0","Total Questions",String.valueOf(questionNum),"Q",
-										"0","Incorrect Answers",String.valueOf(wCount),"Q",
-										"0","Accuracy",String.valueOf(acc),"%",
-										"0","Total Penalty",String.valueOf(TIME_PENALTY * wCount/10),"Sec",
-										"1","Total Time", String.valueOf(timePass / 10), "Sec" };
+										"0",
+										"Total Questions",
+										String.valueOf(questionNum),
+										"Q",
+										"0",
+										"Incorrect Answers",
+										String.valueOf(wCount),
+										"Q",
+										"0",
+										"Accuracy",
+										String.valueOf(acc),
+										"%",
+										"0",
+										"Total Penalty",
+										String.valueOf(TIME_PENALTY * wCount
+												/ 10), "Sec", "1",
+										"Total Time",
+										String.valueOf(timePass / 10), "Sec" };
 								b.putStringArray("resultData", resultData);
 								b.putChar("MODE", MODE_CODE_TIME);
 								break;
@@ -404,7 +425,29 @@ public class GamePlay extends Activity implements OnTouchListener,
 	public void onPause() {
 		super.onPause();
 		timeSwitch = false;
-		mp.reset();
+		if (mp.isPlaying()) {
+			mp.pause();
+		}
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setIcon(R.drawable.icon_common);
+		alertDialogBuilder.setTitle("Paused");
+		alertDialogBuilder.setMessage("Game Pause");
+		alertDialogBuilder.setCancelable(false);
+		alertDialogBuilder.setPositiveButton("Resume",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int whichButton) {
+						timeSwitch = true;
+						try {
+							mp.start();
+						} catch (IllegalStateException e) {
+							e.printStackTrace();
+							moveAnim('o');
+						}
+					}
+				});
+		final AlertDialog startDialog = alertDialogBuilder.create();
+		startDialog.show();
 	}
 
 	/*
@@ -500,10 +543,18 @@ public class GamePlay extends Activity implements OnTouchListener,
 	 * Time Mode Core Function ******************
 	 */
 	private void timeModeCore(int a) {
+		AudioManager mgr = (AudioManager) this
+				.getSystemService(Context.AUDIO_SERVICE);
+		float streamVolumeCurrent = mgr
+				.getStreamVolume(AudioManager.STREAM_MUSIC);
+		float streamVolumeMax = mgr
+				.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		float volume = (float) (streamVolumeCurrent / streamVolumeMax * 1.5);
 		String tMsg = "!";
 
 		if (a == btnRight) {
 			timeSwitch = false;
+			sp.play(spMap.get(SOUND_RIGHT), volume, volume, 1, 0, 1f);
 			tMsg = "Correct!"; // TODO move to XML
 			rCount++;
 			stack++;
@@ -516,6 +567,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 			// endGame(true, "Timed Quiz Complete!");
 			// }
 		} else {
+			sp.play(spMap.get(SOUND_WRONG), volume, volume, 1, 0, 1f);
 			wCount++;
 			stack = 0;
 			Animation timeAnim = AnimationUtils.loadAnimation(this,
@@ -530,10 +582,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 			timePass += TIME_PENALTY;
 		}
 		Toast.makeText(this, tMsg, 0).show();
-		acc = (rCount*1000 / (rCount + wCount))/10.0;
+		acc = (rCount * 1000 / (rCount + wCount)) / 10.0;
 		tv_acc = (TextView) findViewById(R.id.status_acc);
-		tv_acc.setText(acc+"%");
-		Log.v("ACC", rCount+"|"+wCount+"|"+acc);
+		tv_acc.setText(acc + "%");
+		Log.v("ACC", rCount + "|" + wCount + "|" + acc);
 	}
 
 	/*
@@ -568,9 +620,8 @@ public class GamePlay extends Activity implements OnTouchListener,
 	 */
 
 	/* Common fields */
-	private int screenWidth = 320, gLength = 10,
-			timePass = 0, questionNum = 0, btnRight, errorCount = 0, rCount,
-			wCount;
+	private int screenWidth = 320, gLength = 10, timePass = 0, questionNum = 0,
+			btnRight, errorCount = 0, rCount, wCount;
 	@SuppressWarnings("unused")
 	private int screenHeight = 480;
 	private boolean subFolder, repeat, id3tag, timeSwitch, isAnim;
@@ -586,6 +637,9 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private char mode;
 	private TextView tv_acc;
 	private double acc;
+
+	private HashMap<Integer, Integer> spMap;
+	private SoundPool sp;
 
 	/* Time fields */
 	private int stack, hStack;
