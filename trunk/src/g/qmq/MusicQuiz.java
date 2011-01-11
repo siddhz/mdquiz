@@ -28,13 +28,12 @@ public class MusicQuiz extends Activity implements OnClickListener,
 	private Button btnNew, btnSet, btnBoard, btnExit;
 	private View tv;
 	private boolean showAnim;
-	private boolean forceEN;
-		
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE); // Hide title bar.	
-		
+		requestWindowFeature(Window.FEATURE_NO_TITLE); // Hide title bar.
+
 		/*
 		 * Country and Language List.
 		 * http://developer.android.com/reference/java/util/Locale.html
@@ -42,7 +41,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		Typeface tf = Typeface
 				.createFromAsset(getAssets(), "fonts/oldengl.ttf");
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
-		forceEN = prefs.getBoolean("force_en", false);
+		boolean forceEN = prefs.getBoolean("force_en", false);
 		if (forceEN) {
 			String languageToLoad = "en";
 			Locale locale = new Locale(languageToLoad);
@@ -59,7 +58,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			iniSystem();
 
 		// Ad Testing
-//		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR });
+		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR });
 
 		// Set OnClick Listener.
 		btnNew = (Button) findViewById(R.id.btnNew);
@@ -106,7 +105,7 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setIcon(R.drawable.icon_common);
 		alertDialogBuilder.setMessage(R.string.agreement);
-		alertDialogBuilder.setTitle("Welcome to MDroid"); //TODO MOVE TO XML
+		alertDialogBuilder.setTitle("Welcome to MDroid"); // TODO MOVE TO XML
 		alertDialogBuilder.setPositiveButton("OK",
 				new DialogInterface.OnClickListener() {
 					@Override
@@ -123,23 +122,28 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		startDialog.show();
 	}
 
-	
-	private void iniFolderSelect(){
+	private void iniFolderSelect() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setIcon(R.drawable.icon_common);		
-		alertDialogBuilder.setTitle("Welcome to MDroid"); //TODO MOVE TO XML
-		alertDialogBuilder.setMessage("To get started, you need to select your music folder."); //TODO MOVE TO XML
+		alertDialogBuilder.setIcon(R.drawable.icon_common);
+		alertDialogBuilder.setTitle("Welcome to MDroid"); // TODO MOVE TO XML
+		alertDialogBuilder
+				.setMessage("To get started, you need to select your music folder."); // TODO
+		// MOVE
+		// TO
+		// XML
 		alertDialogBuilder.setPositiveButton("Continue",
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int whichButton) {
-						startActivity(new Intent(MusicQuiz.this, DirBrowser.class));
+						startActivity(new Intent(MusicQuiz.this,
+								DirBrowser.class));
 					}
 				});
 		alertDialogBuilder.setCancelable(false);
 		final AlertDialog startDialog = alertDialogBuilder.create();
 		startDialog.show();
 	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -162,14 +166,14 @@ public class MusicQuiz extends Activity implements OnClickListener,
 	}
 
 	private void openNewQuizDialog() {
-//		new AlertDialog.Builder(this)
-//				.setTitle(R.string.mode_title)
-//				.setItems(R.array.quizMode,
-//						new DialogInterface.OnClickListener() {
-//							public void onClick(
-//									DialogInterface dialoginterface, int i) {
-//								startAct(i);
-//							}
+		// new AlertDialog.Builder(this)
+		// .setTitle(R.string.mode_title)
+		// .setItems(R.array.quizMode,
+		// new DialogInterface.OnClickListener() {
+		// public void onClick(
+		// DialogInterface dialoginterface, int i) {
+		// startAct(i);
+		// }
 		// }).setCancelable(true).show();
 		overridePendingTransition(R.anim.zoom_enter, R.anim.fade);
 		startActivity(new Intent(this, ModeSelection.class));
