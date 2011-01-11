@@ -41,16 +41,38 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.admob.android.ads.AdManager;
+import com.admob.android.ads.AdView;
+
 public class GamePlay extends Activity implements OnTouchListener,
 		OnClickListener {
-	private final static int MAX_ERROR = 10; // Number of errors can occur
-	// before stop.
-	private final static char MODE_CODE_TIME = 'T'; // Timed mode.
-	private final static int GLENGTH = 10; // Game Length
-	private final int TIME_PENALTY = 50; // Penalty for guessing wrong
-	// (1=1/10sec)
+	/************************
+	 *General constants
+	 */
+
+	// Number of errors can occur before stop.
+	private final static int MAX_ERROR = 10;
+	// Game Length
+	private final static int GLENGTH = 10;
 	public static final int SOUND_RIGHT = 1;
 	public static final int SOUND_WRONG = 2;
+
+	/**
+	 *General constants
+	 ************************/
+
+	/*******************************
+	 * Timed mode constants
+	 */
+
+	// Timed mode code
+	private final static char MODE_CODE_TIME = 'T';
+	// Penalty for guessing wrong(1=1/10sec)
+	private final int TIME_PENALTY = 50;
+
+	/**
+	 * Timed mode constants
+	 *******************************/
 
 	/** Called when the activity is first created. */
 	@Override
@@ -73,7 +95,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		id3tag = prefs.getBoolean("id3tag", false);
 		isAnim = prefs.getBoolean("anim", true);
 
-		// Get screen size
+		// Get screen sizes
 		DisplayMetrics displayMetrics = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 		screenWidth = displayMetrics.widthPixels;
@@ -83,7 +105,8 @@ public class GamePlay extends Activity implements OnTouchListener,
 		btn[1] = (Button) findViewById(R.id.btn_answer2);
 		btn[2] = (Button) findViewById(R.id.btn_answer3);
 		btn[3] = (Button) findViewById(R.id.btn_answer4);
-		// Setup on click.
+		
+		// Setup onClick events.
 		btn[0].setOnClickListener(this);
 		btn[1].setOnClickListener(this);
 		btn[2].setOnClickListener(this);
@@ -100,6 +123,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		spMap.put(SOUND_WRONG, sp.load(GamePlay.this, R.raw.sound_wrong, 1));
 
 		initThread.start();
+		addView = (AdView) findViewById(R.id.gameplay_ad);
 	}
 
 	private void readyStage() {
@@ -285,6 +309,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 				if (direction == 'o') {
 					questionGiver(); // Next question.
 					timeSwitch = false;
+					// Get new ad every 5 questions.
+					if (questionNum % 5 == 0) {
+						addView.requestFreshAd();
+					}
 				}
 				if (direction == 'i') {
 					timeSwitch = true;
@@ -640,6 +668,8 @@ public class GamePlay extends Activity implements OnTouchListener,
 
 	private HashMap<Integer, Integer> spMap;
 	private SoundPool sp;
+
+	private AdView addView;
 
 	/* Time fields */
 	private int stack, hStack;
