@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,13 +22,17 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 
 import com.admob.android.ads.AdManager;
+import com.admob.android.ads.InterstitialAd;
+import com.admob.android.ads.InterstitialAdListener;
+import com.admob.android.ads.InterstitialAd.Event;
 
 public class MusicQuiz extends Activity implements OnClickListener,
-		OnTouchListener {
+		OnTouchListener, InterstitialAdListener {
 	private SharedPreferences prefs = null;
 	private Button btnNew, btnSet, btnBoard, btnExit;
 	private View tv;
 	private boolean showAnim;
+	private InterstitialAd mInterstitialAd;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,10 @@ public class MusicQuiz extends Activity implements OnClickListener,
 			iniSystem();
 
 		// Ad Testing
-		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR });
+//		AdManager.setTestDevices(new String[] { AdManager.TEST_EMULATOR });
+
+		mInterstitialAd = new InterstitialAd(Event.APP_START, this);
+		mInterstitialAd.requestAd(this);
 
 		// Set OnClick Listener.
 		btnNew = (Button) findViewById(R.id.btnNew);
@@ -218,4 +226,22 @@ public class MusicQuiz extends Activity implements OnClickListener,
 		System.exit(0);
 		// android.os.Process.killProcess(android.os.Process.myPid());
 	}
+
+	/*******************
+	 * Admob Ads control.
+	 */
+	@Override
+	public void onFailedToReceiveInterstitial(InterstitialAd interstitialAd) {
+		Log.e("ADS FAIL","FAILED TO RECEIVE ADS");
+	}
+
+	@Override
+	public void onReceiveInterstitial(InterstitialAd interstitialAd) {
+		if (interstitialAd == mInterstitialAd) {
+			mInterstitialAd.show(this);
+		}
+	}
+	/**
+	 * Admob Ads control.
+	 ******************/
 }

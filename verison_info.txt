@@ -14,8 +14,16 @@
 		Got to go? Don't worry you can now pause the game by tap home key or power key, 
 		and come back later resume wherever you left off.
 
-2.0.3Beta BD:20100107
+2.0.3Beta BD:20110107
 	*Polished Glory Hall.
 	
-TODO:
+2.0.4Beta BD:20110211
+	*Improving stability.
+	-Removed phone state permission.
+	
+2.0.5Beta BD:TBA
+	
+
+
+TODO: Add close button in glory hall.
 	

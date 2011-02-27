@@ -77,7 +77,7 @@ public class libBuilder extends Activity {
 
 	public void songListXML() {
 		String xmlstr, path = "songlist.xml";
-		ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
+		ArrayList<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 		prefs = getSharedPreferences("g.qmq_preferences", 0);
 		// id3tag = prefs.getBoolean("id3tag", false);
 		comFun cFun = new comFun();
@@ -91,7 +91,7 @@ public class libBuilder extends Activity {
 		StringWriter writer = new StringWriter();
 		try {
 			serializer.setOutput(writer);
-			// <?xml version=¡±1.0¡å encoding=¡±UTF-8¡å standalone=¡±yes¡±?>
+			// <?xml version=ï¿½ï¿½1.0ï¿½ï¿½ encoding=ï¿½ï¿½UTF-8ï¿½ï¿½ standalone=ï¿½ï¿½yesï¿½ï¿½?>
 			serializer.startDocument("UTF-8", true);
 			serializer.startTag("", "list");
 

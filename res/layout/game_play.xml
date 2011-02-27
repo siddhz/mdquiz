@@ -86,7 +86,8 @@
 		<com.admob.android.ads.AdView android:id="@+id/gameplay_ad"
 			android:layout_width="fill_parent" android:layout_height="wrap_content"
 			myapp:backgroundColor="#000000" myapp:primaryTextColor="#FFFFFF"
-			myapp:secondaryTextColor="#CCCCCC" />
+			myapp:secondaryTextColor="#CCCCCC" myapp:refreshInterval="30"
+			myapp:keywords="android game music" />
 		<!-- ADs Bottom END -->
 	</LinearLayout>
 

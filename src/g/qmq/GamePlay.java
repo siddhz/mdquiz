@@ -1,6 +1,3 @@
-/*
- * TODO Add pause and resume.
- */
 package g.qmq;
 
 import java.io.FileNotFoundException;
@@ -18,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -41,7 +39,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.admob.android.ads.AdManager;
 import com.admob.android.ads.AdView;
 
 public class GamePlay extends Activity implements OnTouchListener,
@@ -105,7 +102,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		btn[1] = (Button) findViewById(R.id.btn_answer2);
 		btn[2] = (Button) findViewById(R.id.btn_answer3);
 		btn[3] = (Button) findViewById(R.id.btn_answer4);
-		
+
 		// Setup onClick events.
 		btn[0].setOnClickListener(this);
 		btn[1].setOnClickListener(this);
@@ -127,12 +124,16 @@ public class GamePlay extends Activity implements OnTouchListener,
 	}
 
 	private void readyStage() {
-		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		comFun cFun = new comFun();
+		AlertDialog.Builder dialog = null;
+		Resources res = this.getResources();
 		// Pre-game check
 		if (mFiles.size() - 4 > gLength) {
-			dialog.setIcon(R.drawable.icon_common);
-			dialog.setTitle("Let's Rock."); // TODO move to XML
-			dialog.setMessage(R.string.tMode_startMsg);
+			
+			dialog = cFun
+					.alertMaker(this, res.getString(R.string.tMode_startTitle),
+							res.getString(R.string.tMode_startMsg),
+							R.drawable.icon_common);
 			dialog.setPositiveButton(R.string.btn_continue,
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -149,9 +150,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 
 					});
 		} else {
-			dialog.setIcon(R.drawable.icon_question);
-			dialog.setTitle("Warning!"); // TODO move to XML
-			dialog.setMessage(R.string.warn_notEnoughSound);
+			dialog = cFun
+			.alertMaker(this, "Warning!",
+					res.getString(R.string.warn_notEnoughSound),
+					R.drawable.icon_question);
 			dialog.setPositiveButton(R.string.btn_continue,
 					new DialogInterface.OnClickListener() {
 						@Override
@@ -163,7 +165,6 @@ public class GamePlay extends Activity implements OnTouchListener,
 							timeSwitch = false;
 							timer = new Timer(true);
 							timer.schedule(task, 1000, 100);
-
 							questionGiver();
 						}
 
@@ -657,7 +658,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private ProgressBar iniProgressBar;
 	private TextView iniTV;
 	private Button btn[] = new Button[4];
-	private ArrayList<HashMap<String, Object>> mFiles = new ArrayList<HashMap<String, Object>>();
+	private ArrayList<HashMap<String, String>> mFiles = new ArrayList<HashMap<String, String>>();
 	private int played[];
 	private MediaPlayer mp = new MediaPlayer();
 	private Random rng = new Random();
