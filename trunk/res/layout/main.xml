@@ -44,8 +44,9 @@
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:layout_alignParentBottom="true">
 		<com.admob.android.ads.AdView android:id="@+id/ad"
-	android:layout_width="wrap_content" android:layout_height="wrap_content"
-	myapp:keywords="music" myapp:backgroundColor="#000000"
-	myapp:primaryTextColor="#FFFFFF" myapp:secondaryTextColor="#CCCCCC" />
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			myapp:backgroundColor="#000000" myapp:primaryTextColor="#FFFFFF"
+			myapp:secondaryTextColor="#CCCCCC" myapp:refreshInterval="60"
+			myapp:keywords="android game music" />
 	</LinearLayout>
 </RelativeLayout>

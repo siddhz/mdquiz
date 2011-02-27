@@ -17,6 +17,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 
 public class comFun {
@@ -25,14 +29,14 @@ public class comFun {
 	}
 
 	public boolean getAllMusicFiles(InputStream dir, boolean subFolder,
-			ArrayList<HashMap<String, Object>> mFiles, boolean id3tag) {
+			ArrayList<HashMap<String, String>> mFiles, boolean id3tag) {
 		DocumentBuilderFactory docBuilderFactory = null;
 		DocumentBuilder docBuilder = null;
 		Document doc = null;
 		try {
 			docBuilderFactory = DocumentBuilderFactory.newInstance();
 			docBuilder = docBuilderFactory.newDocumentBuilder();
-			// xml file ·Åµ½ assetsÄ¿Â¼ÖÐµÄ
+			// xml file ï¿½Åµï¿½ assetsÄ¿Â¼ï¿½Ðµï¿½
 			doc = docBuilder.parse(dir);
 			// root element
 			Element root = doc.getDocumentElement();
@@ -40,7 +44,7 @@ public class comFun {
 			// get a NodeList by tagname
 			NodeList nodeList = root.getElementsByTagName("song");
 			for (int i = 0; i < nodeList.getLength(); i++) {
-				HashMap<String, Object> hm = new HashMap<String, Object>();
+				HashMap<String, String> hm = new HashMap<String, String>();
 
 				Node nd = nodeList.item(i);
 
@@ -83,31 +87,33 @@ public class comFun {
 	}
 
 	public boolean getAllMusicFiles(String dir, boolean subFolder,
-			ArrayList<HashMap<String, Object>> mFiles) {
-		try{
-		File files[] = new File(dir).listFiles();
-		for (File file : files) { // Start seeking all files under DIR.
-			HashMap<String, Object> mFile = new HashMap<String, Object>();
-			// Checking permissions.
-			if (!file.isHidden() && file.canRead()) {
-				// If current file is a folder and search subFolders is on, go
-				// dig.
-				if (file.isDirectory() && subFolder)
-					getAllMusicFiles(file.getPath(), subFolder, mFiles);
-				// If it is not a folder and end with support music format put
-				// in to
-				// array.
-				if (!file.isDirectory()
-						&& (file.getName().endsWith(".mp3") || file.getName()
-								.endsWith(".wma"))) {
-					mFile.put("mFile_name", file.getName().substring(0,
-							file.getName().length() - 4));
-					mFile.put("mFile_path", file.getPath());
-					mFiles.add(mFile);
+			ArrayList<HashMap<String, String>> mFiles) {
+		try {
+			File files[] = new File(dir).listFiles();
+			for (File file : files) { // Start seeking all files under DIR.
+				HashMap<String, String> mFile = new HashMap<String, String>();
+				// Checking permissions.
+				if (!file.isHidden() && file.canRead()) {
+					// Current file is a folder and search subFolders is on,
+					// go
+					// dig.
+					if (file.isDirectory() && subFolder)
+						getAllMusicFiles(file.getPath(), subFolder, mFiles);
+					// If it is not a folder and end with support music format
+					// put
+					// in to
+					// array.
+					if (!file.isDirectory()
+							&& (file.getName().endsWith(".mp3") || file
+									.getName().endsWith(".wma"))) {
+						mFile.put("mFile_name", file.getName().substring(0,
+								file.getName().length() - 4));
+						mFile.put("mFile_path", file.getPath());
+						mFiles.add(mFile);
+					}
 				}
 			}
-		}
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (!mFiles.isEmpty())
@@ -116,15 +122,15 @@ public class comFun {
 	}
 
 	/**
-	 * ×¼±¸ÒôÀÖ
+	 * ×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param mp
 	 *            MediaPlayer
 	 * @param src
-	 *            ÒôÀÖµØÖ·
+	 *            ï¿½ï¿½ï¿½Öµï¿½Ö·
 	 * @param start
-	 *            ¿ªÊ¼Ê±¼ä¶¨Î» (Èç¹ûÐ¡ÓÚ0£¬Ê¹ÓÃÄ¬ÈÏÖÐ¼äÎ»ÖÃ¼ÓËæ»úÆ«²î)
-	 * @return ×¼±¸×´Ì¬. T|F
+	 *            ï¿½ï¿½Ê¼Ê±ï¿½ä¶¨Î» (ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½0ï¿½ï¿½Ê¹ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½Ð¼ï¿½Î»ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½)
+	 * @return ×¼ï¿½ï¿½×´Ì¬. T|F
 	 */
 	public boolean setMusic(MediaPlayer mp, boolean isLoop, String src,
 			int start) {
@@ -167,6 +173,15 @@ public class comFun {
 			return false;
 		}
 		return true;
+	}
+
+	public Builder alertMaker(Context context, String title, String msg,
+			int icon) {
+		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+		dialog.setIcon(icon);
+		dialog.setTitle(title);
+		dialog.setMessage(msg);
+		return dialog;
 	}
 
 }

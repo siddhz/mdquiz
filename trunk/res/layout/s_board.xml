@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:background="@drawable/main_bg"
-	android:gravity="center_horizontal">
+	android:gravity="center_horizontal" xmlns:myapp="http://schemas.android.com/apk/res/g.qmq">
 	<LinearLayout android:id="@+id/sboard_title_bar"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:orientation="horizontal" android:gravity="bottom"
@@ -17,9 +17,8 @@
 		<ImageView android:src="@drawable/bar_right"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
 	</LinearLayout>
-	<ListView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:id="@+id/lv">
-	</ListView>
+
+	<!-- Waiting indication -->
 	<RelativeLayout android:id="@+id/rela_wait"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"
 		android:layout_marginTop="50dip">
@@ -38,4 +37,17 @@
 		android:visibility="gone" android:gravity="center"
 		android:layout_marginTop="20dip" android:textSize="20sp">
 	</TextView>
+	<!-- Waiting indication -->
+
+	<ListView android:id="@+id/lv" android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+	</ListView>
+
+	<!-- ADs Bottom START -->
+	<com.admob.android.ads.AdView android:id="@+id/sboard_ad"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		myapp:backgroundColor="#000000" myapp:primaryTextColor="#FFFFFF"
+		myapp:secondaryTextColor="#CCCCCC" myapp:refreshInterval="30"
+		myapp:keywords="android game music" />
+	<!-- ADs Bottom END -->
 </LinearLayout>

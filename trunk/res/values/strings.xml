@@ -42,12 +42,12 @@
 	</string>
 
 	<string name="warn_notEnoughSound">You do not have enough sounds to complete this
-		quiz, continue anyway!?
-		\n(Hint: Change setting to "Allow Repeat" or simply
-		add more sounds.)</string>
+		quiz!\n
+		Do you want do continue by allowing repeated song?</string>
 
 	<!-- Time Mode START -->
 	<string name="tMode_name">Timed Mode</string>
+	<string name="tMode_startTitle">Are You Ready To Rock?!</string>
 	<string name="tMode_startMsg">
 		Goal: Finish the question as fast as you can.
 		\nScore base on time and accuracy.
@@ -68,19 +68,6 @@
 	<string name="mode_loading">Loading</string>
 	
 	<!-- Time Mode END -->
-	
-	<string name="sMode_startMsg">
-		Goal: Do not make a single mistake.
-		\nScore base on
-		how many question you have answered.
-		\n\nAre you ready?!
-	</string>
-	<string name="mMode_startMsg">
-		Goal: Be as accurate as possible and take your
-		time.
-		\nScore base on how accurate you are.
-		\n\nAre you ready?!
-	</string>
 	
 	<string name="fetching_web">Fetching Global Score Ranking</string>
 	<string name="fetching_xml">Fetching Local Score Ranking</string>
@@ -113,4 +100,11 @@
 	
 	<!-- Score Board -->
 	<string name="fetching_failed">No result found!</string>
+	
+	<!-- Game Mode -->
+		<!-- Flash Mode -->
+		<string name="text_mode_flash_hit">HIT</string>
+		<string name="text_mode_flash_miss">MISS</string>
+		<string name="text_mode_flash_time">TIME</string>
+		
 </resources>
