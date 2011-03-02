@@ -33,7 +33,6 @@ public class MusicQuiz extends Activity implements OnClickListener,
 	private View tv;
 	private boolean showAnim;
 	private InterstitialAd mInterstitialAd;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
