@@ -1,14 +1,13 @@
 package g.qmq;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.admob.android.ads.AdView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -17,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -28,29 +28,29 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.admob.android.ads.AdView;
 
 public class GamePlay_Flash extends Activity implements OnClickListener {
 
 	/* ***********************
 	 * General constants
 	 */
-	private final static int MAX_ERROR = 10;// Number of errors can occur before
-	// stop.
-	private final static int GLENGTH = 10;// Game Length
+	// Number of errors can occur before stop.
+	private final static int MAX_ERROR = 10;
+	private final int GAME_LENGTH = 5;
 	private final int SOUND_RIGHT = 1;
 	private final int SOUND_WRONG = 2;
-	private final int GAME_LENGTH = 10;
 	private final int MAX_MISS = 10;
 	private final char MODE_CODE = 'F';
 
@@ -82,20 +82,43 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 		screenWidth = displayMetrics.widthPixels;
 		screenHeight = displayMetrics.heightPixels;
 
-		btn = (Button) findViewById(R.id.btn_answer1);
-		btn.setOnClickListener(this);
+		addView = (AdView) findViewById(R.id.gameplay_ad);
+		btn = (Button) findViewById(R.id.btn_answer);
+		ll = (LinearLayout) findViewById(R.id.midLayout);
+		ll.setOnClickListener(this);
+		stats_hit = (TextView) findViewById(R.id.status_hit);
+		stats_miss = (TextView) findViewById(R.id.status_miss);
 
 		sp = new SoundPool(4, AudioManager.STREAM_MUSIC, 100);
 		spMap = new HashMap<Integer, Integer>();
 		spMap.put(SOUND_RIGHT, sp.load(this, R.raw.sound_right, 1));
 		spMap.put(SOUND_WRONG, sp.load(this, R.raw.sound_wrong, 1));
 
-		initThread.start();
-		addView = (AdView) findViewById(R.id.gameplay_ad);
+		iniProgressBar = (ProgressBar) findViewById(R.id.time_pb);
+		iniTV = (TextView) findViewById(R.id.time_tvWait);
+		comFun cFun = new comFun();
+		InputStream inputS = null;
+		try {
+			inputS = GamePlay_Flash.this.openFileInput("songlist.xml");
+			if (!cFun.getAllMusicFiles(inputS, subFolder, mFiles, id3tag)) {
+				handler.sendEmptyMessage(9);
+				return;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			Log.v("Fail", "Failed to load files.");
+			return;
+		}
+		// Initialize played list.
+		played = new ArrayList<Integer>();
+		readyStage();
+		Toast.makeText(GamePlay_Flash.this, "Ready!", 0).show();
 	}
 
 	@Override
 	public void onClick(View v) {
+		btn.clearAnimation();
+		v.setClickable(false);
 		AudioManager mgr = (AudioManager) this
 				.getSystemService(Context.AUDIO_SERVICE);
 		float streamVolumeCurrent = mgr
@@ -106,6 +129,7 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 		String tMsg = "!";
 
 		if (currentIndex == rightIndex) {
+			flashBackground(Color.GREEN, 1000);
 			timeSwitch = false;
 			sp.play(spMap.get(SOUND_RIGHT), volume, volume, 1, 0, 1f);
 			tMsg = "Correct!"; // TODO move to XML
@@ -115,12 +139,13 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 				hStack = stack;
 			if (stack >= 2)
 				tMsg = "Correct!" + " x" + stack;
-			handler.sendEmptyMessage(0);
+			requestNewSet();
 			// moveAnim('o');
 			// if (questionNum + 1 >= gLength) {
 			// endGame(true, "Timed Quiz Complete!");
 			// }
 		} else {
+			flashBackground(Color.RED, 1000);
 			sp.play(spMap.get(SOUND_WRONG), volume, volume, 1, 0, 1f);
 			miss++;
 			stack = 0;
@@ -134,10 +159,13 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 			animToolBox sAnim = new animToolBox(animToolBox.ZOOM_IN_CENTER);
 			sAnim.animScale(btn);
 			if (miss > MAX_MISS) {
+				updateStats();
 				endGame(true, "GAME OVER");
 				return;
 			}
+			requestNewSet();
 		}
+		updateStats();
 		Toast.makeText(this, tMsg, 0).show();
 	}
 
@@ -226,16 +254,10 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
-							// Initialize
-							questionNum = 0;
-							played.clear();
-							timeSwitch = false;
-							timer = new Timer(true);
-							timer.schedule(task, 1000, 100);
-
-							handler.sendEmptyMessage(0);
+							iniProgressBar.setVisibility(View.GONE);
+							iniTV.setVisibility(View.GONE);
+							gameStart();
 						}
-
 					});
 		} else {
 			dialog = cFun.alertMaker(this, "Warning!", res
@@ -245,16 +267,10 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
+							iniProgressBar.setVisibility(View.GONE);
+							iniTV.setVisibility(View.GONE);
 							repeat = true;
-
-							// Initialize
-							questionNum = 0;
-							played.clear();
-							timeSwitch = false;
-							timer = new Timer(true);
-							timer.schedule(task, 1000, 100);
-
-							handler.sendEmptyMessage(0);
+							gameStart();
 						}
 
 					});
@@ -270,7 +286,49 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 		dialog.show();
 	}
 
+	public boolean setMusic(boolean isLoop, String src, int startTime) {
+		try {
+			mp.reset();
+			mp.setDataSource(src);
+			mp.prepare();
+			if (startTime < 0) {
+				int mLength = mp.getDuration();
+				if (mLength < 1) {
+					startTime = 0;
+				} else {
+					Random rng = new Random();
+					startTime = (int) ((mLength / 2) + (Math.pow(-1, rng
+							.nextInt(1)) * (mLength / 10)));
+				}
+			}
+			mp.seekTo(startTime);
+			mp.setLooping(isLoop);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			if (mp.isPlaying())
+				mp.stop();
+			mp.reset();
+			return false;
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+			if (mp.isPlaying())
+				mp.stop();
+			mp.reset();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			if (mp.isPlaying())
+				mp.stop();
+			mp.reset();
+			return false;
+		}
+		return true;
+	}
+
 	protected void missAnswer() {
+		btn.clearAnimation();
+		flashBackground(Color.RED, 1000);
+
 		AudioManager mgr = (AudioManager) GamePlay_Flash.this
 				.getSystemService(Context.AUDIO_SERVICE);
 		float streamVolumeCurrent = mgr
@@ -296,9 +354,66 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 			return;
 		}
 		Toast.makeText(GamePlay_Flash.this, tMsg, 0).show();
+		updateStats();
+	}
+
+	private void flashBackground(int color, int time) {
+		Animation anim = AnimationUtils.loadAnimation(this, R.anim.flash);
+		anim.setDuration(1000);
+		ll.startAnimation(anim);
+	}
+
+	private void updateStats() {
+		stats_hit.setText(String.valueOf(hit));
+		stats_miss.setText(String.valueOf(miss));
+	}
+
+	private void gameStart() {
+		// Initialize
+		questionNum = 0;
+		played.clear();
+		timer = new Timer(true);
+		timer.schedule(task, 1000, 100);
+		timeSwitch = true;
+		requestNewSet();
+	}
+
+	private void requestNewSet() {
+		btn.clearAnimation();
+		if (mp.isPlaying())
+			mp.stop();
+		cSet = questionMaker(mFiles, 4, repeat, played);
+		rightIndex = rng.nextInt(cSet.size());
+		currentIndex = 0;
+		btn.setText(cSet.get(currentIndex).get("name"));
+		String scr = cSet.get(rightIndex).get("path");
+		if (!setMusic(true, scr, -1)) {
+			errorCount++;
+			if (errorCount < MAX_ERROR) {
+				requestNewSet();
+			} else {
+				endGame(
+						false,
+						"Too much errors in reading music files, try rebuild music library. Game terminated.");
+			}
+			return;
+		}
+		questionNum++;
+		Animation anim = moveAnim(0, 0, 0, screenHeight, 10000);
+		anim.setAnimationListener(animListener);
+		btn.setVisibility(View.VISIBLE);
+		btn.startAnimation(anim);
+		mp.start();
+	}
+
+	private void gameProcessNext() {
+		currentIndex++;
+		btn.setText(cSet.get(currentIndex).get("name"));
 	}
 
 	public void endGame(final boolean isSuccess, String msg) {
+		gameOver = true;
+		btn.clearAnimation();
 		timeSwitch = false;
 		if (mp.isPlaying())
 			mp.stop();
@@ -355,62 +470,63 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 		startDialog.show();
 	}
 
-	private Animation moveAnim(final char direction, float fromX, float toX,
-			float fromY, float toY, long dur) {
-		if (mp.isPlaying() && direction == 'o')
-			mp.stop();
-
-		Animation anim = null;
-		anim = new TranslateAnimation(fromX, toX, fromY, toY);
+	private Animation moveAnim(float fromX, float toX, float fromY, float toY,
+			long dur) {
+		Animation anim = new TranslateAnimation(fromX, toX, fromY, toY);
 		anim.setDuration(dur);
-		anim.setFillAfter(true);
-		if (direction == 'o') {
-			anim.setInterpolator(new AccelerateInterpolator());
-		} else if (direction == 'i') {
-			anim.setInterpolator(new AccelerateInterpolator());
-		}
+		anim.setFillAfter(false);
+		anim.setInterpolator(new AccelerateInterpolator());
+		anim.setRepeatMode(Animation.RESTART);
+		anim.setRepeatCount(Animation.INFINITE);
 		return anim;
 	}
 
-	private AnimationListener animInListener = new AnimationListener() {
+	// private AnimationListener animInListener = new AnimationListener() {
+	//
+	// @Override
+	// public void onAnimationEnd(Animation a) {
+	// Animation anim = moveAnim('o', 0, 0, 0, screenHeight, 1500);
+	// anim.setAnimationListener(animOutListener);
+	// btn.startAnimation(anim);
+	// }
+	//
+	// @Override
+	// public void onAnimationRepeat(Animation a) {
+	// }
+	//
+	// @Override
+	// public void onAnimationStart(Animation a) {
+	// timeSwitch = true;
+	// mp.start();
+	// }
+	//
+	// };
 
+	private AnimationListener animListener = new AnimationListener() {
 		@Override
 		public void onAnimationEnd(Animation a) {
-			Animation anim = moveAnim('o', 0, 0, 0, screenHeight, 1500);
-			anim.setAnimationListener(animOutListener);
-			btn.startAnimation(anim);
+			Log.v("ANIM","END");
+			ll.setClickable(false);
 		}
 
 		@Override
 		public void onAnimationRepeat(Animation a) {
-		}
-
-		@Override
-		public void onAnimationStart(Animation a) {
-			timeSwitch = true;
-			mp.start();
-		}
-
-	};
-
-	private AnimationListener animOutListener = new AnimationListener() {
-
-		@Override
-		public void onAnimationEnd(Animation a) {
-			timeSwitch = false;
-			mp.stop();
+			Log.v("ANIM","REPEAT");
+			if (gameOver)
+				return;
 			if (rightIndex == currentIndex) {// Missed Right Answer
 				missAnswer();
+				requestNewSet();
+				return;
 			}
-			handler.sendEmptyMessage(0);
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation a) {
+			ll.setClickable(false);
+			gameProcessNext();
 		}
 
 		@Override
 		public void onAnimationStart(Animation a) {
+			Log.v("ANIM","START");
+			ll.setClickable(true);
 		}
 
 	};
@@ -433,12 +549,14 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 				}
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
+				// To fail to load music handler.
 				handler.sendEmptyMessage(9);
 				return;
 			}
 
 			// Initialize played list.
 			played = new ArrayList<Integer>();
+			// To ready stage.
 			handler.sendEmptyMessage(8);
 		}
 	});
@@ -447,9 +565,7 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 	TimerTask task = new TimerTask() {
 		public void run() {
 			if (timeSwitch) {
-				timePass++;
-				TextView timerV = (TextView) findViewById(R.id.status_time);
-				timerV.setText(((double) timePass / 10) + "s");
+				handler.sendEmptyMessage(99);
 			}
 		}
 	};
@@ -463,27 +579,52 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 	final Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case 0: // Looping thought set
-				if (currentIndex >= 4 || !isStart) {// Missed all answers
-					isStart = true;
-					cSet = questionMaker(mFiles, 4, repeat, played);
-					Random random = new Random();
-					rightIndex = random.nextInt(cSet.size());
-					currentIndex = -1;
-				}
-				currentIndex++;
-				Animation anim = moveAnim('i', 0, 0, -screenHeight, 0, 1500);
-				anim.setAnimationListener(animInListener);
-				btn.startAnimation(anim);
-				break;
-			case 8:
-				iniProgressBar.setVisibility(View.GONE);
-				iniTV.setVisibility(View.GONE);
-				readyStage();
-				break;
-			case 9: // Failed to load files
-				// TODO
-				break;
+			// case 0: // Looping thought set
+			// cSet = questionMaker(mFiles, 4, repeat, played);
+			// Random random = new Random();
+			// rightIndex = random.nextInt(cSet.size());
+			// currentIndex = 0;
+			// String scr = cSet.get(currentIndex).get("path");
+			// if (!setMusic(true, scr, -1)) {
+			// handler.sendEmptyMessage(3);
+			// break;
+			// }
+			// questionNum++;
+			// Animation anim = moveAnim(0, 0, -screenHeight, 0, 1500);
+			// anim.setAnimationListener(animListener);
+			// btn.startAnimation(anim);
+			// break;
+			// case 1:
+			// currentIndex++;
+			// String scr1 = cSet.get(currentIndex).get("path");
+			// if (!setMusic(true, scr1, -1)) {
+			// handler.sendEmptyMessage(3);
+			// break;
+			// }
+			// questionNum++;
+			// Animation anim1 = moveAnim(0, 0, -screenHeight, 0, 1500);
+			// anim1.setAnimationListener(animListener);
+			// btn.startAnimation(anim1);
+			// break;
+			// case 3:// Error on giving question.
+			// errorCount++;
+			// if (errorCount <= MAX_ERROR) {
+			// // Try again with new set.
+			// this.sendEmptyMessage(0);
+			// } else {
+			// // TODO move below string to XML
+			// endGame(false,
+			// "Music not found try refreash the music library in settings.");
+			// }
+			// break;
+			// case 8:
+			// // Initialization complete, system ready to go.
+			// iniProgressBar.setVisibility(View.GONE);
+			// iniTV.setVisibility(View.GONE);
+			// readyStage();
+			// case 9: // Failed to load files
+			// Log.v("Fail", "Failed to load files.");
+			// break;
 			case 99: // Timer Actions
 				if (timeSwitch) {
 					timePass++;
@@ -503,7 +644,8 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 
 	private int screenWidth = 320, screenHeight = 480, timePass = 0,
 			questionNum = 0, errorCount = 0, hit = 0, miss = 0;
-	private boolean subFolder, repeat, id3tag, timeSwitch, isAnim, isStart = false;
+	private boolean subFolder, repeat, id3tag, timeSwitch, isAnim,
+			gameOver = false;
 	private SharedPreferences prefs = null;
 	private ProgressBar iniProgressBar;
 	private TextView iniTV;
@@ -514,10 +656,11 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 	private Random rng = new Random();
 	private Timer timer;
 	private char mode;
-	private TextView tv_acc;
+	private TextView stats_hit, stats_miss;
 	private double acc;
 	private ArrayList<HashMap<String, String>> cSet = new ArrayList<HashMap<String, String>>();
 	private int currentIndex, rightIndex;
+	private LinearLayout ll;
 
 	private HashMap<Integer, Integer> spMap;
 	private SoundPool sp;

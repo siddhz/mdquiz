@@ -48,7 +48,7 @@ public class ModeSelection extends Activity implements OnTouchListener,
 				// it.putExtras(bundle);
 				// startActivity(it);
 
-				startActivity(new Intent(ModeSelection.this, GamePlay.class));
+				startActivity(new Intent(ModeSelection.this, GamePlay_Flash.class));
 				ModeSelection.this.finish();
 			}
 
