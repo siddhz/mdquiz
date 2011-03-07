@@ -380,24 +380,13 @@ public class GamePlay extends Activity implements OnTouchListener,
 							case MODE_CODE_TIME:
 								// First place must be mode code;
 								String[] resultData = new String[] {
-										"0",
-										"Total Questions",
-										String.valueOf(questionNum),
-										"Q",
-										"0",
-										"Incorrect Answers",
-										String.valueOf(wCount),
-										"Q",
-										"0",
-										"Accuracy",
-										String.valueOf(acc),
-										"%",
-										"0",
-										"Total Penalty",
-										String.valueOf(TIME_PENALTY * wCount
-												/ 10), "Sec", "1",
-										"Total Time",
-										String.valueOf(timePass / 10), "Sec" };
+										"0","Total Questions",String.valueOf(questionNum),"Q",
+										"0","Incorrect Answers",String.valueOf(wCount),"Q",
+										"0","Accuracy",String.valueOf(acc),"%",
+										"0","Total Penalty",String.valueOf(TIME_PENALTY * wCount
+												/ 10), "Sec", 
+										"1","Total Time",String.valueOf(timePass / 10), "Sec" 
+										};
 								b.putStringArray("resultData", resultData);
 								b.putChar("MODE", MODE_CODE_TIME);
 								break;

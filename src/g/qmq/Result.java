@@ -44,7 +44,6 @@ import android.widget.TextView;
 public class Result extends Activity implements OnClickListener,
 		OnTouchListener {
 	private final static int MAX_ENTRY = 100; // Max entry stored in XML.
-	private final static String TIME_KEY = "total time";
 	private final static long animTime = 1500;
 
 	@Override
@@ -94,11 +93,6 @@ public class Result extends Activity implements OnClickListener,
 			Bundle bundle = this.getIntent().getExtras();
 			resultData = bundle.getStringArray("resultData");
 			mode = bundle.getChar("MODE");
-			switch (mode) {
-			case 'T':
-				KEY = TIME_KEY;
-				break;
-			}
 			int rLength = resultData.length;
 			String preFormat[] = new String[rLength - (rLength / 4)];
 			int pLength = preFormat.length;
@@ -177,6 +171,10 @@ public class Result extends Activity implements OnClickListener,
 			switch (mode) {
 			case 'T':
 				xmlName = "TimeMode.xml";
+				break;
+			case 'F':
+				xmlName = "FlashMode.xml";
+				break;
 			}
 			// Read existing data.
 			dataStore = ReadXML(xmlName);
@@ -250,7 +248,6 @@ public class Result extends Activity implements OnClickListener,
 		try {
 			docBuilderFactory = DocumentBuilderFactory.newInstance();
 			docBuilder = docBuilderFactory.newDocumentBuilder();
-			// xml file 放到 assets目录中的
 			doc = docBuilder.parse(this.openFileInput(FileName));
 			// root element
 			Element root = doc.getDocumentElement();
@@ -370,8 +367,9 @@ public class Result extends Activity implements OnClickListener,
 				index = 0;
 				for (int i = 0, j = source.size(); i < j; i++) {
 					int t = Integer.valueOf(temp.get(sortBy)[fieldValue]);
-					int c = Integer.valueOf(source.get(i).get(sortBy)[fieldValue]);
-					if(c < t){
+					int c = Integer
+							.valueOf(source.get(i).get(sortBy)[fieldValue]);
+					if (c < t) {
 						temp = source.get(i);
 						index = i;
 					}
@@ -379,14 +377,15 @@ public class Result extends Activity implements OnClickListener,
 				sortedList.add(temp);
 				source.remove(index);
 			}
-		}else{
+		} else {
 			while (!source.isEmpty()) {
 				temp = source.get(0);
 				index = 0;
 				for (int i = 0, j = source.size(); i < j; i++) {
 					int t = Integer.valueOf(temp.get(sortBy)[fieldValue]);
-					int c = Integer.valueOf(source.get(i).get(sortBy)[fieldValue]);
-					if(c > t){
+					int c = Integer
+							.valueOf(source.get(i).get(sortBy)[fieldValue]);
+					if (c > t) {
 						temp = source.get(i);
 						index = i;
 					}
@@ -522,5 +521,4 @@ public class Result extends Activity implements OnClickListener,
 	private ArrayList<ArrayList<String[]>> dataStore = new ArrayList<ArrayList<String[]>>();
 	private int mYear, mMonth, mDay, mHour, mMinute, uid;
 	private TextView tv[] = new TextView[3];
-	private String KEY;
 }

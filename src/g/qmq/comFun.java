@@ -20,7 +20,6 @@ import org.xml.sax.SAXException;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.media.MediaPlayer;
 
 public class comFun {
