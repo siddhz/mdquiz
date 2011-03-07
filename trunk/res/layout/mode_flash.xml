@@ -5,32 +5,15 @@
 	xmlns:myapp="http://schemas.android.com/apk/res/g.qmq">
 
 	<LinearLayout android:id="@+id/midLayout"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:orientation="vertical" android:layout_centerVertical="true"
 		android:paddingLeft="10dip" android:paddingRight="10dip">
-		<Button android:id="@+id/btn_answer1" android:layout_width="fill_parent"
+		<Button android:id="@+id/btn_answer" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:textSize="18sp"
-			android:text="@string/btn_answer1" android:background="@drawable/btnbg"
+			android:text="None" android:background="@drawable/btnbg"
 			android:textColor="@color/time_mode_btn_text" android:visibility="gone">
 		</Button>
-		<Button android:id="@+id/btn_answer2" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textSize="18sp"
-			android:text="@string/btn_answer2" android:background="@drawable/btnbg"
-			android:textColor="@color/time_mode_btn_text"
-			android:layout_marginTop="25dip" android:visibility="gone">
-		</Button>
-		<Button android:id="@+id/btn_answer3" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textSize="18sp"
-			android:text="@string/btn_answer3" android:background="@drawable/btnbg"
-			android:textColor="@color/time_mode_btn_text"
-			android:layout_marginTop="25dip" android:visibility="gone">
-		</Button>
-		<Button android:id="@+id/btn_answer4" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:textSize="18sp"
-			android:text="@string/btn_answer4" android:background="@drawable/btnbg"
-			android:textColor="@color/time_mode_btn_text"
-			android:layout_marginTop="25dip" android:visibility="gone">
-		</Button>
+		
 		<ProgressBar android:id="@+id/time_pb"
 			android:layout_width="40dip" android:layout_height="40dip"></ProgressBar>
 		<TextView android:id="@+id/time_tvWait" android:layout_width="wrap_content"
@@ -80,11 +63,11 @@
 	</LinearLayout>
 	
 	<!-- ADs Bottom START -->
-	<com.admob.android.ads.AdView android:id="@+id/gameplay_ad"
-		android:layout_alignParentBottom="true" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" myapp:backgroundColor="#000000"
-		myapp:primaryTextColor="#FFFFFF" myapp:secondaryTextColor="#CCCCCC"
-		myapp:refreshInterval="30" myapp:keywords="android game music" />
+<!--	<com.admob.android.ads.AdView android:id="@+id/gameplay_ad"-->
+<!--		android:layout_alignParentBottom="true" android:layout_width="wrap_content"-->
+<!--		android:layout_height="wrap_content" myapp:backgroundColor="#000000"-->
+<!--		myapp:primaryTextColor="#FFFFFF" myapp:secondaryTextColor="#CCCCCC"-->
+<!--		myapp:refreshInterval="30" myapp:keywords="android game music" />-->
 	<!-- ADs Bottom END -->
 
 	<TextView android:id="@+id/time_pluse" android:layout_height="wrap_content"
