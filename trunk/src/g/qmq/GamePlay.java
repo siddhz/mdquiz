@@ -51,8 +51,10 @@ public class GamePlay extends Activity implements OnTouchListener,
 	private final static int MAX_ERROR = 10;
 	// Game Length
 	private final static int GLENGTH = 10;
-	public static final int SOUND_RIGHT = 1;
-	public static final int SOUND_WRONG = 2;
+	private final int SOUND_RIGHT = 1;
+	private final int SOUND_WRONG = 2;
+	
+	private boolean isAnim;
 
 	/**
 	 *General constants
@@ -642,7 +644,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 			btnRight, errorCount = 0, rCount, wCount;
 	@SuppressWarnings("unused")
 	private int screenHeight = 480;
-	private boolean subFolder, repeat, id3tag, timeSwitch, isAnim;
+	private boolean subFolder, repeat, id3tag, timeSwitch;
 	private SharedPreferences prefs = null;
 	private ProgressBar iniProgressBar;
 	private TextView iniTV;
