@@ -54,8 +54,8 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 	private final int MAX_MISS = 10;
 	private final char MODE_CODE = 'F';
 
-	/*
-	 * General constants**********************
+	/***********************
+	 * General constants
 	 */
 
 	/** Called when the activity is first created. */
