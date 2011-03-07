@@ -23,6 +23,7 @@ public class splash extends Activity {
 		iv.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				iv.clearAnimation();
 				startActivity(new Intent(splash.this, MusicQuiz.class));
 				splash.this.finish();
 			}
@@ -53,28 +54,6 @@ public class splash extends Activity {
 			}
 		});
 		iv.startAnimation(fadeOut);
-
-		// welcomeThread.start();
 	}
-
-	// private Thread welcomeThread = new Thread() {
-	// @Override
-	// public void run() {
-	// try {
-	// super.run();
-	// while (wait < WELCOME_TIME) {
-	// sleep(10);
-	// wait += 10;
-	// }
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// } finally {
-	// startActivity(new Intent(splash.this, MusicQuiz.class));
-	// finish();
-	// }
-	// }
-	// };
-
-	private int wait = 0;
-	private ImageView iv, disk;
+	private ImageView iv;
 }
