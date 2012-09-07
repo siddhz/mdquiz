@@ -130,7 +130,7 @@ public class GamePlay extends Activity implements OnTouchListener,
 		AlertDialog.Builder dialog = null;
 		Resources res = this.getResources();
 		// Pre-game check
-		if (mFiles.size() - 4 > gLength) {
+		if (mFiles.size() - 4 > (gLength * 4)) {
 			
 			dialog = cFun
 					.alertMaker(this, res.getString(R.string.tMode_startTitle),
@@ -152,25 +152,26 @@ public class GamePlay extends Activity implements OnTouchListener,
 
 					});
 		} else {
-			dialog = cFun
-			.alertMaker(this, "Warning!",
+			dialog = cFun.alertMaker(this, "Warning!",
 					res.getString(R.string.warn_notEnoughSound),
 					R.drawable.icon_question);
-			dialog.setPositiveButton(R.string.btn_continue,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							questionNum = 0;
-							played = new int[mFiles.size()];
-
-							// Start time counting.
-							timeSwitch = false;
-							timer = new Timer(true);
-							timer.schedule(task, 1000, 100);
-							questionGiver();
-						}
-
-					});
+			if(repeat == true && mFiles.size() >= 4){
+				dialog.setPositiveButton(R.string.btn_continue,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface arg0, int arg1) {
+								questionNum = 0;
+								played = new int[mFiles.size()];
+	
+								// Start time counting.
+								timeSwitch = false;
+								timer = new Timer(true);
+								timer.schedule(task, 1000, 100);
+								questionGiver();
+							}
+	
+						});
+			}
 			dialog.setNegativeButton(R.string.btn_quit,
 					new DialogInterface.OnClickListener() {
 						@Override

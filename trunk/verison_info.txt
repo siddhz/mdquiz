@@ -22,7 +22,7 @@
 	-Removed phone state permission.
 	
 2.0.5Beta BD:TBA
-	
+	*More complete per-game check for not enough songs error.
 
 
 TODO: Add close button in glory hall.
