@@ -263,17 +263,19 @@ public class GamePlay_Flash extends Activity implements OnClickListener {
 			dialog = cFun.alertMaker(this, "Warning!", res
 					.getString(R.string.warn_notEnoughSound),
 					R.drawable.icon_question);
-			dialog.setPositiveButton(R.string.btn_continue,
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface arg0, int arg1) {
-							iniProgressBar.setVisibility(View.GONE);
-							iniTV.setVisibility(View.GONE);
-							repeat = true;
-							gameStart();
-						}
-
-					});
+			if(repeat == true && mFiles.size() >= 4){
+				dialog.setPositiveButton(R.string.btn_continue,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface arg0, int arg1) {
+								iniProgressBar.setVisibility(View.GONE);
+								iniTV.setVisibility(View.GONE);
+								repeat = true;
+								gameStart();
+							}
+	
+						});
+			}
 			dialog.setNegativeButton(R.string.btn_quit,
 					new DialogInterface.OnClickListener() {
 						@Override

@@ -118,13 +118,6 @@ public class eAdapter extends BaseAdapter {
 		TextView tv_rank, tv_score, tv_player;
 	}
 
-	/**
-	 * ������ֺ�׺.
-	 * 
-	 * @param num
-	 *            int �κ�����
-	 * @return String ��׺"st","nd","rd","th".
-	 */
 	private String suffix(int num) {
 		// Handle special case 11,12,13
 		if (num == 11 || num == 12 || num == 13)
